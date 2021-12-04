@@ -22,6 +22,13 @@ abstract public class Brick  {
     public static final int LEFT_IMPACT = 300;
     public static final int RIGHT_IMPACT = 400;
 
+    public Shape getBrickShape() {
+        return brickShape;
+    }
+
+    public void setBrickShape(Shape brickShape) {
+        this.brickShape = brickShape;
+    }
 
 
     public class Crack{
@@ -64,7 +71,7 @@ abstract public class Brick  {
         }
 
         protected void makeCrack(Point2D point, int direction){
-            Rectangle bounds = Brick.this.brickShape.getBounds();
+            Rectangle bounds = Brick.this.getBrickShape().getBounds();
 
             Point impact = new Point((int)point.getX(),(int)point.getY());
             Point start = new Point();
@@ -177,7 +184,7 @@ abstract public class Brick  {
     private static Random rnd;
 
     private String name;
-    Shape brickShape;
+    private Shape brickShape;
 
     private Color border;
     private Color inner;
@@ -192,7 +199,7 @@ abstract public class Brick  {
         rnd = new Random();
         broken = false;
         this.name = name;
-        brickShape = makeBrickFace(pos,size);
+        setBrickShape(makeBrickFace(pos,size));
         this.border = border;
         this.inner = inner;
         this.fullStrength = this.strength = strength;
@@ -225,13 +232,13 @@ abstract public class Brick  {
         if(broken)
             return 0;
         int out  = 0;
-        if(brickShape.contains(b.getRight()))
+        if(getBrickShape().contains(b.getRight()))
             out = LEFT_IMPACT;
-        else if(brickShape.contains(b.getLeft()))
+        else if(getBrickShape().contains(b.getLeft()))
             out = RIGHT_IMPACT;
-        else if(brickShape.contains(b.getUp()))
+        else if(getBrickShape().contains(b.getUp()))
             out = DOWN_IMPACT;
-        else if(brickShape.contains(b.getDown()))
+        else if(getBrickShape().contains(b.getDown()))
             out = UP_IMPACT;
         return out;
     }
