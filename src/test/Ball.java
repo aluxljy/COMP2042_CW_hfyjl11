@@ -10,14 +10,14 @@ import java.awt.geom.RectangularShape;
  */
 abstract public class Ball {
 
-    private Shape ballFace;
+    private Shape ballShape;
 
     private Point2D center;
 
-    Point2D up;
-    Point2D down;
-    Point2D left;
-    Point2D right;
+    private Point2D up;
+    private Point2D down;
+    private Point2D left;
+    private Point2D right;
 
     private Color border;
     private Color inner;
@@ -28,19 +28,19 @@ abstract public class Ball {
     public Ball(Point2D center,int radiusA,int radiusB,Color inner,Color border){
         this.center = center;
 
-        up = new Point2D.Double();
-        down = new Point2D.Double();
-        left = new Point2D.Double();
-        right = new Point2D.Double();
+        setUp(new Point2D.Double());
+        setDown(new Point2D.Double());
+        setLeft(new Point2D.Double());
+        setRight(new Point2D.Double());
 
-        up.setLocation(center.getX(),center.getY()-(radiusB / 2));
-        down.setLocation(center.getX(),center.getY()+(radiusB / 2));
+        getUp().setLocation(center.getX(),center.getY()-(radiusB / 2));
+        getDown().setLocation(center.getX(),center.getY()+(radiusB / 2));
 
-        left.setLocation(center.getX()-(radiusA /2),center.getY());
-        right.setLocation(center.getX()+(radiusA /2),center.getY());
+        getLeft().setLocation(center.getX()-(radiusA /2),center.getY());
+        getRight().setLocation(center.getX()+(radiusA /2),center.getY());
 
 
-        ballFace = makeBall(center,radiusA,radiusB);
+        ballShape = makeBall(center,radiusA,radiusB);
         this.border = border;
         this.inner  = inner;
         speedX = 0;
@@ -50,7 +50,7 @@ abstract public class Ball {
     protected abstract Shape makeBall(Point2D center,int radiusA,int radiusB);
 
     public void move(){
-        RectangularShape tmp = (RectangularShape) ballFace;
+        RectangularShape tmp = (RectangularShape) ballShape;
         center.setLocation((center.getX() + speedX),(center.getY() + speedY));
         double w = tmp.getWidth();
         double h = tmp.getHeight();
@@ -59,7 +59,7 @@ abstract public class Ball {
         setPoints(w,h);
 
 
-        ballFace = tmp;
+        ballShape = tmp;
     }
 
     public void setSpeed(int x,int y){
@@ -96,26 +96,26 @@ abstract public class Ball {
     }
 
     public Shape getBallFace(){
-        return ballFace;
+        return ballShape;
     }
 
     public void moveTo(Point p){
         center.setLocation(p);
 
-        RectangularShape tmp = (RectangularShape) ballFace;
+        RectangularShape tmp = (RectangularShape) ballShape;
         double w = tmp.getWidth();
         double h = tmp.getHeight();
 
         tmp.setFrame((center.getX() -(w / 2)),(center.getY() - (h / 2)),w,h);
-        ballFace = tmp;
+        ballShape = tmp;
     }
 
     private void setPoints(double width,double height){
-        up.setLocation(center.getX(),center.getY()-(height / 2));
-        down.setLocation(center.getX(),center.getY()+(height / 2));
+        getUp().setLocation(center.getX(),center.getY()-(height / 2));
+        getDown().setLocation(center.getX(),center.getY()+(height / 2));
 
-        left.setLocation(center.getX()-(width / 2),center.getY());
-        right.setLocation(center.getX()+(width / 2),center.getY());
+        getLeft().setLocation(center.getX()-(width / 2),center.getY());
+        getRight().setLocation(center.getX()+(width / 2),center.getY());
     }
 
     public int getSpeedX(){
@@ -127,4 +127,35 @@ abstract public class Ball {
     }
 
 
+    public Point2D getUp() {
+        return up;
+    }
+
+    public void setUp(Point2D up) {
+        this.up = up;
+    }
+
+    public Point2D getDown() {
+        return down;
+    }
+
+    public void setDown(Point2D down) {
+        this.down = down;
+    }
+
+    public Point2D getLeft() {
+        return left;
+    }
+
+    public void setLeft(Point2D left) {
+        this.left = left;
+    }
+
+    public Point2D getRight() {
+        return right;
+    }
+
+    public void setRight(Point2D right) {
+        this.right = right;
+    }
 }
