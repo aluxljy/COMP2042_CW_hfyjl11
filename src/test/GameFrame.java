@@ -58,6 +58,7 @@ public class GameFrame extends JFrame implements WindowFocusListener {
         this.pack();
         this.autoLocate();
         this.setVisible(true);
+        this.setResizable(false);
     }
 
     public void enableGameBoard(){
