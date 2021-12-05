@@ -14,17 +14,17 @@ public class CementBrick extends Brick {
     private static final int CEMENT_STRENGTH = 2;
 
     private Crack crack;
-    private Shape brickFace;
+    private Shape brickShape;
 
 
     public CementBrick(Point point, Dimension size){
         super(NAME,point,size,DEF_BORDER,DEF_INNER,CEMENT_STRENGTH);
         crack = new Crack(this,DEF_CRACK_DEPTH,DEF_STEPS);
-        brickFace = super.getBrickShape();
+        brickShape = super.getBrickShape();
     }
 
     @Override
-    protected Shape makeBrickFace(Point pos, Dimension size) {
+    protected Shape makeBrickShape(Point pos, Dimension size) {
         return new Rectangle(pos,size);
     }
 
@@ -44,20 +44,20 @@ public class CementBrick extends Brick {
 
     @Override
     public Shape getBrick() {
-        return brickFace;
+        return brickShape;
     }
 
     private void updateBrick(){
         if(!super.isBroken()){
             GeneralPath gp = crack.draw();
             gp.append(super.getBrickShape(),false);
-            brickFace = gp;
+            brickShape = gp;
         }
     }
 
     public void repair(){
         super.repair();
         crack.reset();
-        brickFace = super.getBrickShape();
+        brickShape = super.getBrickShape();
     }
 }

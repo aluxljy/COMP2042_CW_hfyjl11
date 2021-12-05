@@ -2,7 +2,6 @@ package test;
 
 import java.awt.*;
 import java.awt.Point;
-import java.awt.geom.GeneralPath;
 import java.awt.geom.Point2D;
 import java.util.Random;
 
@@ -207,14 +206,14 @@ abstract public class Brick  {
         rnd = new Random();
         broken = false;
         this.name = name;
-        setBrickShape(makeBrickFace(pos,size));
+        setBrickShape(makeBrickShape(pos,size));
         this.border = border;
         this.inner = inner;
         this.fullStrength = this.strength = strength;
 
     }
 
-    protected abstract Shape makeBrickFace(Point pos,Dimension size);
+    protected abstract Shape makeBrickShape(Point pos, Dimension size);
 
     public  boolean setImpact(Point2D point , int dir){
         if(broken)
