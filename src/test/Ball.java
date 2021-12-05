@@ -40,14 +40,14 @@ abstract public class Ball {
         getRight().setLocation(center.getX()+(radiusA /2),center.getY());
 
 
-        ballShape = makeBall(center,radiusA,radiusB);
+        ballShape = makeBallShape(center,radiusA,radiusB);
         this.border = border;
         this.inner  = inner;
         speedX = 0;
         speedY = 0;
     }
 
-    protected abstract Shape makeBall(Point2D center,int radiusA,int radiusB);
+    protected abstract Shape makeBallShape(Point2D center, int radiusA, int radiusB);
 
     public void move(){
         RectangularShape tmp = (RectangularShape) ballShape;
