@@ -7,39 +7,39 @@ public class Level {
     private int level;
     private int brickCount;*/
 
-    public static Brick[] makeSingleTypeLevel(Rectangle drawArea, int brickCnt, int lineCnt, double brickSizeRatio, int type){
+    public static Brick[] makeSingleTypeLevel(Rectangle drawArea, int brickCount, int lineCount, double brickSizeRatio, int type){
         /*
           if brickCount is not divisible by line count,brickCount is adjusted to the biggest
           multiple of lineCount smaller then brickCount
          */
-        brickCnt -= brickCnt % lineCnt;
+        brickCount -= brickCount % lineCount;
 
-        int brickOnLine = brickCnt / lineCnt;
+        int brickOnLine = brickCount / lineCount;
 
-        double brickLen = drawArea.getWidth() / brickOnLine;
-        double brickHgt = brickLen / brickSizeRatio;
+        double brickLength = drawArea.getWidth() / brickOnLine;
+        double brickHeight = brickLength / brickSizeRatio;
 
-        brickCnt += lineCnt / 2;
+        brickCount += lineCount / 2;
 
-        Brick[] tmp  = new Brick[brickCnt];
+        Brick[] tmp  = new Brick[brickCount];
 
-        Dimension brickSize = new Dimension((int) brickLen,(int) brickHgt);
+        Dimension brickSize = new Dimension((int) brickLength,(int) brickHeight);
         Point p = new Point();
 
         int i;
         for(i = 0; i < tmp.length; i++){
             int line = i / brickOnLine;
-            if(line == lineCnt)
+            if(line == lineCount)
                 break;
-            double x = (i % brickOnLine) * brickLen;
-            x =(line % 2 == 0) ? x : (x - (brickLen / 2));
-            double y = (line) * brickHgt;
+            double x = (i % brickOnLine) * brickLength;
+            x =(line % 2 == 0) ? x : (x - (brickLength / 2));
+            double y = (line) * brickHeight;
             p.setLocation(x,y);
             tmp[i] = Wall.makeBrick(p,brickSize,type);
         }
 
-        for(double y = brickHgt;i < tmp.length;i++, y += 2*brickHgt){
-            double x = (brickOnLine * brickLen) - (brickLen / 2);
+        for(double y = brickHeight;i < tmp.length;i++, y += 2*brickHeight){
+            double x = (brickOnLine * brickLength) - (brickLength / 2);
             p.setLocation(x,y);
             tmp[i] = Wall.makeBrick(p,brickSize,type);
         }
@@ -47,45 +47,45 @@ public class Level {
 
     }
 
-    public static Brick[] makeChessboardLevel(Rectangle drawArea, int brickCnt, int lineCnt, double brickSizeRatio, int typeA, int typeB){
+    public static Brick[] makeChessboardLevel(Rectangle drawArea, int brickCount, int lineCount, double brickSizeRatio, int typeA, int typeB){
         /*
           if brickCount is not divisible by line count,brickCount is adjusted to the biggest
           multiple of lineCount smaller then brickCount
          */
-        brickCnt -= brickCnt % lineCnt;
+        brickCount -= brickCount % lineCount;
 
-        int brickOnLine = brickCnt / lineCnt;
+        int brickOnLine = brickCount / lineCount;
 
         int centerLeft = brickOnLine / 2 - 1;
         int centerRight = brickOnLine / 2 + 1;
 
-        double brickLen = drawArea.getWidth() / brickOnLine;
-        double brickHgt = brickLen / brickSizeRatio;
+        double brickLength = drawArea.getWidth() / brickOnLine;
+        double brickHeight = brickLength / brickSizeRatio;
 
-        brickCnt += lineCnt / 2;
+        brickCount += lineCount / 2;
 
-        Brick[] tmp  = new Brick[brickCnt];
+        Brick[] tmp  = new Brick[brickCount];
 
-        Dimension brickSize = new Dimension((int) brickLen,(int) brickHgt);
+        Dimension brickSize = new Dimension((int) brickLength,(int) brickHeight);
         Point p = new Point();
 
         int i;
         for(i = 0; i < tmp.length; i++){
             int line = i / brickOnLine;
-            if(line == lineCnt)
+            if(line == lineCount)
                 break;
             int posX = i % brickOnLine;
-            double x = posX * brickLen;
-            x =(line % 2 == 0) ? x : (x - (brickLen / 2));
-            double y = (line) * brickHgt;
+            double x = posX * brickLength;
+            x =(line % 2 == 0) ? x : (x - (brickLength / 2));
+            double y = (line) * brickHeight;
             p.setLocation(x,y);
 
             boolean b = ((line % 2 == 0 && i % 2 == 0) || (line % 2 != 0 && posX > centerLeft && posX <= centerRight));
             tmp[i] = b ?  Wall.makeBrick(p,brickSize,typeA) : Wall.makeBrick(p,brickSize,typeB);
         }
 
-        for(double y = brickHgt;i < tmp.length;i++, y += 2*brickHgt){
-            double x = (brickOnLine * brickLen) - (brickLen / 2);
+        for(double y = brickHeight;i < tmp.length;i++, y += 2*brickHeight){
+            double x = (brickOnLine * brickLength) - (brickLength / 2);
             p.setLocation(x,y);
             tmp[i] = Wall.makeBrick(p,brickSize,typeA);
         }
