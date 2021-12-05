@@ -6,10 +6,10 @@ import java.awt.geom.RectangularShape;
 
 /**
  * Created by filippo on 04/09/16.
- *
+ * Refactored by Looi Jie Ying on 03/12/21.
  */
-abstract public class Ball {
 
+abstract public class Ball {
     private Shape ballShape;
 
     private Point2D center;
@@ -25,107 +25,114 @@ abstract public class Ball {
     private int speedX;
     private int speedY;
 
-    public Ball(Point2D center,int radiusA,int radiusB,Color inner,Color border){
+    // Ball constructor
+    public Ball(Point2D center,int radiusA,int radiusB,Color inner,Color border) {
         this.center = center;
 
+        // instantiate Point2D object
         setUp(new Point2D.Double());
         setDown(new Point2D.Double());
         setLeft(new Point2D.Double());
         setRight(new Point2D.Double());
 
-        getUp().setLocation(center.getX(),center.getY()-(radiusB / 2));
-        getDown().setLocation(center.getX(),center.getY()+(radiusB / 2));
-
-        getLeft().setLocation(center.getX()-(radiusA /2),center.getY());
-        getRight().setLocation(center.getX()+(radiusA /2),center.getY());
-
+        // set the top, bottom, left and right location of the ball
+        /*getUp().setLocation(center.getX(),center.getY() - (radiusB / 2));
+        getDown().setLocation(center.getX(),center.getY() + (radiusB / 2));
+        getLeft().setLocation(center.getX() - (radiusA / 2),center.getY());
+        getRight().setLocation(center.getX() + (radiusA / 2),center.getY());*/
 
         ballShape = makeBallShape(center,radiusA,radiusB);
         this.border = border;
-        this.inner  = inner;
+        this.inner = inner;
         speedX = 0;
         speedY = 0;
     }
 
     protected abstract Shape makeBallShape(Point2D center, int radiusA, int radiusB);
 
-    public void move(){
-        RectangularShape tmp = (RectangularShape) ballShape;
-        center.setLocation((center.getX() + speedX),(center.getY() + speedY));
-        double w = tmp.getWidth();
-        double h = tmp.getHeight();
+    public void move() {
+        RectangularShape tempBallShape = (RectangularShape) ballShape;  // type cast ballShape to RectangularShape
+        center.setLocation((center.getX() + speedX),(center.getY() + speedY));  // move center with axis-X and axis-Y speed
+        double width = tempBallShape.getWidth();  // get width of rectangle
+        double height = tempBallShape.getHeight();  // get height of rectangle
 
-        tmp.setFrame((center.getX() -(w / 2)),(center.getY() - (h / 2)),w,h);
-        setPoints(w,h);
+        tempBallShape.setFrame((center.getX() - (width / 2)),(center.getY() - (height / 2)),width,height);  // set the frame with center, width and height of tempBallShape
+        setPoints(width,height);
 
-
-        ballShape = tmp;
+        ballShape = tempBallShape;
     }
 
-    public void setSpeed(int x,int y){
+    public void setSpeed(int x,int y) {
         speedX = x;
         speedY = y;
     }
 
-    public void setXSpeed(int s){
+    public void setSpeedX(int s) {
         speedX = s;
     }
 
-    public void setYSpeed(int s){
+    public void setSpeedY(int s) {
         speedY = s;
     }
 
-    public void reverseX(){
+    public void reverseX() {
         speedX *= -1;
     }
 
-    public void reverseY(){
+    public void reverseY() {
         speedY *= -1;
     }
 
-    public Color getBorderColor(){
+    public Color getBorderColor() {
         return border;
     }
 
-    public Color getInnerColor(){
+    public Color getInnerColor() {
         return inner;
     }
 
-    public Point2D getPosition(){
+    public Point2D getPosition() {
         return center;
     }
 
-    public Shape getBallFace(){
+    public Shape getBallShape() {
         return ballShape;
     }
 
-    public void moveTo(Point p){
+    /**
+     * similar code with move()
+     *
+     */
+    public void moveTo(Point p) {
         center.setLocation(p);
 
-        RectangularShape tmp = (RectangularShape) ballShape;
-        double w = tmp.getWidth();
-        double h = tmp.getHeight();
+        RectangularShape tempBallShape = (RectangularShape) ballShape;
+        double width = tempBallShape.getWidth();
+        double height = tempBallShape.getHeight();
 
-        tmp.setFrame((center.getX() -(w / 2)),(center.getY() - (h / 2)),w,h);
-        ballShape = tmp;
+        tempBallShape.setFrame((center.getX() - (width / 2)),(center.getY() - (height / 2)),width,height);
+        ballShape = tempBallShape;
     }
 
-    private void setPoints(double width,double height){
-        getUp().setLocation(center.getX(),center.getY()-(height / 2));
-        getDown().setLocation(center.getX(),center.getY()+(height / 2));
-
-        getLeft().setLocation(center.getX()-(width / 2),center.getY());
-        getRight().setLocation(center.getX()+(width / 2),center.getY());
+    /**
+     * same code just type is different
+     *
+     */
+    private void setPoints(double width,double height) {
+        // set the top, bottom, left and right location of the ball
+        getUp().setLocation(center.getX(),center.getY() - (height / 2));
+        getDown().setLocation(center.getX(),center.getY() + (height / 2));
+        getLeft().setLocation(center.getX() - (width / 2),center.getY());
+        getRight().setLocation(center.getX() + (width / 2),center.getY());
     }
 
-    public int getSpeedX(){
+    public int getSpeedX() {
         return speedX;
     }
 
-    public int getSpeedY(){
+    public int getSpeedY() {
         return speedY;
     }
-
 
     public Point2D getUp() {
         return up;

@@ -282,11 +282,11 @@ public class Wall {
     }
 
     public void setBallXSpeed(int s){
-        getBall().setXSpeed(s);
+        getBall().setSpeedX(s);
     }
 
     public void setBallYSpeed(int s){
-        getBall().setYSpeed(s);
+        getBall().setSpeedY(s);
     }
 
     public void resetBallCount(){

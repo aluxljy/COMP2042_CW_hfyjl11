@@ -165,7 +165,7 @@ public class GameBoard extends JComponent implements KeyListener,MouseListener,M
     private void drawBall(Ball ball,Graphics2D g2d){
         Color tmp = g2d.getColor();
 
-        Shape s = ball.getBallFace();
+        Shape s = ball.getBallShape();
 
         g2d.setColor(ball.getInnerColor());
         g2d.fill(s);
