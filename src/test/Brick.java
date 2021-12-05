@@ -30,7 +30,7 @@ abstract public class Brick  {
         this.brickShape = brickShape;
     }
 
-
+/*
     public class Crack{
 
         private static final int CRACK_SECTIONS = 3;
@@ -179,6 +179,14 @@ abstract public class Brick  {
             return out;
         }
 
+    }*/
+
+    public static Random getRnd() {
+        return rnd;
+    }
+
+    public static void setRnd(Random rnd) {
+        Brick.rnd = rnd;
     }
 
     private static Random rnd;
