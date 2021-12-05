@@ -24,7 +24,7 @@ import java.util.Random;
 
 public class Wall {
 
-    private static final int LEVELS_COUNT = 4;
+    private static final int LEVELS_COUNT = 5;
 
     private static final int CLAY = 1;
     private static final int STEEL = 2;
@@ -75,11 +75,12 @@ public class Wall {
 
     }
 
-    private Brick[] makeSingleTypeLevel(Rectangle drawArea, int brickCnt, int lineCnt, double brickSizeRatio, int type){
-        /*
+
+    /*private Brick[] makeSingleTypeLevel(Rectangle drawArea, int brickCnt, int lineCnt, double brickSizeRatio, int type){
+        *//*
           if brickCount is not divisible by line count,brickCount is adjusted to the biggest
           multiple of lineCount smaller then brickCount
-         */
+         *//*
         brickCnt -= brickCnt % lineCnt;
 
         int brickOnLine = brickCnt / lineCnt;
@@ -113,13 +114,13 @@ public class Wall {
         }
         return tmp;
 
-    }
+    }*/
 
-    private Brick[] makeChessboardLevel(Rectangle drawArea, int brickCnt, int lineCnt, double brickSizeRatio, int typeA, int typeB){
-        /*
+    /*private Brick[] makeChessboardLevel(Rectangle drawArea, int brickCnt, int lineCnt, double brickSizeRatio, int typeA, int typeB){
+        *//*
           if brickCount is not divisible by line count,brickCount is adjusted to the biggest
           multiple of lineCount smaller then brickCount
-         */
+         *//*
         brickCnt -= brickCnt % lineCnt;
 
         int brickOnLine = brickCnt / lineCnt;
@@ -158,7 +159,7 @@ public class Wall {
             tmp[i] = makeBrick(p,brickSize,typeA);
         }
         return tmp;
-    }
+    }*/
 
     private void makeBall(Point2D ballPos){
         setBall(new RubberBall(ballPos));
@@ -166,10 +167,11 @@ public class Wall {
 
     private Brick[][] makeLevels(Rectangle drawArea,int brickCount,int lineCount,double brickDimensionRatio){
         Brick[][] tmp = new Brick[LEVELS_COUNT][];
-        tmp[0] = makeSingleTypeLevel(drawArea,brickCount,lineCount,brickDimensionRatio,CLAY);
-        tmp[1] = makeChessboardLevel(drawArea,brickCount,lineCount,brickDimensionRatio,CLAY,CEMENT);
-        tmp[2] = makeChessboardLevel(drawArea,brickCount,lineCount,brickDimensionRatio,CLAY,STEEL);
-        tmp[3] = makeChessboardLevel(drawArea,brickCount,lineCount,brickDimensionRatio,STEEL,CEMENT);
+        tmp[0] = Level.makeSingleTypeLevel(drawArea,brickCount,lineCount,brickDimensionRatio,CLAY);
+        tmp[1] = Level.makeSingleTypeLevel(drawArea,brickCount,lineCount,brickDimensionRatio,CEMENT);
+        tmp[2] = Level.makeChessboardLevel(drawArea,brickCount,lineCount,brickDimensionRatio,CLAY,CEMENT);
+        tmp[3] = Level.makeChessboardLevel(drawArea,brickCount,lineCount,brickDimensionRatio,CLAY,STEEL);
+        tmp[4] = Level.makeChessboardLevel(drawArea,brickCount,lineCount,brickDimensionRatio,STEEL,CEMENT);
         return tmp;
     }
 
@@ -291,7 +293,7 @@ public class Wall {
         ballCount = 3;
     }
 
-    private Brick makeBrick(Point point, Dimension size, int type){
+    public static Brick makeBrick(Point point, Dimension size, int type){
         Brick out;
         switch(type){
             case CLAY:
