@@ -48,16 +48,16 @@ public class SteelBrick extends Brick {
         return brickShape;
     }
 
-    public  boolean setImpact(Point2D point,int dir) {
+    /*public boolean setImpact(Point2D point,int direction) {
         if(super.isBroken())
             return false;
         impact();
-        return  super.isBroken();
-    }
+        return super.isBroken();
+    }*/
 
     public void impact() {
         if(random.nextDouble() < STEEL_PROBABILITY) {
-            super.impact();
+            super.impact();  // if random is less than STEEL_PROBABILITY then call parent impact, else do nothing (steel brick does not break)
         }
     }
 }
