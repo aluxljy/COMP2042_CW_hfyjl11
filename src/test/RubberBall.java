@@ -26,13 +26,14 @@ public class RubberBall extends Ball {
     private static final Color DEF_INNER_COLOR = new Color(255, 219, 88);
     private static final Color DEF_BORDER_COLOR = DEF_INNER_COLOR.darker().darker();
 
+    // RubberBall constructor
     public RubberBall(Point2D center) {
         super(center,DEF_RADIUS,DEF_RADIUS,DEF_INNER_COLOR,DEF_BORDER_COLOR);  // call Ball constructor
     }
 
     @Override
     protected Shape makeBallShape(Point2D center, int radiusA, int radiusB) {
-        // framing rectangle shape
+        // framing the rectangle shape
         double x = center.getX() - (radiusA / 2);
         double y = center.getY() - (radiusB / 2);
 

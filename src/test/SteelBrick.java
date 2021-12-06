@@ -21,27 +21,25 @@ import java.awt.*;
 import java.awt.geom.Point2D;
 import java.util.Random;
 
-
 public class SteelBrick extends Brick {
-
     private static final String NAME = "Steel Brick";
-    private static final Color DEF_INNER = new Color(203, 203, 201);
+    private static final Color DEF_INNER = new Color(203,203,201);
     private static final Color DEF_BORDER = Color.BLACK;
     private static final int STEEL_STRENGTH = 1;
     private static final double STEEL_PROBABILITY = 0.4;
 
-    private Random rnd;
+    private Random random;
     private Shape brickShape;
 
-    public SteelBrick(Point point, Dimension size){
-        super(NAME,point,size,DEF_BORDER,DEF_INNER,STEEL_STRENGTH);
-        rnd = new Random();
+    // SteelBrick constructor
+    public SteelBrick(Point position, Dimension size) {
+        super(NAME,position,size,DEF_BORDER,DEF_INNER,STEEL_STRENGTH);
+        random = new Random();
         brickShape = super.getBrickShape();
     }
 
-
     @Override
-    protected Shape makeBrickShape(Point position, Dimension size) {
+    protected Shape makeBrickShape(Point position,Dimension size) {
         return new Rectangle(position,size);
     }
 
@@ -50,17 +48,16 @@ public class SteelBrick extends Brick {
         return brickShape;
     }
 
-    public  boolean setImpact(Point2D point , int dir){
+    public  boolean setImpact(Point2D point,int dir) {
         if(super.isBroken())
             return false;
         impact();
         return  super.isBroken();
     }
 
-    public void impact(){
-        if(rnd.nextDouble() < STEEL_PROBABILITY){
+    public void impact() {
+        if(random.nextDouble() < STEEL_PROBABILITY) {
             super.impact();
         }
     }
-
 }

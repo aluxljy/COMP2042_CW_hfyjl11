@@ -9,6 +9,7 @@ import java.util.Random;
  * Created by filippo on 04/09/16.
  * Refactored by Looi Jie Ying on 03/12/21.
  */
+
 abstract public class Brick  {
     public static final int DEF_CRACK_DEPTH = 1;
     public static final int DEF_STEPS = 35;
@@ -18,6 +19,9 @@ abstract public class Brick  {
     public static final int LEFT_IMPACT = 300;
     public static final int RIGHT_IMPACT = 400;
 
+    /**
+     * called in Crack
+     */
     public Shape getBrickShape() {
         return brickShape;
     }
@@ -162,6 +166,9 @@ abstract public class Brick  {
         }
     }*/
 
+    /**
+     * random is for crack
+     */
     private static Random random;
 
     private String name;
@@ -177,7 +184,10 @@ abstract public class Brick  {
 
     // Brick constructor
     public Brick(String name,Point position,Dimension size,Color border,Color inner,int strength) {
-        random = new Random();  // probability of steel brick
+        /**
+         * random is for crack
+         */
+        random = new Random();
         broken = false;
         this.name = name;
         setBrickShape(makeBrickShape(position,size));
@@ -224,7 +234,7 @@ abstract public class Brick  {
         return broken;
     }
 
-    // repair the crack on cement brick
+    // repair the bricks
     public void repair() {
         broken = false;
         strength = fullStrength;  // revert strength back to full strength
@@ -235,7 +245,10 @@ abstract public class Brick  {
         broken = (strength == 0);  // if strength is 0 then broken is true
     }
 
-    public static Random getRnd() {
+    /**
+     * getRandom is for crack
+     */
+    public static Random getRandom() {
         return random;
     }
 }

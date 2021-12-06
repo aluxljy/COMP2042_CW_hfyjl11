@@ -91,6 +91,9 @@ abstract public class Ball {
         return inner;
     }
 
+    /**
+     * called in Player
+     */
     public Point2D getPosition() {
         return center;
     }
@@ -101,7 +104,6 @@ abstract public class Ball {
 
     /**
      * similar code with move()
-     *
      */
     public void moveTo(Point p) {
         center.setLocation(p);
@@ -115,8 +117,7 @@ abstract public class Ball {
     }
 
     /**
-     * same code just type is different
-     *
+     * same code inside Ball constructor just type is different
      */
     private void setPoints(double width,double height) {
         // set the top, bottom, left and right location of the ball
@@ -134,6 +135,9 @@ abstract public class Ball {
         return speedY;
     }
 
+    /**
+     * called in Brick
+     */
     public Point2D getUp() {
         return up;
     }
@@ -142,6 +146,9 @@ abstract public class Ball {
         this.up = up;
     }
 
+    /**
+     * called in Brick & Player
+     */
     public Point2D getDown() {
         return down;
     }
@@ -150,6 +157,9 @@ abstract public class Ball {
         this.down = down;
     }
 
+    /**
+     * called in Brick
+     */
     public Point2D getLeft() {
         return left;
     }
@@ -158,6 +168,9 @@ abstract public class Ball {
         this.left = left;
     }
 
+    /**
+     * called in Brick
+     */
     public Point2D getRight() {
         return right;
     }
