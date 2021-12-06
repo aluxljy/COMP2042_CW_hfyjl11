@@ -42,6 +42,8 @@ public class HomeMenu extends JComponent implements MouseListener, MouseMotionLi
     private static final int BORDER_SIZE = 5;
     private static final float[] DASHES = {12,6};
 
+    private static final double BUTTON_DISPLACEMENT = 35.0;
+
     private Rectangle menuShape;
     private Rectangle startButton;
     private Rectangle exitButton;
@@ -180,79 +182,44 @@ public class HomeMenu extends JComponent implements MouseListener, MouseMotionLi
         int x = (menuShape.width - startButton.width) / 2;  // align buttons from the right to the center
         int y = (int)((menuShape.height - startButton.height) * 0.6);  // move buttons from the bottom to the current position
 
-        startButton.setLocation(x,y);
-
-        x = (int)(startButton.getWidth() - startRectangleText.getWidth()) / 2;  // align start button text from the right to the center
-        y = (int)(startButton.getHeight() - startRectangleText.getHeight()) / 2;  // move start button text from the top to the middle
-
-        x += startButton.x;
-        y += startButton.y + (startButton.height * 0.9);
-
-        if(startClicked) {
-            Color tmp = g2d.getColor();
-            g2d.setColor(CLICKED_BUTTON_COLOR);
-            g2d.draw(startButton);
-            g2d.setColor(CLICKED_TEXT);
-            g2d.drawString(START_TEXT,x,y);
-            g2d.setColor(tmp);
-        }
-        else {
-            g2d.draw(startButton);
-            g2d.drawString(START_TEXT,x,y);
-        }
+        createButton(g2d,startButton,startRectangleText,startClicked,START_TEXT,x,y);
 
         x = startButton.x;
         y = startButton.y;
 
-        y += 35.0;
+        y += BUTTON_DISPLACEMENT;
 
-        exitButton.setLocation(x,y);
-
-        x = (int)(exitButton.getWidth() - exitRectangleText.getWidth()) / 2;
-        y = (int)(exitButton.getHeight() - exitRectangleText.getHeight()) / 2;
-
-        x += exitButton.x;
-        y += exitButton.y + (startButton.height * 0.9);
-
-        if(exitClicked) {
-            Color tmp = g2d.getColor();
-
-            g2d.setColor(CLICKED_BUTTON_COLOR);
-            g2d.draw(exitButton);
-            g2d.setColor(CLICKED_TEXT);
-            g2d.drawString(EXIT_TEXT,x,y);
-            g2d.setColor(tmp);
-        }
-        else {
-            g2d.draw(exitButton);
-            g2d.drawString(EXIT_TEXT,x,y);
-        }
+        createButton(g2d,exitButton,exitRectangleText,exitClicked,EXIT_TEXT,x,y);
 
         x = exitButton.x;
         y = exitButton.y;
 
-        y += 35.0;
+        y += BUTTON_DISPLACEMENT;
 
-        infoButton.setLocation(x,y);
+        createButton(g2d,infoButton,infoRectangleText,infoClicked,INFO_TEXT,x,y);
+    }
 
-        x = (int)(infoButton.getWidth() - infoRectangleText.getWidth()) / 2;
-        y = (int)(infoButton.getHeight() - infoRectangleText.getHeight()) / 2;
+    public void createButton(Graphics2D g2d, Rectangle button, Rectangle2D rectangleText, boolean buttonClicked, String BUTTON_TEXT, int x, int y) {
+        button.setLocation(x,y);
 
-        x += infoButton.x;
-        y += infoButton.y + (exitButton.height * 0.9);
+        x = (int)(button.getWidth() - rectangleText.getWidth()) / 2;
+        y = (int)(button.getHeight() - rectangleText.getHeight()) / 2;
 
-        if(infoClicked) {
+        x += button.x;
+        y += button.y + (button.height * 0.9);
+
+        if(buttonClicked) {
             Color tmp = g2d.getColor();
 
             g2d.setColor(CLICKED_BUTTON_COLOR);
-            g2d.draw(infoButton);
+            g2d.draw(button);
             g2d.setColor(CLICKED_TEXT);
-            g2d.drawString(INFO_TEXT,x,y);
+            g2d.drawString(BUTTON_TEXT,x,y);
             g2d.setColor(tmp);
         }
         else {
-            g2d.draw(infoButton);
-            g2d.drawString(INFO_TEXT,x,y);
+            g2d.draw(button);
+            g2d.drawString(BUTTON_TEXT,x,y);
         }
     }
 
