@@ -9,9 +9,9 @@ import java.awt.geom.Point2D;
  * Refactored by Looi Jie Ying on 03/12/21.
  */
 
-abstract public class Brick  {
-    public static final int DEF_CRACK_DEPTH = 1;
-    public static final int DEF_STEPS = 35;
+abstract public class Brick {
+    //public static final int DEF_CRACK_DEPTH = 1;
+    //public static final int DEF_STEPS = 35;
 
     public static final int UP_IMPACT = 100;
     public static final int DOWN_IMPACT = 200;

@@ -10,6 +10,9 @@ public class CementBrick extends Brick {
     private static final Color DEF_BORDER = new Color(217,199,175);
     private static final int CEMENT_STRENGTH = 2;
 
+    public static final int DEF_CRACK_DEPTH = 1;
+    public static final int DEF_STEPS = 35;
+
     private Crack crack;
     private Shape brickShape;
 
