@@ -169,7 +169,7 @@ abstract public class Brick  {
     /**
      * random is for crack
      */
-    private static Random random;
+    //private static Random random;
 
     private String name;
     private Shape brickShape;
@@ -187,7 +187,7 @@ abstract public class Brick  {
         /**
          * random is for crack
          */
-        random = new Random();
+        //random = new Random();
         broken = false;
         this.name = name;
         setBrickShape(makeBrickShape(position,size));
@@ -248,9 +248,9 @@ abstract public class Brick  {
     /**
      * getRandom is for crack
      */
-    public static Random getRandom() {
+    /*public static Random getRandom() {
         return random;
-    }
+    }*/
 }
 
 

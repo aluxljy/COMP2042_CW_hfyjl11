@@ -306,9 +306,9 @@ public class Wall {
                 out = new CementBrick(point, size);
                 break;
             default:
-                throw  new IllegalArgumentException(String.format("Unknown Type:%d\n",type));
+                throw new IllegalArgumentException(String.format("Unknown Type:%d\n",type));
         }
-        return  out;
+        return out;
     }
 
     public Brick[] getBricks() {

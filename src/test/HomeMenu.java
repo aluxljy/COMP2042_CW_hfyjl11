@@ -199,7 +199,7 @@ public class HomeMenu extends JComponent implements MouseListener, MouseMotionLi
         createButton(g2d,infoButton,infoRectangleText,infoClicked,INFO_TEXT,x,y);
     }
 
-    public void createButton(Graphics2D g2d, Rectangle button, Rectangle2D rectangleText, boolean buttonClicked, String BUTTON_TEXT, int x, int y) {
+    public void createButton(Graphics2D g2d,Rectangle button,Rectangle2D rectangleText,boolean buttonClicked,String BUTTON_TEXT,int x,int y) {
         button.setLocation(x,y);
 
         x = (int)(button.getWidth() - rectangleText.getWidth()) / 2;
