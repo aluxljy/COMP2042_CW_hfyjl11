@@ -3,7 +3,6 @@ package test;
 import java.awt.*;
 import java.awt.Point;
 import java.awt.geom.Point2D;
-import java.util.Random;
 
 /**
  * Created by filippo on 04/09/16.
@@ -166,9 +165,6 @@ abstract public class Brick  {
         }
     }*/
 
-    /**
-     * random is for crack
-     */
     //private static Random random;
 
     private String name;
@@ -184,9 +180,6 @@ abstract public class Brick  {
 
     // Brick constructor
     public Brick(String name,Point position,Dimension size,Color border,Color inner,int strength) {
-        /**
-         * random is for crack
-         */
         //random = new Random();
         broken = false;
         this.name = name;
@@ -230,7 +223,7 @@ abstract public class Brick  {
         return output;
     }
 
-    public final boolean isBroken(){
+    public final boolean isBroken() {
         return broken;
     }
 
@@ -240,14 +233,11 @@ abstract public class Brick  {
         strength = fullStrength;  // revert strength back to full strength
     }
 
-    public void impact(){
+    public void impact() {
         strength--;  // decrease strength of brick
         broken = (strength == 0);  // if strength is 0 then broken is true
     }
 
-    /**
-     * getRandom is for crack
-     */
     /*public static Random getRandom() {
         return random;
     }*/
