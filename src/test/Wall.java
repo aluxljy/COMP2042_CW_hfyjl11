@@ -26,9 +26,13 @@ public class Wall {
 
     private static final int LEVELS_COUNT = 5;
 
-    private static final int CLAY = 1;
+    /*private static final int CLAY = 1;
     private static final int STEEL = 2;
-    private static final int CEMENT = 3;
+    private static final int CEMENT = 3;*/
+
+    private static final String CLAY = "CLAYBRICK";
+    private static final String STEEL = "STEELBRICK";
+    private static final String CEMENT = "CEMENTBRICK";
 
     private Random rnd;
     private Rectangle area;
@@ -293,7 +297,7 @@ public class Wall {
         ballCount = 3;
     }
 
-    public static Brick makeBrick(Point point, Dimension size, int type){
+    /*public static Brick makeBrick(Point point, Dimension size, int type){
         Brick out;
         switch(type){
             case CLAY:
@@ -309,7 +313,7 @@ public class Wall {
                 throw new IllegalArgumentException(String.format("Unknown Type:%d\n",type));
         }
         return out;
-    }
+    }*/
 
     public Brick[] getBricks() {
         return bricks;
