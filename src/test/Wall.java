@@ -21,14 +21,14 @@ import java.awt.*;
 import java.awt.geom.Point2D;
 import java.util.Random;
 
-
 public class Wall {
-
     private static final int LEVELS_COUNT = 5;
 
     /*private static final int CLAY = 1;
     private static final int STEEL = 2;
     private static final int CEMENT = 3;*/
+
+    private static final String RUBBER = "RUBBERBALL";
 
     private static final String CLAY = "CLAYBRICK";
     private static final String STEEL = "STEELBRICK";
@@ -50,7 +50,6 @@ public class Wall {
     private boolean ballLost;
 
     public Wall(Rectangle drawArea, int brickCount, int lineCount, double brickDimensionRatio, Point ballPos){
-
         this.startPoint = new Point(ballPos);
 
         levels = makeLevels(drawArea,brickCount,lineCount,brickDimensionRatio);
@@ -61,8 +60,12 @@ public class Wall {
 
         rnd = new Random();
 
-        makeBall(ballPos);
+        //createBall(ballPos);
+        BallFactory ballFactory = new BallFactory();
+        setBall(ballFactory.makeBall(RUBBER,ballPos));
+
         int speedX,speedY;
+
         do{
             speedX = rnd.nextInt(5) - 2;
         }while(speedX == 0);
@@ -75,8 +78,6 @@ public class Wall {
         setPlayer(new Player((Point) ballPos.clone(),150,10, drawArea));
 
         area = drawArea;
-
-
     }
 
 
@@ -165,9 +166,10 @@ public class Wall {
         return tmp;
     }*/
 
-    private void makeBall(Point2D ballPos){
-        setBall(new RubberBall(ballPos));
-    }
+    /*private void createBall(Point2D ballPos){
+        BallFactory ballFactory = new BallFactory();
+        setBall(ballFactory.makeBall(RUBBER,ballPos));
+    }*/
 
     private Brick[][] makeLevels(Rectangle drawArea,int brickCount,int lineCount,double brickDimensionRatio){
         Brick[][] tmp = new Brick[LEVELS_COUNT][];

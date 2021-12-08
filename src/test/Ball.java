@@ -48,7 +48,7 @@ abstract public class Ball {
         speedY = 0;
     }
 
-    protected abstract Shape makeBallShape(Point2D center, int radiusA, int radiusB);
+    protected abstract Shape makeBallShape(Point2D center,int radiusA,int radiusB);
 
     public void move() {
         RectangularShape tempBallShape = (RectangularShape) ballShape;  // type cast ballShape to RectangularShape
@@ -178,4 +178,5 @@ abstract public class Ball {
     public void setRight(Point2D right) {
         this.right = right;
     }
+
 }
