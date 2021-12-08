@@ -51,7 +51,7 @@ public class CementBrick extends Brick {
      * called in GameBoard
      */
    @Override
-    public Shape getBrick() {
+    public Shape getBrickShape() {
         return this.brickShape;
     }
 

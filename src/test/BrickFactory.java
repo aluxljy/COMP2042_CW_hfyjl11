@@ -7,7 +7,7 @@ public class BrickFactory {
      * called in Level
      */
     public Brick makeBrick(String brickType, Point point, Dimension size) {
-        if(brickType == null){
+        if(brickType == null) {
             return null;
         }
         if(brickType.equalsIgnoreCase("CLAYBRICK")) {

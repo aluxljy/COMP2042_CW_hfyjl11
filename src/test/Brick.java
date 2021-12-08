@@ -211,13 +211,6 @@ abstract public class Brick {
     /**
      * called in GameBoard
      */
-    public Shape getBrick() {
-        return brickShape;
-    }
-
-    /**
-     * called in GameBoard
-     */
     public Color getBorderColor() {
         return border;
     }

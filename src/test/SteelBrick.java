@@ -29,7 +29,7 @@ public class SteelBrick extends Brick {
     private static final double STEEL_PROBABILITY = 0.4;
 
     private Random random;
-    private Shape brickShape;
+    //private Shape brickShape;
 
     /**
      * called in BrickFactory
@@ -38,7 +38,7 @@ public class SteelBrick extends Brick {
     public SteelBrick(Point position, Dimension size) {
         super(NAME,position,size,DEF_BORDER,DEF_INNER,STEEL_STRENGTH);
         random = new Random();
-        brickShape = super.getBrickShape();
+        //brickShape = super.getBrickShape();
     }
 
     /*@Override
