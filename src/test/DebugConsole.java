@@ -22,32 +22,35 @@ import java.awt.*;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 
-public class DebugConsole extends JDialog implements WindowListener{
-
+public class DebugConsole extends JDialog implements WindowListener {
     private static final String TITLE = "Debug Console";
-
 
     private JFrame owner;
     private DebugPanel debugPanel;
     private GameBoard gameBoard;
     private Wall wall;
 
-
-    public DebugConsole(JFrame owner,Wall wall,GameBoard gameBoard){
-
+    /**
+     * View
+     */
+    // DebugConsole constructor
+    public DebugConsole(JFrame owner,Wall wall,GameBoard gameBoard) {
         this.wall = wall;
         this.owner = owner;
         this.gameBoard = gameBoard;
+
         initialize();
 
         debugPanel = new DebugPanel(wall);
         this.add(debugPanel,BorderLayout.CENTER);
 
-
         this.pack();
     }
 
-    private void initialize(){
+    /**
+     * View
+     */
+    private void initialize() {
         this.setModal(true);
         this.setTitle(TITLE);
         this.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
@@ -56,19 +59,23 @@ public class DebugConsole extends JDialog implements WindowListener{
         this.setFocusable(true);
     }
 
-
-    private void setLocation(){
+    /**
+     * NOT SURE
+     */
+    private void setLocation() {
         int x = ((owner.getWidth() - this.getWidth()) / 2) + owner.getX();
         int y = ((owner.getHeight() - this.getHeight()) / 2) + owner.getY();
         this.setLocation(x,y);
     }
-
 
     @Override
     public void windowOpened(WindowEvent windowEvent) {
 
     }
 
+    /**
+     * Controller
+     */
     @Override
     public void windowClosing(WindowEvent windowEvent) {
         gameBoard.repaint();
@@ -89,6 +96,9 @@ public class DebugConsole extends JDialog implements WindowListener{
 
     }
 
+    /**
+     * Controller
+     */
     @Override
     public void windowActivated(WindowEvent windowEvent) {
         setLocation();

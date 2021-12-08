@@ -63,6 +63,10 @@ public class HomeMenu extends JComponent implements MouseListener, MouseMotionLi
     private boolean exitClicked;
     private boolean infoClicked;
 
+    /**
+     * View
+     */
+    // HomeMenu constructor
     public HomeMenu(GameFrame owner,Dimension area) {
         this.setFocusable(true);
         this.requestFocusInWindow();
@@ -89,10 +93,16 @@ public class HomeMenu extends JComponent implements MouseListener, MouseMotionLi
         buttonFont = new Font("Monospaced",Font.PLAIN,startButton.height-2);
     }
 
+    /**
+     * View
+     */
     public void paint(Graphics g) {
         drawMenu((Graphics2D)g);
     }
 
+    /**
+     * View
+     */
     public void drawMenu(Graphics2D g2d) {
         drawContainer(g2d);
 
@@ -119,6 +129,9 @@ public class HomeMenu extends JComponent implements MouseListener, MouseMotionLi
         g2d.setColor(prevColor);
     }
 
+    /**
+     * View
+     */
     private void drawContainer(Graphics2D g2d) {
         Color prev = g2d.getColor();
 
@@ -140,6 +153,9 @@ public class HomeMenu extends JComponent implements MouseListener, MouseMotionLi
         g2d.setColor(prev);
     }
 
+    /**
+     * View
+     */
     private void drawText(Graphics2D g2d) {
         g2d.setColor(TEXT_COLOR);
 
@@ -170,6 +186,9 @@ public class HomeMenu extends JComponent implements MouseListener, MouseMotionLi
         g2d.drawString(CREDITS,sX,sY);
     }
 
+    /**
+     * View
+     */
     private void drawButton(Graphics2D g2d) {
         FontRenderContext frc = g2d.getFontRenderContext();
 
@@ -199,6 +218,9 @@ public class HomeMenu extends JComponent implements MouseListener, MouseMotionLi
         createButton(g2d,infoButton,infoRectangleText,infoClicked,INFO_TEXT,x,y);
     }
 
+    /**
+     * View
+     */
     public void createButton(Graphics2D g2d,Rectangle button,Rectangle2D rectangleText,boolean buttonClicked,String BUTTON_TEXT,int x,int y) {
         button.setLocation(x,y);
 
@@ -223,6 +245,9 @@ public class HomeMenu extends JComponent implements MouseListener, MouseMotionLi
         }
     }
 
+    /**
+     * Controller
+     */
     @Override
     public void mouseClicked(MouseEvent mouseEvent) {
         Point p = mouseEvent.getPoint();
@@ -238,6 +263,9 @@ public class HomeMenu extends JComponent implements MouseListener, MouseMotionLi
         }
     }
 
+    /**
+     * Controller
+     */
     @Override
     public void mousePressed(MouseEvent mouseEvent) {
         Point p = mouseEvent.getPoint();
@@ -255,6 +283,9 @@ public class HomeMenu extends JComponent implements MouseListener, MouseMotionLi
         }
     }
 
+    /**
+     * Controller
+     */
     @Override
     public void mouseReleased(MouseEvent mouseEvent) {
         if(startClicked) {
@@ -287,6 +318,9 @@ public class HomeMenu extends JComponent implements MouseListener, MouseMotionLi
 
     }
 
+    /**
+     * Controller
+     */
     @Override
     public void mouseMoved(MouseEvent mouseEvent) {
         Point p = mouseEvent.getPoint();
