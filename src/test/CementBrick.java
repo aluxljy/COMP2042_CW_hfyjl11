@@ -16,6 +16,9 @@ public class CementBrick extends Brick {
     private Crack crack;
     private Shape brickShape;
 
+    /**
+     * called in BrickFactory
+     */
     // CementBrick constructor
     public CementBrick(Point position,Dimension size) {
         super(NAME,position,size,DEF_BORDER,DEF_INNER,CEMENT_STRENGTH);
@@ -23,17 +26,20 @@ public class CementBrick extends Brick {
         brickShape = super.getBrickShape();
     }
 
-    @Override
+   /* @Override
     protected Shape makeBrickShape(Point position,Dimension size) {
         return new Rectangle(position,size);
     }
-
+*/
+    /**
+     * called in Wall
+     */
     @Override
     public boolean setImpact(Point2D point,int direction) {
-        if(super.isBroken())
+        if(super.getBroken())
             return false;  // if broken then do not set impact
         super.impact();
-        if(!super.isBroken()) {
+        if(!super.getBroken()) {
             crack.makeCrack(point,direction);  // if not broken then add crack on cement brick
             updateBrick();
             return false;
@@ -41,19 +47,25 @@ public class CementBrick extends Brick {
         return true;
     }
 
-    @Override
+    /**
+     * called in GameBoard
+     */
+   @Override
     public Shape getBrick() {
-        return brickShape;
+        return this.brickShape;
     }
 
     private void updateBrick() {
-        if(!super.isBroken()) {
+        if(!super.getBroken()) {
             GeneralPath output = crack.draw();  // draw the crack path
             output.append(super.getBrickShape(),false);
             brickShape = output;
         }
     }
 
+    /**
+     * called in Wall
+     */
     public void repair() {
         super.repair();
         crack.reset();  // remove crack path

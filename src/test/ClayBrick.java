@@ -14,18 +14,21 @@ public class ClayBrick extends Brick {
     private static final Color DEF_BORDER = Color.GRAY;
     private static final int CLAY_STRENGTH = 1;
 
+    /**
+     * called in BrickFactory
+     */
     // ClayBrick constructor
     public ClayBrick(Point position, Dimension size) {
         super(NAME,position,size,DEF_BORDER,DEF_INNER,CLAY_STRENGTH);
     }
 
-    @Override
+    /*@Override
     protected Shape makeBrickShape(Point position,Dimension size) {
         return new Rectangle(position,size);
-    }
+    }*/
 
-    @Override
+   /* @Override
     public Shape getBrick() {
         return super.getBrickShape();
-    }
+    }*/
 }

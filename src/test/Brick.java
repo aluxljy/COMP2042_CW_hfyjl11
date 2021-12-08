@@ -25,7 +25,8 @@ abstract public class Brick {
         return brickShape;
     }
 
-    public void setBrickShape(Shape brickShape) {
+    // changed from public method to private method
+    private void setBrickShape(Shape brickShape) {
         this.brickShape = brickShape;
     }
 
@@ -189,8 +190,15 @@ abstract public class Brick {
         this.fullStrength = this.strength = strength;  // strength of brick
     }
 
-    protected abstract Shape makeBrickShape(Point position,Dimension size);
+    //protected abstract Shape makeBrickShape(Point position,Dimension size);
+    // changed from protected abstract method to private concrete method
+    private Shape makeBrickShape(Point position,Dimension size) {
+        return new Rectangle(position,size);
+    }
 
+    /**
+     * called in Wall
+     */
     public boolean setImpact(Point2D point,int direction) {
         if(broken)
             return false;  // if broken then do not set impact
@@ -198,16 +206,32 @@ abstract public class Brick {
         return broken;  // broken can be true or false
     }
 
-    public abstract Shape getBrick();
+    //public abstract Shape getBrick();
 
-    public Color getBorderColor() {
-        return  border;
+    /**
+     * called in GameBoard
+     */
+    public Shape getBrick() {
+        return brickShape;
     }
 
+    /**
+     * called in GameBoard
+     */
+    public Color getBorderColor() {
+        return border;
+    }
+
+    /**
+     * called in GameBoard
+     */
     public Color getInnerColor() {
         return inner;
     }
 
+    /**
+     * called in Wall
+     */
     public final int findImpact(Ball ball) {
         if(broken)
             return 0;  // if broken then no rebound
@@ -223,10 +247,19 @@ abstract public class Brick {
         return output;
     }
 
-    public final boolean isBroken() {
+    /*public final boolean isBroken() {
+        return broken;
+    }*/
+    /**
+     * called in GameBoard
+     */
+    public boolean getBroken() {
         return broken;
     }
 
+    /**
+     * called in Wall
+     */
     // repair the bricks
     public void repair() {
         broken = false;

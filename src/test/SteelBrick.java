@@ -31,6 +31,9 @@ public class SteelBrick extends Brick {
     private Random random;
     private Shape brickShape;
 
+    /**
+     * called in BrickFactory
+     */
     // SteelBrick constructor
     public SteelBrick(Point position, Dimension size) {
         super(NAME,position,size,DEF_BORDER,DEF_INNER,STEEL_STRENGTH);
@@ -38,15 +41,15 @@ public class SteelBrick extends Brick {
         brickShape = super.getBrickShape();
     }
 
-    @Override
+    /*@Override
     protected Shape makeBrickShape(Point position,Dimension size) {
         return new Rectangle(position,size);
-    }
+    }*/
 
-    @Override
+   /* @Override
     public Shape getBrick() {
         return brickShape;
-    }
+    }*/
 
     /*public boolean setImpact(Point2D point,int direction) {
         if(super.isBroken())
@@ -55,6 +58,7 @@ public class SteelBrick extends Brick {
         return super.isBroken();
     }*/
 
+    @Override
     public void impact() {
         if(random.nextDouble() < STEEL_PROBABILITY) {
             super.impact();  // if random is less than STEEL_PROBABILITY then call parent impact, else do nothing (steel brick does not break)
