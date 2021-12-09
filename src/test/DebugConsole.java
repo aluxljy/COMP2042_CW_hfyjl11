@@ -31,7 +31,7 @@ public class DebugConsole extends JDialog implements WindowListener {
     private Wall wall;
 
     /**
-     * View
+     * Controller
      */
     // DebugConsole constructor
     public DebugConsole(JFrame owner,Wall wall,GameBoard gameBoard) {
@@ -48,7 +48,7 @@ public class DebugConsole extends JDialog implements WindowListener {
     }
 
     /**
-     * View
+     * Controller
      */
     private void initialize() {
         this.setModal(true);

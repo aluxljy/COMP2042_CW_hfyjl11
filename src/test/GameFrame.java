@@ -53,7 +53,7 @@ public class GameFrame extends JFrame implements WindowFocusListener {
     }
 
     /**
-     * View
+     * Controller
      */
     public void initialize() {
         this.setTitle(DEF_TITLE);
@@ -65,7 +65,7 @@ public class GameFrame extends JFrame implements WindowFocusListener {
     }
 
     /**
-     * View
+     * Controller
      */
     public void enableGameBoard() {
         this.dispose();

@@ -34,7 +34,7 @@ public class DebugPanel extends JPanel {
     private Wall wall;
 
     /**
-     * View
+     * Controller
      */
     //DebugPanel constructor
     public DebugPanel(Wall wall) {
@@ -56,7 +56,7 @@ public class DebugPanel extends JPanel {
     }
 
     /**
-     * View
+     * Controller
      */
     private void initialize(){
         this.setBackground(DEF_BKG);

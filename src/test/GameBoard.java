@@ -102,7 +102,7 @@ public class GameBoard extends JComponent implements KeyListener,MouseListener,M
     }
 
     /**
-     * View
+     * Controller
      */
     private void initialize() {
         this.setPreferredSize(new Dimension(DEF_WIDTH,DEF_HEIGHT));
