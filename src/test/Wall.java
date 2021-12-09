@@ -187,7 +187,7 @@ public class Wall {
     }
 
     public void findImpacts(){
-        if(getPlayer().impact(getBall())){
+        if(getPlayer().impactWithBall(getBall())){
             getBall().reverseY();
         }
         else if(impactWall()){
@@ -199,10 +199,10 @@ public class Wall {
         else if(impactBorder()) {
             getBall().reverseX();
         }
-        else if(getBall().getPosition().getY() < area.getY()){
+        else if(getBall().getBallPosition().getY() < area.getY()){
             getBall().reverseY();
         }
-        else if(getBall().getPosition().getY() > area.getY() + area.getHeight()){
+        else if(getBall().getBallPosition().getY() > area.getY() + area.getHeight()){
             ballCount--;
             ballLost = true;
         }
@@ -211,20 +211,20 @@ public class Wall {
     private boolean impactWall(){
         for(Brick brick : getBricks()){
             switch(brick.findImpact(getBall())) {
-                //Vertical Impact
+                //Vertical impact
                 case Brick.UP_IMPACT:
-                    getBall().reverseY();
+                    getBall().reverseY();  // if the bottom side of the ball hits the top side of the brick, then ball rebounds upwards
                     return brick.setImpact(getBall().getDown(),Crack.UP);
                 case Brick.DOWN_IMPACT:
-                    getBall().reverseY();
+                    getBall().reverseY();  // if the top side of the ball hits the bottom side of the brick, then ball rebounds downwards
                     return brick.setImpact(getBall().getUp(),Crack.DOWN);
 
-                //Horizontal Impact
+                //Horizontal impact
                 case Brick.LEFT_IMPACT:
-                    getBall().reverseX();
+                    getBall().reverseX();  // if the right side of the ball hits the left side of the brick, then ball rebounds to the left
                     return brick.setImpact(getBall().getRight(),Crack.RIGHT);
                 case Brick.RIGHT_IMPACT:
-                    getBall().reverseX();
+                    getBall().reverseX();  // if the left side of the ball hits the right side of the brick, then ball rebounds to the right
                     return brick.setImpact(getBall().getLeft(),Crack.LEFT);
             }
         }
@@ -232,7 +232,7 @@ public class Wall {
     }
 
     private boolean impactBorder(){
-        Point2D point = getBall().getPosition();
+        Point2D point = getBall().getBallPosition();
         return ((point.getX() < area.getX()) ||(point.getX() > (area.getX() + area.getWidth())));
     }
 
@@ -287,10 +287,16 @@ public class Wall {
         return level < levels.length;
     }
 
+    /**
+     * called in DebugPanel
+     */
     public void setBallXSpeed(int speed){
         getBall().setSpeedX(speed);
     }
 
+    /**
+     * called in DebugPanel
+     */
     public void setBallYSpeed(int speed){
         getBall().setSpeedY(speed);
     }

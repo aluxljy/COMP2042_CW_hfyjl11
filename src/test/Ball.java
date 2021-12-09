@@ -50,9 +50,13 @@ abstract public class Ball {
 
     protected abstract Shape makeBallShape(Point2D center,int radiusA,int radiusB);
 
+    /**
+     * called in Wall
+     */
     public void move() {
-        RectangularShape tempBallShape = (RectangularShape) ballShape;  // type cast ballShape to RectangularShape
         center.setLocation((center.getX() + speedX),(center.getY() + speedY));  // move center with axis-X and axis-Y speed
+
+        RectangularShape tempBallShape = (RectangularShape) ballShape;  // type cast ballShape to RectangularShape
         double width = tempBallShape.getWidth();  // get width of rectangle
         double height = tempBallShape.getHeight();  // get height of rectangle
 
@@ -62,51 +66,76 @@ abstract public class Ball {
         ballShape = tempBallShape;
     }
 
+    /**
+     * called in Wall
+     */
     public void setSpeed(int x,int y) {
         speedX = x;
         speedY = y;
     }
 
-    public void setSpeedX(int s) {
-        speedX = s;
+    /**
+     * called in Wall
+     */
+    public void setSpeedX(int speed) {
+        speedX = speed;
     }
 
-    public void setSpeedY(int s) {
-        speedY = s;
+    /**
+     * called in Wall
+     */
+    public void setSpeedY(int speed) {
+        speedY = speed;
     }
 
+    /**
+     * called in Wall
+     */
     public void reverseX() {
         speedX *= -1;
     }
 
+    /**
+     * called in Wall
+     */
     public void reverseY() {
         speedY *= -1;
     }
 
+    /**
+     * called in GameBoard
+     */
     public Color getBorderColor() {
         return border;
     }
 
+    /**
+     * called in GameBoard
+     */
     public Color getInnerColor() {
         return inner;
     }
 
     /**
-     * called in Player
+     * called in Player & Wall
      */
-    public Point2D getPosition() {
+    public Point2D getBallPosition() {
         return center;
     }
 
+    /**
+     * called in GameBoard
+     */
     public Shape getBallShape() {
         return ballShape;
     }
 
     /**
      * similar code with move()
+     * called in Wall
      */
-    public void moveTo(Point p) {
-        center.setLocation(p);
+    public void moveTo(Point position) {
+        center.setLocation(position);
 
         RectangularShape tempBallShape = (RectangularShape) ballShape;
         double width = tempBallShape.getWidth();
@@ -116,9 +145,6 @@ abstract public class Ball {
         ballShape = tempBallShape;
     }
 
-    /**
-     * same code inside Ball constructor just type is different
-     */
     private void setPoints(double width,double height) {
         // set the top, bottom, left and right location of the ball
         getUp().setLocation(center.getX(),center.getY() - (height / 2));
@@ -127,16 +153,22 @@ abstract public class Ball {
         getRight().setLocation(center.getX() + (width / 2),center.getY());
     }
 
+    /**
+     * called in DebugConsole
+     */
     public int getSpeedX() {
         return speedX;
     }
 
+    /**
+     * called in DebugConsole
+     */
     public int getSpeedY() {
         return speedY;
     }
 
     /**
-     * called in Brick
+     * called in Brick & Wall
      */
     public Point2D getUp() {
         return up;
@@ -147,7 +179,7 @@ abstract public class Ball {
     }
 
     /**
-     * called in Brick & Player
+     * called in Brick, Player & Wall
      */
     public Point2D getDown() {
         return down;
@@ -158,7 +190,7 @@ abstract public class Ball {
     }
 
     /**
-     * called in Brick
+     * called in Brick & Wall
      */
     public Point2D getLeft() {
         return left;
@@ -169,7 +201,7 @@ abstract public class Ball {
     }
 
     /**
-     * called in Brick
+     * called in Brick & Wall
      */
     public Point2D getRight() {
         return right;

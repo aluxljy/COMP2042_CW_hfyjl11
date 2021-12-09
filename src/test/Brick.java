@@ -227,16 +227,16 @@ abstract public class Brick {
      */
     public final int findImpact(Ball ball) {
         if(broken)
-            return 0;  // if broken then no rebound
+            return 0;  // if broken then no impact
         int output  = 0;
         if(getBrickShape().contains(ball.getRight()))
-            output = LEFT_IMPACT;  // if the right side of the ball hits the brick, then ball rebounds to the left
+            output = LEFT_IMPACT;  // if the right side of the ball hits the brick, then brick receives left impact
         else if(getBrickShape().contains(ball.getLeft()))
-            output = RIGHT_IMPACT;  // if the left side of the ball hits the brick, then ball rebounds to the right
+            output = RIGHT_IMPACT;  // if the left side of the ball hits the brick, then brick receives right impact
         else if(getBrickShape().contains(ball.getUp()))
-            output = DOWN_IMPACT;  // if the top side of the ball hits the brick, then ball rebounds downwards
+            output = DOWN_IMPACT;  // if the top side of the ball hits the brick, then brick receives down impact
         else if(getBrickShape().contains(ball.getDown()))
-            output = UP_IMPACT;  // if the bottom side of the ball hits the brick, then ball rebounds upwards
+            output = UP_IMPACT;  // if the bottom side of the ball hits the brick, then brick receives up impact
         return output;
     }
 

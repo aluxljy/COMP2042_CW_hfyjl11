@@ -46,8 +46,11 @@ public class Player {
         return new Rectangle(point,new Dimension(width,height));
     }
 
-    public boolean impact(Ball ball){
-        return playerShape.contains(ball.getPosition()) && playerShape.contains(ball.getDown()) ;
+    /**
+     * called in Wall
+     */
+    public boolean impactWithBall(Ball ball){
+        return playerShape.contains(ball.getBallPosition()) && playerShape.contains(ball.getDown()) ;
     }
 
     public void move(){
