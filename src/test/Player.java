@@ -19,24 +19,21 @@ package test;
 
 import java.awt.*;
 
-
 public class Player {
-
-
     public static final Color BORDER_COLOR = Color.GREEN.darker().darker();
     public static final Color INNER_COLOR = Color.GREEN;
 
     private static final int DEF_MOVE_AMOUNT = 5;
 
     private Rectangle playerShape;
-    private Point ballPoint;
+    private Point ballPosition;
     private int moveAmount;
     private int min;
     private int max;
 
 
-    public Player(Point ballPoint,int width,int height,Rectangle container) {
-        this.ballPoint = ballPoint;
+    public Player(Point ballPosition,int width,int height,Rectangle container) {
+        this.ballPosition = ballPosition;
         moveAmount = 0;
         playerShape = makeRectangle(width, height);
         min = container.x + (width / 2);
@@ -45,20 +42,20 @@ public class Player {
     }
 
     private Rectangle makeRectangle(int width,int height){
-        Point p = new Point((int)(ballPoint.getX() - (width / 2)),(int)ballPoint.getY());
-        return  new Rectangle(p,new Dimension(width,height));
+        Point point = new Point((int)(ballPosition.getX() - (width / 2)),(int) ballPosition.getY());
+        return new Rectangle(point,new Dimension(width,height));
     }
 
-    public boolean impact(Ball b){
-        return playerShape.contains(b.getPosition()) && playerShape.contains(b.getDown()) ;
+    public boolean impact(Ball ball){
+        return playerShape.contains(ball.getPosition()) && playerShape.contains(ball.getDown()) ;
     }
 
     public void move(){
-        double x = ballPoint.getX() + moveAmount;
+        double x = ballPosition.getX() + moveAmount;
         if(x < min || x > max)
             return;
-        ballPoint.setLocation(x,ballPoint.getY());
-        playerShape.setLocation(ballPoint.x - (int) playerShape.getWidth()/2,ballPoint.y);
+        ballPosition.setLocation(x, ballPosition.getY());
+        playerShape.setLocation(ballPosition.x - (int) playerShape.getWidth() / 2, ballPosition.y);
     }
 
     public void moveLeft(){
@@ -73,12 +70,12 @@ public class Player {
         moveAmount = 0;
     }
 
-    public Shape getPlayerFace(){
+    public Shape getPlayerShape(){
         return playerShape;
     }
 
-    public void moveTo(Point p){
-        ballPoint.setLocation(p);
-        playerShape.setLocation(ballPoint.x - (int) playerShape.getWidth()/2,ballPoint.y);
+    public void moveTo(Point point){
+        ballPosition.setLocation(point);
+        playerShape.setLocation(ballPosition.x - (int) playerShape.getWidth() / 2, ballPosition.y);
     }
 }

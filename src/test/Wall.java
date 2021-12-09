@@ -34,7 +34,7 @@ public class Wall {
     private static final String STEEL = "STEELBRICK";
     private static final String CEMENT = "CEMENTBRICK";
 
-    private Random rnd;
+    private Random random;
     private Rectangle area;
 
     private Brick[] bricks;
@@ -49,8 +49,8 @@ public class Wall {
     private int ballCount;
     private boolean ballLost;
 
-    public Wall(Rectangle drawArea, int brickCount, int lineCount, double brickDimensionRatio, Point ballPos){
-        this.startPoint = new Point(ballPos);
+    public Wall(Rectangle drawArea, int brickCount, int lineCount, double brickDimensionRatio, Point ballPosition){
+        this.startPoint = new Point(ballPosition);
 
         levels = makeLevels(drawArea,brickCount,lineCount,brickDimensionRatio);
         level = 0;
@@ -58,24 +58,24 @@ public class Wall {
         ballCount = 3;
         ballLost = false;
 
-        rnd = new Random();
+        random = new Random();
 
-        //createBall(ballPos);
+        //createBall(ballPosition);
         BallFactory ballFactory = new BallFactory();
-        setBall(ballFactory.makeBall(RUBBER,ballPos));
+        setBall(ballFactory.makeBall(RUBBER,ballPosition));
 
         int speedX,speedY;
 
         do{
-            speedX = rnd.nextInt(5) - 2;
+            speedX = random.nextInt(5) - 2;
         }while(speedX == 0);
         do{
-            speedY = -rnd.nextInt(3);
+            speedY = -random.nextInt(3);
         }while(speedY == 0);
 
         getBall().setSpeed(speedX,speedY);
 
-        setPlayer(new Player((Point) ballPos.clone(),150,10, drawArea));
+        setPlayer(new Player((Point) ballPosition.clone(),150,10, drawArea));
 
         area = drawArea;
     }
@@ -209,31 +209,31 @@ public class Wall {
     }
 
     private boolean impactWall(){
-        for(Brick b : getBricks()){
-            switch(b.findImpact(getBall())) {
+        for(Brick brick : getBricks()){
+            switch(brick.findImpact(getBall())) {
                 //Vertical Impact
                 case Brick.UP_IMPACT:
                     getBall().reverseY();
-                    return b.setImpact(getBall().getDown(),Crack.UP);
+                    return brick.setImpact(getBall().getDown(),Crack.UP);
                 case Brick.DOWN_IMPACT:
                     getBall().reverseY();
-                    return b.setImpact(getBall().getUp(),Crack.DOWN);
+                    return brick.setImpact(getBall().getUp(),Crack.DOWN);
 
                 //Horizontal Impact
                 case Brick.LEFT_IMPACT:
                     getBall().reverseX();
-                    return b.setImpact(getBall().getRight(),Crack.RIGHT);
+                    return brick.setImpact(getBall().getRight(),Crack.RIGHT);
                 case Brick.RIGHT_IMPACT:
                     getBall().reverseX();
-                    return b.setImpact(getBall().getLeft(),Crack.LEFT);
+                    return brick.setImpact(getBall().getLeft(),Crack.LEFT);
             }
         }
         return false;
     }
 
     private boolean impactBorder(){
-        Point2D p = getBall().getPosition();
-        return ((p.getX() < area.getX()) ||(p.getX() > (area.getX() + area.getWidth())));
+        Point2D point = getBall().getPosition();
+        return ((point.getX() < area.getX()) ||(point.getX() > (area.getX() + area.getWidth())));
     }
 
     public int getBrickCount(){
@@ -253,10 +253,10 @@ public class Wall {
         getBall().moveTo(startPoint);
         int speedX,speedY;
         do{
-            speedX = rnd.nextInt(5) - 2;
+            speedX = random.nextInt(5) - 2;
         }while(speedX == 0);
         do{
-            speedY = -rnd.nextInt(3);
+            speedY = -random.nextInt(3);
         }while(speedY == 0);
 
         getBall().setSpeed(speedX,speedY);
@@ -264,8 +264,8 @@ public class Wall {
     }
 
     public void wallReset(){
-        for(Brick b : getBricks())
-            b.repair();
+        for(Brick brick : getBricks())
+            brick.repair();
         brickCount = getBricks().length;
         ballCount = 3;
     }
@@ -287,12 +287,12 @@ public class Wall {
         return level < levels.length;
     }
 
-    public void setBallXSpeed(int s){
-        getBall().setSpeedX(s);
+    public void setBallXSpeed(int speed){
+        getBall().setSpeedX(speed);
     }
 
-    public void setBallYSpeed(int s){
-        getBall().setSpeedY(s);
+    public void setBallYSpeed(int speed){
+        getBall().setSpeedY(speed);
     }
 
     public void resetBallCount(){

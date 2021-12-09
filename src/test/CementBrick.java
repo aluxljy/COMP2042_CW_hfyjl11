@@ -66,6 +66,7 @@ public class CementBrick extends Brick {
     /**
      * called in Wall
      */
+    @Override
     public void repair() {
         super.repair();
         crack.reset();  // remove crack path

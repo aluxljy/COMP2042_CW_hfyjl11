@@ -45,10 +45,10 @@ public class GameBoard extends JComponent implements KeyListener,MouseListener,M
 
     private Font menuFont;
 
-    private Rectangle continueButtonRect;
-    private Rectangle exitButtonRect;
-    private Rectangle restartButtonRect;
-    private int strLen;
+    private Rectangle continueButtonRectangle;
+    private Rectangle exitButtonRectangle;
+    private Rectangle restartButtonRectangle;
+    private int stringLength;
 
     private DebugConsole debugConsole;
 
@@ -59,7 +59,7 @@ public class GameBoard extends JComponent implements KeyListener,MouseListener,M
     public GameBoard(JFrame owner) {
         super();
 
-        strLen = 0;
+        stringLength = 0;
         showPauseMenu = false;
 
         menuFont = new Font("Monospaced",Font.PLAIN,TEXT_SIZE);
@@ -126,9 +126,9 @@ public class GameBoard extends JComponent implements KeyListener,MouseListener,M
 
         drawBall(wall.getBall(),g2d);
 
-        for(Brick b : wall.getBricks())
-            if(!b.getBroken())
-                drawBrick(b,g2d);
+        for(Brick brick : wall.getBricks())
+            if(!brick.getBroken())
+                drawBrick(brick,g2d);
 
         drawPlayer(wall.getPlayer(),g2d);
 
@@ -169,13 +169,13 @@ public class GameBoard extends JComponent implements KeyListener,MouseListener,M
     private void drawBall(Ball ball,Graphics2D g2d) {
         Color tmp = g2d.getColor();
 
-        Shape s = ball.getBallShape();
+        Shape shape = ball.getBallShape();
 
         g2d.setColor(ball.getInnerColor());
-        g2d.fill(s);
+        g2d.fill(shape);
 
         g2d.setColor(ball.getBorderColor());
-        g2d.draw(s);
+        g2d.draw(shape);
 
         g2d.setColor(tmp);
     }
@@ -186,12 +186,12 @@ public class GameBoard extends JComponent implements KeyListener,MouseListener,M
     private void drawPlayer(Player p,Graphics2D g2d) {
         Color tmp = g2d.getColor();
 
-        Shape s = p.getPlayerFace();
+        Shape shape = p.getPlayerShape();
         g2d.setColor(Player.INNER_COLOR);
-        g2d.fill(s);
+        g2d.fill(shape);
 
         g2d.setColor(Player.BORDER_COLOR);
-        g2d.draw(s);
+        g2d.draw(shape);
 
         g2d.setColor(tmp);
     }
@@ -211,8 +211,8 @@ public class GameBoard extends JComponent implements KeyListener,MouseListener,M
         Composite tmp = g2d.getComposite();
         Color tmpColor = g2d.getColor();
 
-        AlphaComposite ac = AlphaComposite.getInstance(AlphaComposite.SRC_OVER,0.55f);
-        g2d.setComposite(ac);
+        AlphaComposite alphaComposite = AlphaComposite.getInstance(AlphaComposite.SRC_OVER,0.55f);
+        g2d.setComposite(alphaComposite);
 
         g2d.setColor(Color.BLACK);
         g2d.fillRect(0,0,DEF_WIDTH,DEF_HEIGHT);
@@ -231,12 +231,12 @@ public class GameBoard extends JComponent implements KeyListener,MouseListener,M
         g2d.setFont(menuFont);
         g2d.setColor(MENU_COLOR);
 
-        if(strLen == 0){
+        if(stringLength == 0){
             FontRenderContext frc = g2d.getFontRenderContext();
-            strLen = menuFont.getStringBounds(PAUSE,frc).getBounds().width;
+            stringLength = menuFont.getStringBounds(PAUSE,frc).getBounds().width;
         }
 
-        int x = (this.getWidth() - strLen) / 2;
+        int x = (this.getWidth() - stringLength) / 2;
         int y = this.getHeight() / 10;
 
         g2d.drawString(PAUSE,x,y);
@@ -244,28 +244,28 @@ public class GameBoard extends JComponent implements KeyListener,MouseListener,M
         x = this.getWidth() / 8;
         y = this.getHeight() / 4;
 
-        if(continueButtonRect == null){
+        if(continueButtonRectangle == null){
             FontRenderContext frc = g2d.getFontRenderContext();
-            continueButtonRect = menuFont.getStringBounds(CONTINUE,frc).getBounds();
-            continueButtonRect.setLocation(x,y-continueButtonRect.height);
+            continueButtonRectangle = menuFont.getStringBounds(CONTINUE,frc).getBounds();
+            continueButtonRectangle.setLocation(x,y - continueButtonRectangle.height);
         }
 
         g2d.drawString(CONTINUE,x,y);
 
         y *= 2;
 
-        if(restartButtonRect == null){
-            restartButtonRect = (Rectangle) continueButtonRect.clone();
-            restartButtonRect.setLocation(x,y-restartButtonRect.height);
+        if(restartButtonRectangle == null){
+            restartButtonRectangle = (Rectangle) continueButtonRectangle.clone();
+            restartButtonRectangle.setLocation(x,y - restartButtonRectangle.height);
         }
 
         g2d.drawString(RESTART,x,y);
 
-        y *= 3.0/2;
+        y *= 3.0 / 2;
 
-        if(exitButtonRect == null){
-            exitButtonRect = (Rectangle) continueButtonRect.clone();
-            exitButtonRect.setLocation(x,y-exitButtonRect.height);
+        if(exitButtonRectangle == null){
+            exitButtonRectangle = (Rectangle) continueButtonRectangle.clone();
+            exitButtonRectangle.setLocation(x,y - exitButtonRectangle.height);
         }
 
         g2d.drawString(EXIT,x,y);
@@ -323,24 +323,23 @@ public class GameBoard extends JComponent implements KeyListener,MouseListener,M
      */
     @Override
     public void mouseClicked(MouseEvent mouseEvent) {
-        Point p = mouseEvent.getPoint();
+        Point point = mouseEvent.getPoint();
         if(!showPauseMenu)
             return;
-        if(continueButtonRect.contains(p)) {
+        if(continueButtonRectangle.contains(point)) {
             showPauseMenu = false;
             repaint();
         }
-        else if(restartButtonRect.contains(p)) {
+        else if(restartButtonRectangle.contains(point)) {
             message = "Restarting Game...";
             wall.ballReset();
             wall.wallReset();
             showPauseMenu = false;
             repaint();
         }
-        else if(exitButtonRect.contains(p)) {
+        else if(exitButtonRectangle.contains(point)) {
             System.exit(0);
         }
-
     }
 
     @Override
@@ -373,9 +372,9 @@ public class GameBoard extends JComponent implements KeyListener,MouseListener,M
      */
     @Override
     public void mouseMoved(MouseEvent mouseEvent) {
-        Point p = mouseEvent.getPoint();
-        if(exitButtonRect != null && showPauseMenu) {
-            if (exitButtonRect.contains(p) || continueButtonRect.contains(p) || restartButtonRect.contains(p))
+        Point point = mouseEvent.getPoint();
+        if(exitButtonRectangle != null && showPauseMenu) {
+            if (exitButtonRectangle.contains(point) || continueButtonRectangle.contains(point) || restartButtonRectangle.contains(point))
                 this.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
             else
                 this.setCursor(Cursor.getDefaultCursor());

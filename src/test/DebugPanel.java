@@ -66,21 +66,21 @@ public class DebugPanel extends JPanel {
     /**
      * View
      */
-    private JButton makeButton(String title, ActionListener e){
+    private JButton makeButton(String title, ActionListener listener){
         JButton out = new JButton(title);
-        out.addActionListener(e);
-        return  out;
+        out.addActionListener(listener);
+        return out;
     }
 
     /**
      * View
      */
-    private JSlider makeSlider(int min, int max, ChangeListener e){
+    private JSlider makeSlider(int min, int max, ChangeListener listener){
         JSlider out = new JSlider(min,max);
         out.setMajorTickSpacing(1);
         out.setSnapToTicks(true);
         out.setPaintTicks(true);
-        out.addChangeListener(e);
+        out.addChangeListener(listener);
         return out;
     }
 
