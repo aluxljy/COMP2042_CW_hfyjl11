@@ -31,54 +31,74 @@ public class Player {
     private int min;
     private int max;
 
-
+    /**
+     * called in Wall
+     */
+    // Player constructor
     public Player(Point ballPosition,int width,int height,Rectangle container) {
         this.ballPosition = ballPosition;
         moveAmount = 0;
-        playerShape = makeRectangle(width, height);
+        playerShape = makeRectangle(width,height);
         min = container.x + (width / 2);
         max = min + container.width - width;
-
     }
 
-    private Rectangle makeRectangle(int width,int height){
-        Point point = new Point((int)(ballPosition.getX() - (width / 2)),(int) ballPosition.getY());
+    private Rectangle makeRectangle(int width,int height) {
+        Point point = new Point((int)(ballPosition.getX() - (width / 2)),(int) ballPosition.getY() + (height / 3));
         return new Rectangle(point,new Dimension(width,height));
     }
 
     /**
      * called in Wall
      */
-    public boolean impactWithBall(Ball ball){
+    public boolean impactWithBall(Ball ball) {
         return playerShape.contains(ball.getBallPosition()) && playerShape.contains(ball.getDown()) ;
     }
 
-    public void move(){
+    /**
+     * called in Wall
+     */
+    public void move() {
         double x = ballPosition.getX() + moveAmount;
         if(x < min || x > max)
             return;
         ballPosition.setLocation(x, ballPosition.getY());
-        playerShape.setLocation(ballPosition.x - (int) playerShape.getWidth() / 2, ballPosition.y);
+        playerShape.setLocation(ballPosition.x - (int) playerShape.getWidth() / 2, ballPosition.y + (int) playerShape.getHeight() / 3);
     }
 
-    public void moveLeft(){
+    /**
+     * called in GameBoard
+     */
+    public void moveLeft() {
         moveAmount = -DEF_MOVE_AMOUNT;
     }
 
-    public void moveRight(){
+    /**
+     * called in GameBoard
+     */
+    public void moveRight() {
         moveAmount = DEF_MOVE_AMOUNT;
     }
 
-    public void stop(){
+    /**
+     * called in GameBoard
+     */
+    public void stop() {
         moveAmount = 0;
     }
 
-    public Shape getPlayerShape(){
+    /**
+     * called in GameBoard
+     */
+    public Shape getPlayerShape() {
         return playerShape;
     }
 
-    public void moveTo(Point position){
+    /**
+     * called in Wall
+     */
+    public void moveTo(Point position) {
         ballPosition.setLocation(position);
-        playerShape.setLocation(ballPosition.x - (int) playerShape.getWidth() / 2, ballPosition.y);
+        playerShape.setLocation(ballPosition.x - (int) playerShape.getWidth() / 2, ballPosition.y + (int) playerShape.getHeight() / 3);
     }
 }
