@@ -186,6 +186,9 @@ public class Wall {
         getBall().move();
     }
 
+    /**
+     * called in GameBoard
+     */
     public void findImpacts(){
         if(getPlayer().impactWithBall(getBall())){
             getBall().reverseY();
@@ -233,7 +236,7 @@ public class Wall {
 
     private boolean impactBorder(){
         Point2D point = getBall().getBallPosition();
-        return ((point.getX() < area.getX()) ||(point.getX() > (area.getX() + area.getWidth())));
+        return ((point.getX() < area.getX()) || (point.getX() > (area.getX() + area.getWidth())));
     }
 
     public int getBrickCount(){
@@ -248,6 +251,9 @@ public class Wall {
         return ballLost;
     }
 
+    /**
+     * called in GameBoard
+     */
     public void ballReset(){
         getPlayer().moveTo(startPoint);
         getBall().moveTo(startPoint);

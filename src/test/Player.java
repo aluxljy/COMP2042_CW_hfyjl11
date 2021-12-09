@@ -65,7 +65,7 @@ public class Player {
         moveAmount = -DEF_MOVE_AMOUNT;
     }
 
-    public void movRight(){
+    public void moveRight(){
         moveAmount = DEF_MOVE_AMOUNT;
     }
 
@@ -77,8 +77,8 @@ public class Player {
         return playerShape;
     }
 
-    public void moveTo(Point point){
-        ballPosition.setLocation(point);
+    public void moveTo(Point position){
+        ballPosition.setLocation(position);
         playerShape.setLocation(ballPosition.x - (int) playerShape.getWidth() / 2, ballPosition.y);
     }
 }
