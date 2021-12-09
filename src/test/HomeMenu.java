@@ -17,6 +17,7 @@
  */
 package test;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseEvent;
@@ -24,6 +25,9 @@ import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.awt.font.FontRenderContext;
 import java.awt.geom.Rectangle2D;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 
 public class HomeMenu extends JComponent implements MouseListener, MouseMotionListener {
     private static final String GREETINGS = "Welcome to:";
@@ -62,6 +66,8 @@ public class HomeMenu extends JComponent implements MouseListener, MouseMotionLi
     private boolean startClicked;
     private boolean exitClicked;
     private boolean infoClicked;
+
+    BufferedImage homeMenuBackground;
 
     /**
      * View
@@ -133,24 +139,30 @@ public class HomeMenu extends JComponent implements MouseListener, MouseMotionLi
      * View
      */
     private void drawContainer(Graphics2D g2d) {
-        Color previousColor = g2d.getColor();
+        try {
+            homeMenuBackground = ImageIO.read(new File("src/test/PurpleBrick.jfif"));
+            g2d.drawImage(homeMenuBackground,0,0,450,350,null);
+        }
+        catch(IOException exception) {
+            Color previousColor = g2d.getColor();
 
-        g2d.setColor(BG_COLOR);
-        g2d.fill(menuShape);
+            g2d.setColor(BG_COLOR);
+            g2d.fill(menuShape);
 
-        Stroke tmp = g2d.getStroke();
+            Stroke tmp = g2d.getStroke();
 
-        g2d.setStroke(borderStoke_noDashes);
-        g2d.setColor(DASH_BORDER_COLOR);
-        g2d.draw(menuShape);
+            g2d.setStroke(borderStoke_noDashes);
+            g2d.setColor(DASH_BORDER_COLOR);
+            g2d.draw(menuShape);
 
-        g2d.setStroke(borderStoke);
-        g2d.setColor(BORDER_COLOR);
-        g2d.draw(menuShape);
+            g2d.setStroke(borderStoke);
+            g2d.setColor(BORDER_COLOR);
+            g2d.draw(menuShape);
 
-        g2d.setStroke(tmp);
+            g2d.setStroke(tmp);
 
-        g2d.setColor(previousColor);
+            g2d.setColor(previousColor);
+        }
     }
 
     /**
