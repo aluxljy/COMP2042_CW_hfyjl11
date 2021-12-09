@@ -13,11 +13,11 @@ public class BrickFactory {
         }
         if(brickType.equalsIgnoreCase("CLAYBRICK")) {
             return new ClayBrick(point,size);
-
-        } else if(brickType.equalsIgnoreCase("CEMENTBRICK")) {
+        }
+        else if(brickType.equalsIgnoreCase("CEMENTBRICK")) {
             return new CementBrick(point,size);
-
-        } else if(brickType.equalsIgnoreCase("STEELBRICK")) {
+        }
+        else if(brickType.equalsIgnoreCase("STEELBRICK")) {
             return new SteelBrick(point,size);
         }
         return null;
