@@ -56,14 +56,15 @@ abstract public class Ball {
     public void move() {
         center.setLocation((center.getX() + speedX),(center.getY() + speedY));  // move center with axis-X and axis-Y speed
 
-        RectangularShape tempBallShape = (RectangularShape) ballShape;  // type cast ballShape to RectangularShape
+        /*RectangularShape tempBallShape = (RectangularShape) ballShape;  // type cast ballShape to RectangularShape
         double width = tempBallShape.getWidth();  // get width of rectangle
         double height = tempBallShape.getHeight();  // get height of rectangle
 
         tempBallShape.setFrame((center.getX() - (width / 2)),(center.getY() - (height / 2)),width,height);  // set the frame with center, width and height of tempBallShape
         setPoints(width,height);
 
-        ballShape = tempBallShape;
+        ballShape = tempBallShape;*/
+        makeTempBallShape();
     }
 
     /**
@@ -137,11 +138,23 @@ abstract public class Ball {
     public void moveTo(Point position) {
         center.setLocation(position);
 
-        RectangularShape tempBallShape = (RectangularShape) ballShape;
+        /*RectangularShape tempBallShape = (RectangularShape) ballShape;
         double width = tempBallShape.getWidth();
         double height = tempBallShape.getHeight();
 
         tempBallShape.setFrame((center.getX() - (width / 2)),(center.getY() - (height / 2)),width,height);
+        ballShape = tempBallShape;*/
+        makeTempBallShape();
+    }
+
+    private void makeTempBallShape() {
+        RectangularShape tempBallShape = (RectangularShape) ballShape;  // type cast ballShape to RectangularShape
+        double width = tempBallShape.getWidth();  // get width of rectangle
+        double height = tempBallShape.getHeight();  // get height of rectangle
+
+        tempBallShape.setFrame((center.getX() - (width / 2)),(center.getY() - (height / 2)),width,height);  // set the frame with center, width and height of tempBallShape
+        setPoints(width,height);
+
         ballShape = tempBallShape;
     }
 
