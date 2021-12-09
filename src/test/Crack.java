@@ -47,7 +47,32 @@ public class Crack {
         Point start = new Point();
         Point end = new Point();
 
-        switch(direction) {
+        if(direction == LEFT) {
+            start.setLocation(bounds.x + bounds.width,bounds.y);
+            end.setLocation(bounds.x + bounds.width,bounds.y + bounds.height);
+            Point tmp = makeRandomPoint(start,end,VERTICAL);
+            createCrack(impact,tmp);
+        }
+        else if(direction == RIGHT) {
+            start.setLocation(bounds.getLocation());
+            end.setLocation(bounds.x,bounds.y + bounds.height);
+            Point tmp = makeRandomPoint(start,end,VERTICAL);
+            createCrack(impact,tmp);
+        }
+        else if(direction == UP) {
+            start.setLocation(bounds.x,bounds.y + bounds.height);
+            end.setLocation(bounds.x + bounds.width,bounds.y + bounds.height);
+            Point tmp = makeRandomPoint(start,end,HORIZONTAL);
+            createCrack(impact,tmp);
+        }
+        else if(direction == DOWN) {
+            start.setLocation(bounds.getLocation());
+            end.setLocation(bounds.x + bounds.width,bounds.y);
+            Point tmp = makeRandomPoint(start,end,HORIZONTAL);
+            createCrack(impact,tmp);
+        }
+
+        /*switch(direction) {
             case LEFT:
                 start.setLocation(bounds.x + bounds.width,bounds.y);
                 end.setLocation(bounds.x + bounds.width,bounds.y + bounds.height);
@@ -75,16 +100,16 @@ public class Crack {
                 makeCrack(impact,tmp);
 
                 break;
-        }
+        }*/
     }
 
-    protected void makeCrack(Point start,Point end) {
+    private void createCrack(Point start, Point end) {
         GeneralPath path = new GeneralPath();
 
         path.moveTo(start.x,start.y);
 
-        double w = (end.x - start.x) / (double)steps;
-        double h = (end.y - start.y) / (double)steps;
+        double width = (end.x - start.x) / (double)steps;
+        double height = (end.y - start.y) / (double)steps;
 
         int bound = crackDepth;
         int jump  = bound * 5;
@@ -92,8 +117,8 @@ public class Crack {
         double x,y;
 
         for(int i = 1; i < steps;i++) {
-            x = (i * w) + start.x;
-            y = (i * h) + start.y + randomInBounds(bound);
+            x = (i * width) + start.x;
+            y = (i * height) + start.y + randomInBounds(bound);
 
             if(inMiddle(i,CRACK_SECTIONS,steps))
                 y += jumps(jump,JUMP_PROBABILITY);
@@ -105,8 +130,8 @@ public class Crack {
     }
 
     private int randomInBounds(int bound) {
-        int n = (bound * 2) + 1;
-        return getRandom().nextInt(n) - bound;
+        int number = (bound * 2) + 1;
+        return getRandom().nextInt(number) - bound;
     }
 
     private boolean inMiddle(int i,int steps,int divisions) {
@@ -117,27 +142,34 @@ public class Crack {
     }
 
     private int jumps(int bound,double probability) {
-
         if(getRandom().nextDouble() > probability)
             return randomInBounds(bound);
         return  0;
     }
 
     private Point makeRandomPoint(Point from,Point to,int direction) {
-        Point out = new Point();
-        int pos;
+        Point point = new Point();
+        int position;
 
-        switch(direction) {
+        if(direction == HORIZONTAL) {
+            position = getRandom().nextInt(to.x - from.x) + from.x;
+            point.setLocation(position,to.y);
+        }
+        else if(direction == VERTICAL) {
+            position = getRandom().nextInt(to.y - from.y) + from.y;
+            point.setLocation(to.x,position);
+        }
+        /*switch(direction) {
             case HORIZONTAL:
-                pos = getRandom().nextInt(to.x - from.x) + from.x;
-                out.setLocation(pos,to.y);
+                position = getRandom().nextInt(to.x - from.x) + from.x;
+                point.setLocation(position,to.y);
                 break;
             case VERTICAL:
-                pos = getRandom().nextInt(to.y - from.y) + from.y;
-                out.setLocation(to.x,pos);
+                position = getRandom().nextInt(to.y - from.y) + from.y;
+                point.setLocation(to.x,position);
                 break;
-        }
-        return out;
+        }*/
+        return point;
     }
 
     public Random getRandom() {
