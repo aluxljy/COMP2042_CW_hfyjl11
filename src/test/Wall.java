@@ -75,7 +75,7 @@ public class Wall {
 
         getBall().setSpeed(speedX,speedY);
 
-        setPlayer(new Player((Point) ballPosition.clone(),150,10, drawArea));
+        setPlayer(new Player((Point) ballPosition.clone(),130,10, drawArea));
 
         area = drawArea;
     }
