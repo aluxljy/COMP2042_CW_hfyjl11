@@ -22,12 +22,8 @@ import javax.swing.event.ChangeListener;
 import java.awt.*;
 import java.awt.event.ActionListener;
 
-
-
 public class DebugPanel extends JPanel {
-
     private static final Color DEF_BKG = Color.WHITE;
-
 
     private JButton skipLevel;
     private JButton resetBalls;
@@ -37,8 +33,11 @@ public class DebugPanel extends JPanel {
 
     private Wall wall;
 
-    public DebugPanel(Wall wall){
-
+    /**
+     * Controller
+     */
+    //DebugPanel constructor
+    public DebugPanel(Wall wall) {
         this.wall = wall;
 
         initialize();
@@ -54,32 +53,42 @@ public class DebugPanel extends JPanel {
 
         this.add(ballXSpeed);
         this.add(ballYSpeed);
-
     }
 
+    /**
+     * Controller
+     */
     private void initialize(){
         this.setBackground(DEF_BKG);
         this.setLayout(new GridLayout(2,2));
     }
 
-    private JButton makeButton(String title, ActionListener e){
+    /**
+     * View
+     */
+    private JButton makeButton(String title, ActionListener listener){
         JButton out = new JButton(title);
-        out.addActionListener(e);
-        return  out;
+        out.addActionListener(listener);
+        return out;
     }
 
-    private JSlider makeSlider(int min, int max, ChangeListener e){
+    /**
+     * View
+     */
+    private JSlider makeSlider(int min, int max, ChangeListener listener){
         JSlider out = new JSlider(min,max);
         out.setMajorTickSpacing(1);
         out.setSnapToTicks(true);
         out.setPaintTicks(true);
-        out.addChangeListener(e);
+        out.addChangeListener(listener);
         return out;
     }
 
+    /**
+     * NOT SURE
+     */
     public void setValues(int x,int y){
         ballXSpeed.setValue(x);
         ballYSpeed.setValue(y);
     }
-
 }
