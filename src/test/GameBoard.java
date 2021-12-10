@@ -54,6 +54,7 @@ public class GameBoard extends JComponent implements KeyListener,MouseListener,M
 
     /**
      * NOT SURE
+     * called in GameFrame
      */
     // GameBoard constructor
     public GameBoard(JFrame owner) {
@@ -183,10 +184,10 @@ public class GameBoard extends JComponent implements KeyListener,MouseListener,M
     /**
      * View
      */
-    private void drawPlayer(Player p,Graphics2D g2d) {
+    private void drawPlayer(Player player,Graphics2D g2d) {
         Color tmp = g2d.getColor();
 
-        Shape shape = p.getPlayerShape();
+        Shape shape = player.getPlayerShape();
         g2d.setColor(Player.INNER_COLOR);
         g2d.fill(shape);
 
@@ -386,6 +387,7 @@ public class GameBoard extends JComponent implements KeyListener,MouseListener,M
 
     /**
      * Controller
+     * called in GameFrame
      */
     public void onLostFocus() {
         gameTimer.stop();

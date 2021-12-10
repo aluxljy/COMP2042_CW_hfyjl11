@@ -71,6 +71,7 @@ public class HomeMenu extends JComponent implements MouseListener, MouseMotionLi
 
     /**
      * View
+     * called in GameFrame
      */
     // HomeMenu constructor
     public HomeMenu(GameFrame owner,Dimension area) {
@@ -109,7 +110,7 @@ public class HomeMenu extends JComponent implements MouseListener, MouseMotionLi
     /**
      * View
      */
-    public void drawMenu(Graphics2D g2d) {
+    private void drawMenu(Graphics2D g2d) {
         drawContainer(g2d);
 
         /*

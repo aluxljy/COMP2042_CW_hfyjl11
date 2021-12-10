@@ -34,26 +34,22 @@ public class GameFrame extends JFrame implements WindowFocusListener {
 
     /**
      * View
+     * called in GraphicsMain
      */
     // GameFrame constructor
     public GameFrame() {
         super();
-
         gaming = false;
-
         this.setLayout(new BorderLayout());
-
         gameBoard = new GameBoard(this);
-
         homeMenu = new HomeMenu(this,new Dimension(450,350));
-
         this.add(homeMenu,BorderLayout.CENTER);
-
         this.setUndecorated(true);
     }
 
     /**
      * Controller
+     * called in GraphicsMain
      */
     public void initialize() {
         this.setTitle(DEF_TITLE);
@@ -66,6 +62,7 @@ public class GameFrame extends JFrame implements WindowFocusListener {
 
     /**
      * Controller
+     * called in HomeMenu
      */
     public void enableGameBoard() {
         this.dispose();

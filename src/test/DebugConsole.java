@@ -32,6 +32,7 @@ public class DebugConsole extends JDialog implements WindowListener {
 
     /**
      * Controller
+     * called in GameBoard
      */
     // DebugConsole constructor
     public DebugConsole(JFrame owner,Wall wall,GameBoard gameBoard) {

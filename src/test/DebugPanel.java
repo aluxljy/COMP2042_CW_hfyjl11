@@ -35,6 +35,7 @@ public class DebugPanel extends JPanel {
 
     /**
      * Controller
+     * called in DebugConsole
      */
     //DebugPanel constructor
     public DebugPanel(Wall wall) {
@@ -86,6 +87,7 @@ public class DebugPanel extends JPanel {
 
     /**
      * NOT SURE
+     * called in DebugConsole
      */
     public void setValues(int x,int y){
         ballXSpeed.setValue(x);
