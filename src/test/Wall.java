@@ -49,7 +49,11 @@ public class Wall {
     private int ballCount;
     private boolean ballLost;
 
-    public Wall(Rectangle drawArea, int brickCount, int lineCount, double brickDimensionRatio, Point ballPosition){
+    /**
+     * called in GameBoard
+     */
+    // Wall constructor
+    public Wall(Rectangle drawArea, int brickCount, int lineCount, double brickDimensionRatio, Point ballPosition) {
         this.startPoint = new Point(ballPosition);
 
         levels = makeLevels(drawArea,brickCount,lineCount,brickDimensionRatio);
@@ -64,16 +68,19 @@ public class Wall {
         BallFactory ballFactory = new BallFactory();
         setBall(ballFactory.makeBall(RUBBER,ballPosition));
 
-        int speedX,speedY;
+        /*int speedX,speedY;
 
         do{
             speedX = random.nextInt(5) - 2;
-        }while(speedX == 0);
+        }
+        while(speedX == 0);
         do{
             speedY = -random.nextInt(3);
-        }while(speedY == 0);
+        }
+        while(speedY == 0);
 
-        getBall().setSpeed(speedX,speedY);
+        getBall().setSpeed(speedX,speedY);*/
+        randomSpeed();
 
         setPlayer(new Player((Point) ballPosition.clone(),100,10, drawArea));
 
@@ -171,16 +178,19 @@ public class Wall {
         setBall(ballFactory.makeBall(RUBBER,ballPos));
     }*/
 
-    private Brick[][] makeLevels(Rectangle drawArea,int brickCount,int lineCount,double brickDimensionRatio){
+    private Brick[][] makeLevels(Rectangle drawArea,int brickCount,int lineCount,double brickDimensionRatio) {
         Brick[][] tmp = new Brick[LEVELS_COUNT][];
         tmp[0] = Level.makeSingleTypeLevel(drawArea,brickCount,lineCount,brickDimensionRatio,CLAY);
         tmp[1] = Level.makeChessboardLevel(drawArea,brickCount,lineCount,brickDimensionRatio,CLAY,CEMENT);
-        tmp[2] = Level.makeSingleTypeLevel(drawArea,brickCount,lineCount,brickDimensionRatio,CEMENT);
+        tmp[2] = Level.makeChessboardLevel(drawArea,brickCount,lineCount,brickDimensionRatio,CEMENT,CEMENT);
         tmp[3] = Level.makeChessboardLevel(drawArea,brickCount,lineCount,brickDimensionRatio,CLAY,STEEL);
         tmp[4] = Level.makeChessboardLevel(drawArea,brickCount,lineCount,brickDimensionRatio,STEEL,CEMENT);
         return tmp;
     }
 
+    /**
+     * called in GameBoard
+     */
     public void move(){
         getPlayer().move();
         getBall().move();
@@ -189,38 +199,41 @@ public class Wall {
     /**
      * called in GameBoard
      */
-    public void findImpacts(){
-        if(getPlayer().impactWithBall(getBall())){
+    public void findImpacts() {
+        if(getPlayer().impactWithBall(getBall()) && impactWithBorder()) {
             getBall().reverseY();
         }
-        else if(impactWall()){
+        else if(getPlayer().impactWithBall(getBall())) {
+            getBall().reverseY();
+        }
+        else if(impactWithWall()) {
             /*for efficiency reverse is done into method impactWall
             * because for every brick program checks for horizontal and vertical impacts
             */
             brickCount--;
         }
-        else if(impactBorder()) {
+        else if(impactWithBorder()) {
             getBall().reverseX();
         }
-        else if(getBall().getBallPosition().getY() < area.getY()){
+        else if(getBall().getBallPosition().getY() < area.getY()) {
             getBall().reverseY();
         }
-        else if(getBall().getBallPosition().getY() > area.getY() + area.getHeight()){
+        else if(getBall().getBallPosition().getY() > area.getY() + area.getHeight()) {
             ballCount--;
             ballLost = true;
         }
     }
 
-    private boolean impactWall(){
+    private boolean impactWithWall(){
         for(Brick brick : getBricks()){
-            switch(brick.findImpact(getBall())) {
+            /*switch(brick.findImpact(getBall())) {
                 //Vertical impact
                 case Brick.UP_IMPACT:
                     getBall().reverseY();  // if the bottom side of the ball hits the top side of the brick, then ball rebounds upwards
-                    return brick.setImpact(getBall().getDown(),Crack.UP);
+                    return brick.setImpact(getBall().getDown(),Crack.DOWN);
                 case Brick.DOWN_IMPACT:
                     getBall().reverseY();  // if the top side of the ball hits the bottom side of the brick, then ball rebounds downwards
-                    return brick.setImpact(getBall().getUp(),Crack.DOWN);
+                    return brick.setImpact(getBall().getUp(),Crack.UP);
 
                 //Horizontal impact
                 case Brick.LEFT_IMPACT:
@@ -229,24 +242,53 @@ public class Wall {
                 case Brick.RIGHT_IMPACT:
                     getBall().reverseX();  // if the left side of the ball hits the right side of the brick, then ball rebounds to the right
                     return brick.setImpact(getBall().getLeft(),Crack.LEFT);
+            }*/
+            if(brick.findImpact(getBall()) == Brick.UP_IMPACT) {
+                //Vertical impact
+                getBall().reverseY();  // if the bottom side of the ball hits the top side of the brick, then ball rebounds upwards
+                return brick.setImpact(getBall().getDown(),Crack.DOWN);
+            }
+            else if(brick.findImpact(getBall()) == Brick.DOWN_IMPACT) {
+                //Vertical impact
+                getBall().reverseY();  // if the top side of the ball hits the bottom side of the brick, then ball rebounds downwards
+                return brick.setImpact(getBall().getUp(),Crack.UP);
+            }
+            else if(brick.findImpact(getBall()) == Brick.LEFT_IMPACT) {
+                //Horizontal impact
+                getBall().reverseX();  // if the right side of the ball hits the left side of the brick, then ball rebounds to the left
+                return brick.setImpact(getBall().getRight(),Crack.RIGHT);
+            }
+            else if(brick.findImpact(getBall()) == Brick.RIGHT_IMPACT) {
+                //Horizontal impact
+                getBall().reverseX();  // if the left side of the ball hits the right side of the brick, then ball rebounds to the right
+                return brick.setImpact(getBall().getLeft(),Crack.LEFT);
             }
         }
         return false;
     }
 
-    private boolean impactBorder(){
+    private boolean impactWithBorder(){
         Point2D point = getBall().getBallPosition();
         return ((point.getX() < area.getX()) || (point.getX() > (area.getX() + area.getWidth())));
     }
 
+    /**
+     * called in GameBoard
+     */
     public int getBrickCount(){
         return brickCount;
     }
 
+    /**
+     * called in GameBoard
+     */
     public int getBallCount(){
         return ballCount;
     }
 
+    /**
+     * called in GameBoard
+     */
     public boolean isBallLost(){
         return ballLost;
     }
@@ -257,18 +299,38 @@ public class Wall {
     public void ballReset(){
         getPlayer().moveTo(startPoint);
         getBall().moveTo(startPoint);
-        int speedX,speedY;
+        /*int speedX,speedY;
         do{
             speedX = random.nextInt(5) - 2;
-        }while(speedX == 0);
+        }
+        while(speedX == 0);
         do{
             speedY = -random.nextInt(3);
-        }while(speedY == 0);
+        }
+        while(speedY == 0);
 
-        getBall().setSpeed(speedX,speedY);
+        getBall().setSpeed(speedX,speedY);*/
+        randomSpeed();
         ballLost = false;
     }
 
+    public void randomSpeed() {
+        int speedX,speedY;
+        do{
+            speedX = random.nextInt(5) - 2;
+        }
+        while(speedX == 0);
+        do{
+            speedY = -random.nextInt(3);
+        }
+        while(speedY == 0);
+
+        getBall().setSpeed(speedX,speedY);
+    }
+
+    /**
+     * called in GameBoard
+     */
     public void wallReset(){
         for(Brick brick : getBricks())
             brick.repair();
@@ -276,19 +338,31 @@ public class Wall {
         ballCount = 3;
     }
 
+    /**
+     * called in GameBoard
+     */
     public boolean ballEnd(){
         return ballCount == 0;
     }
 
+    /**
+     * called in GameBoard
+     */
     public boolean isDone(){
         return brickCount == 0;
     }
 
+    /**
+     * called in DebugPanel & GameBoard
+     */
     public void nextLevel(){
         setBricks(levels[level++]);
         this.brickCount = getBricks().length;
     }
 
+    /**
+     * called in GameBoard
+     */
     public boolean hasLevel(){
         return level < levels.length;
     }
@@ -307,6 +381,9 @@ public class Wall {
         getBall().setSpeedY(speed);
     }
 
+    /**
+     * called in DebugPanel
+     */
     public void resetBallCount(){
         ballCount = 3;
     }
@@ -329,6 +406,9 @@ public class Wall {
         return out;
     }*/
 
+    /**
+     * called in GameBoard
+     */
     public Brick[] getBricks() {
         return bricks;
     }
@@ -337,6 +417,9 @@ public class Wall {
         this.bricks = bricks;
     }
 
+    /**
+     * called in DebugConsole & GameBoard
+     */
     public Ball getBall() {
         return ball;
     }
@@ -345,6 +428,9 @@ public class Wall {
         this.ball = ball;
     }
 
+    /**
+     * called in GameBoard
+     */
     public Player getPlayer() {
         return player;
     }
