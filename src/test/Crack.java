@@ -157,7 +157,7 @@ public class Crack {
     private int jumps(int bound,double probability) {
         if(getRandom().nextDouble() > probability)
             return randomInBounds(bound);
-        return  0;
+        return 0;
     }
 
     private Point makeRandomPoint(Point from,Point to,int direction) {
@@ -166,11 +166,11 @@ public class Crack {
 
         if(direction == HORIZONTAL) {
             position = getRandom().nextInt(to.x - from.x) + from.x;
-            point.setLocation(position,to.y);
+            point.setLocation(position,to.y);  // vertical cracks
         }
         else if(direction == VERTICAL) {
             position = getRandom().nextInt(to.y - from.y) + from.y;
-            point.setLocation(to.x,position);
+            point.setLocation(to.x,position);  // horizontal cracks
         }
         /*switch(direction) {
             case HORIZONTAL:
