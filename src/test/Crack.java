@@ -24,7 +24,11 @@ public class Crack {
     private int crackDepth;
     private int steps;
 
-    public Crack(Brick brick,int crackDepth,int steps) {
+    /**
+     * called in CementBrick
+     */
+    // Crack constructor
+    protected Crack(Brick brick,int crackDepth,int steps) {
         random = new Random();
         this.brick = brick;
         crack = new GeneralPath();
@@ -32,14 +36,23 @@ public class Crack {
         this.steps = steps;
     }
 
-    public GeneralPath draw() {
+    /**
+     * called in CementBrick
+     */
+    protected GeneralPath draw() {
         return crack;
     }
 
-    public void reset() {
+    /**
+     * called in CementBrick
+     */
+    protected void reset() {
         crack.reset();
     }
 
+    /**
+     * called in CementBrick
+     */
     protected void makeCrack(Point2D point,int direction) {
         Rectangle bounds = brick.getBrickShape().getBounds();
 
@@ -47,28 +60,28 @@ public class Crack {
         Point start = new Point();
         Point end = new Point();
 
-        if(direction == LEFT) {
-            start.setLocation(bounds.x + bounds.width,bounds.y);
-            end.setLocation(bounds.x + bounds.width,bounds.y + bounds.height);
-            Point tmp = makeRandomPoint(start,end,VERTICAL);
+        if(direction == RIGHT) {
+            start.setLocation(bounds.x + bounds.width,bounds.y);  // point of top right corner of brick
+            end.setLocation(bounds.x + bounds.width,bounds.y + bounds.height);  // point of bottom right corner of brick
+            Point tmp = makeRandomPoint(start,end,VERTICAL);  // right vertical line
             createCrack(impact,tmp);
         }
-        else if(direction == RIGHT) {
-            start.setLocation(bounds.getLocation());
-            end.setLocation(bounds.x,bounds.y + bounds.height);
-            Point tmp = makeRandomPoint(start,end,VERTICAL);
-            createCrack(impact,tmp);
-        }
-        else if(direction == UP) {
-            start.setLocation(bounds.x,bounds.y + bounds.height);
-            end.setLocation(bounds.x + bounds.width,bounds.y + bounds.height);
-            Point tmp = makeRandomPoint(start,end,HORIZONTAL);
+        else if(direction == LEFT) {
+            start.setLocation(bounds.getLocation());  // point of top left corner of brick
+            end.setLocation(bounds.x,bounds.y + bounds.height);  // point of bottom left corner of brick
+            Point tmp = makeRandomPoint(start,end,VERTICAL);  // left vertical line
             createCrack(impact,tmp);
         }
         else if(direction == DOWN) {
-            start.setLocation(bounds.getLocation());
-            end.setLocation(bounds.x + bounds.width,bounds.y);
-            Point tmp = makeRandomPoint(start,end,HORIZONTAL);
+            start.setLocation(bounds.x,bounds.y + bounds.height);  // point of bottom left corner of brick
+            end.setLocation(bounds.x + bounds.width,bounds.y + bounds.height);  // point of bottom right corner of brick
+            Point tmp = makeRandomPoint(start,end,HORIZONTAL);  // bottom horizontal line
+            createCrack(impact,tmp);
+        }
+        else if(direction == UP) {
+            start.setLocation(bounds.getLocation());  // point of top left corner of brick
+            end.setLocation(bounds.x + bounds.width,bounds.y);  // point of top right corner of brick
+            Point tmp = makeRandomPoint(start,end,HORIZONTAL);  // top horizontal line
             createCrack(impact,tmp);
         }
 
@@ -172,7 +185,7 @@ public class Crack {
         return point;
     }
 
-    public Random getRandom() {
+    private Random getRandom() {
         return random;
     }
 }
