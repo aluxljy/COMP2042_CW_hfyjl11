@@ -185,7 +185,7 @@ public class Crack {
         return point;
     }
 
-    private Random getRandom() {
+    public Random getRandom() {
         return random;
     }
 }

@@ -25,8 +25,7 @@ abstract public class Brick {
         return brickShape;
     }
 
-    // changed from public method to private method
-    private void setBrickShape(Shape brickShape) {
+    public void setBrickShape(Shape brickShape) {
         this.brickShape = brickShape;
     }
 
