@@ -20,8 +20,8 @@ package test;
 import java.awt.*;
 
 public class Player {
-    public static final Color BORDER_COLOR = Color.GREEN.darker().darker();
-    public static final Color INNER_COLOR = Color.GREEN;
+    public static final Color BORDER_COLOR = Color.GRAY;
+    public static final Color INNER_COLOR = Color.LIGHT_GRAY;
 
     private static final int DEF_MOVE_AMOUNT = 5;
 
@@ -39,12 +39,12 @@ public class Player {
         this.ballPosition = ballPosition;
         moveAmount = 0;
         playerShape = makeRectangle(width,height);
-        min = container.x + (width / 2);
-        max = min + container.width - width;
+        min = container.x + (width / 2);  // left boundary
+        max = min + container.width - width;  // right boundary
     }
 
     private Rectangle makeRectangle(int width,int height) {
-        Point point = new Point((int)(ballPosition.getX() - (width / 2)),(int) ballPosition.getY() + (height / 3));
+        Point point = new Point((int)(ballPosition.getX() - (width / 2)),(int) ballPosition.getY() + (height / 3));  // position of the player
         return new Rectangle(point,new Dimension(width,height));
     }
 
@@ -52,7 +52,7 @@ public class Player {
      * called in Wall
      */
     public boolean impactWithBall(Ball ball) {
-        return playerShape.contains(ball.getBallPosition()) && playerShape.contains(ball.getDown()) ;
+        return playerShape.contains(ball.getBallPosition()) && playerShape.contains(ball.getDown());
     }
 
     /**
