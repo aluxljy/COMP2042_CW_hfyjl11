@@ -30,21 +30,21 @@ import java.io.File;
 import java.io.IOException;
 
 public class HomeMenu extends JComponent implements MouseListener, MouseMotionListener {
-    private static final String GREETINGS = "Welcome to:";
-    private static final String GAME_TITLE = "Brick Destroy";
-    private static final String CREDITS = "Version 0.1";
-    private static final String START_TEXT = "Start";
-    private static final String EXIT_TEXT = "Exit";
-    private static final String INFO_TEXT = "Info";
+    private static final String GREETINGS = "LETS PLAY";
+    private static final String GAME_TITLE = "BRICK DESTROYER";
+    private static final String CREDITS = "REFACTORED VERSION 1.0";
+    private static final String START_TEXT = "START";
+    private static final String EXIT_TEXT = "EXIT";
+    private static final String INFO_TEXT = "INFO";
 
-    private static final Color BG_COLOR = Color.PINK.darker();
-    private static final Color BORDER_COLOR = new Color(200,8,21);  //Venetian Red
-    private static final Color DASH_BORDER_COLOR = new  Color(255, 216, 0);  //school bus yellow
-    private static final Color TEXT_COLOR = new Color(16, 52, 166);  //egyptian blue
+    private static final Color BG_COLOR = new Color(153,0,153);
+    private static final Color BORDER_COLOR = new Color(102,0,102);
+    //private static final Color DASH_BORDER_COLOR = new Color(255, 216, 0);
+    private static final Color TEXT_COLOR = new Color(255, 255, 255);
     private static final Color CLICKED_BUTTON_COLOR = BG_COLOR.brighter();
-    private static final Color CLICKED_TEXT = Color.WHITE;
-    private static final int BORDER_SIZE = 5;
-    private static final float[] DASHES = {12,6};
+    private static final Color CLICKED_TEXT = BG_COLOR.brighter();
+    private static final int BORDER_SIZE = 10;
+    //private static final float[] DASHES = {12,6};
 
     private static final double BUTTON_DISPLACEMENT = 35.0;
 
@@ -53,8 +53,8 @@ public class HomeMenu extends JComponent implements MouseListener, MouseMotionLi
     private Rectangle exitButton;
     private Rectangle infoButton;
 
-    private BasicStroke borderStoke;
-    private BasicStroke borderStoke_noDashes;
+    //private BasicStroke borderStoke;
+    private BasicStroke borderStroke;
 
     private Font greetingsFont;
     private Font gameTitleFont;
@@ -90,13 +90,13 @@ public class HomeMenu extends JComponent implements MouseListener, MouseMotionLi
         exitButton = new Rectangle(buttonDimension);
         infoButton = new Rectangle(buttonDimension);
 
-        borderStoke = new BasicStroke(BORDER_SIZE,BasicStroke.CAP_ROUND,BasicStroke.JOIN_ROUND,0,DASHES,0);
-        borderStoke_noDashes = new BasicStroke(BORDER_SIZE,BasicStroke.CAP_ROUND,BasicStroke.JOIN_ROUND);
+        //borderStoke = new BasicStroke(BORDER_SIZE,BasicStroke.CAP_ROUND,BasicStroke.JOIN_ROUND,0,DASHES,0);
+        borderStroke = new BasicStroke(BORDER_SIZE,BasicStroke.CAP_ROUND,BasicStroke.JOIN_ROUND);
 
-        greetingsFont = new Font("Noto Mono",Font.PLAIN,25);
-        gameTitleFont = new Font("Noto Mono",Font.BOLD,40);
+        greetingsFont = new Font("Monospaced",Font.PLAIN,20);
+        gameTitleFont = new Font("Serif",Font.BOLD,40);
         creditsFont = new Font("Monospaced",Font.PLAIN,10);
-        buttonFont = new Font("Monospaced",Font.PLAIN,startButton.height-2);
+        buttonFont = new Font("Serif",Font.BOLD,startButton.height - 2);
     }
 
     /**
@@ -151,11 +151,11 @@ public class HomeMenu extends JComponent implements MouseListener, MouseMotionLi
 
             Stroke tmp = g2d.getStroke();
 
-            g2d.setStroke(borderStoke_noDashes);
-            g2d.setColor(DASH_BORDER_COLOR);
-            g2d.draw(menuShape);
+            g2d.setStroke(borderStroke);
+            //g2d.setColor(DASH_BORDER_COLOR);
+            //g2d.draw(menuShape);
 
-            g2d.setStroke(borderStoke);
+            //g2d.setStroke(borderStoke);
             g2d.setColor(BORDER_COLOR);
             g2d.draw(menuShape);
 
