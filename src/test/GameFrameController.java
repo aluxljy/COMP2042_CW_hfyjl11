@@ -7,7 +7,7 @@ public class GameFrameController implements WindowFocusListener {
     private GameFrame gameFrame;
 
     /**
-     * called in GraphicsMain
+     * called in GameFrame
      */
     // GameFrameController constructor
     public GameFrameController(GameFrame gameFrame) {

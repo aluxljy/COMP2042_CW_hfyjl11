@@ -29,8 +29,7 @@ public class GameFrame extends JFrame {
     private boolean gaming;
 
     /**
-     * View
-     * called in GameInfo & GraphicsMain
+     * called in GameInfoController & GraphicsMain
      */
     // GameFrame constructor
     public GameFrame() {
@@ -56,7 +55,7 @@ public class GameFrame extends JFrame {
     }
 
     /**
-     * called in HomeMenu
+     * called in HomeMenuController
      */
     public void enableGameBoard() {
         this.dispose();

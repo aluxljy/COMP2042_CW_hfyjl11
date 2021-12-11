@@ -82,6 +82,9 @@ public class GameInfo extends JFrame {
         this.setLocation(x,y);
     }
 
+    /**
+     * called in GameInfoController
+     */
     public JButton getBackButton() {
         return backButton;
     }
