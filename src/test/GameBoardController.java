@@ -6,6 +6,10 @@ import java.awt.event.*;
 public class GameBoardController implements KeyListener, MouseListener, MouseMotionListener {
     private GameBoard gameBoard;
 
+    /**
+     * called in GameBoard
+     */
+    // GameBoardController constructor
     public GameBoardController(GameBoard gameBoard) {
         this.gameBoard = gameBoard;
     }
