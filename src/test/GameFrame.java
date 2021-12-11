@@ -24,8 +24,8 @@ import java.awt.event.WindowEvent;
 import java.awt.event.WindowFocusListener;
 import java.awt.event.WindowListener;
 
-public class GameFrame extends JFrame implements WindowFocusListener {
-    private static final String DEF_TITLE = "Brick Destroy";
+public class GameFrame extends JFrame {
+    private static final String DEF_TITLE = "BRICK DESTROYER";
 
     private GameBoard gameBoard;
     private HomeMenu homeMenu;
@@ -34,7 +34,7 @@ public class GameFrame extends JFrame implements WindowFocusListener {
 
     /**
      * View
-     * called in GraphicsMain
+     * called in GameInfo & GraphicsMain
      */
     // GameFrame constructor
     public GameFrame() {
@@ -48,7 +48,6 @@ public class GameFrame extends JFrame implements WindowFocusListener {
     }
 
     /**
-     * Controller
      * called in GraphicsMain
      */
     public void initialize() {
@@ -61,7 +60,6 @@ public class GameFrame extends JFrame implements WindowFocusListener {
     }
 
     /**
-     * Controller
      * called in HomeMenu
      */
     public void enableGameBoard() {
@@ -70,13 +68,9 @@ public class GameFrame extends JFrame implements WindowFocusListener {
         this.add(gameBoard,BorderLayout.CENTER);
         this.setUndecorated(false);
         initialize();
-        /*to avoid problems with graphics focus controller is added here*/
-        this.addWindowFocusListener(this);
+        this.addWindowFocusListener(new GameFrameController(this));
     }
 
-    /**
-     * Together with Controller
-     */
     private void autoLocate() {
         Dimension size = Toolkit.getDefaultToolkit().getScreenSize();
         int x = (size.width - this.getWidth()) / 2;
@@ -85,27 +79,23 @@ public class GameFrame extends JFrame implements WindowFocusListener {
     }
 
     /**
-     * Controller
+     * called in GameFrameController
      */
-    @Override
-    public void windowGainedFocus(WindowEvent windowEvent) {
-        /*
-            the first time the frame loses focus is because
-            it has been disposed to install the GameBoard,
-            so went it regains the focus it's ready to play.
-            of course calling a method such as 'onLostFocus'
-            is useful only if the GameBoard as been displayed
-            at least once
-         */
-        gaming = true;
+    public boolean isGaming() {
+        return gaming;
     }
 
     /**
-     * Controller
+     * called in GameFrameController
      */
-    @Override
-    public void windowLostFocus(WindowEvent windowEvent) {
-        if(gaming)
-            gameBoard.onLostFocus();
+    public void setGaming(boolean gaming) {
+        this.gaming = gaming;
+    }
+
+    /**
+     * called in GameFrameController
+     */
+    public GameBoard getGameBoard() {
+        return gameBoard;
     }
 }
