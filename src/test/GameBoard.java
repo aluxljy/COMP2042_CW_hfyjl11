@@ -53,7 +53,7 @@ public class GameBoard extends JComponent implements KeyListener,MouseListener,M
     private DebugConsole debugConsole;
 
     /**
-     * NOT SURE
+     * Controller
      * called in GameFrame
      */
     // GameBoard constructor
@@ -188,6 +188,7 @@ public class GameBoard extends JComponent implements KeyListener,MouseListener,M
         Color tmp = g2d.getColor();
 
         Shape shape = player.getPlayerShape();
+
         g2d.setColor(Player.INNER_COLOR);
         g2d.fill(shape);
 
@@ -284,7 +285,7 @@ public class GameBoard extends JComponent implements KeyListener,MouseListener,M
      */
     @Override
     public void keyPressed(KeyEvent keyEvent) {
-        switch(keyEvent.getKeyCode()) {
+        /*switch(keyEvent.getKeyCode()) {
             case KeyEvent.VK_A:
                 wall.getPlayer().moveLeft();
                 break;
@@ -308,6 +309,31 @@ public class GameBoard extends JComponent implements KeyListener,MouseListener,M
                     debugConsole.setVisible(true);
             default:
                 wall.getPlayer().stop();
+        }*/
+        if(keyEvent.getKeyCode() == KeyEvent.VK_A) {
+            wall.getPlayer().moveLeft();
+        }
+        else if(keyEvent.getKeyCode() == KeyEvent.VK_D) {
+            wall.getPlayer().moveRight();
+        }
+        else if(keyEvent.getKeyCode() == KeyEvent.VK_ESCAPE) {
+            showPauseMenu = !showPauseMenu;
+            repaint();
+            gameTimer.stop();
+        }
+        else if(keyEvent.getKeyCode() == KeyEvent.VK_SPACE) {
+            if(!showPauseMenu)
+                if(gameTimer.isRunning())
+                    gameTimer.stop();
+                else
+                    gameTimer.start();
+        }
+        else if(keyEvent.getKeyCode() == KeyEvent.VK_F1) {
+            if(keyEvent.isAltDown() && keyEvent.isShiftDown())
+                debugConsole.setVisible(true);
+        }
+        else {
+            wall.getPlayer().stop();
         }
     }
 

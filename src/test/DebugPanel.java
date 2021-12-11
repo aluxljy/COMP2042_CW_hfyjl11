@@ -86,7 +86,7 @@ public class DebugPanel extends JPanel {
     }
 
     /**
-     * NOT SURE
+     * Together with Controller
      * called in DebugConsole
      */
     public void setValues(int x,int y){

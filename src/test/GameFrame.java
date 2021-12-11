@@ -75,7 +75,7 @@ public class GameFrame extends JFrame implements WindowFocusListener {
     }
 
     /**
-     * NOT SURE
+     * Together with Controller
      */
     private void autoLocate() {
         Dimension size = Toolkit.getDefaultToolkit().getScreenSize();
