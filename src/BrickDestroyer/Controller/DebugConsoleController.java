@@ -1,4 +1,7 @@
-package test;
+package BrickDestroyer.Controller;
+
+import BrickDestroyer.Model.Ball;
+import BrickDestroyer.View.DebugConsole;
 
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;

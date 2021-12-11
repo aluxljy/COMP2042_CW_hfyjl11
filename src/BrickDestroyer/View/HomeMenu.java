@@ -15,7 +15,9 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package test;
+package BrickDestroyer.View;
+
+import BrickDestroyer.Controller.HomeMenuController;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -124,7 +126,7 @@ public class HomeMenu extends JComponent {
 
     private void drawContainer(Graphics2D g2d) {
         try {
-            homeMenuBackground = ImageIO.read(new File("src/test/PurpleBrick.jfif"));
+            homeMenuBackground = ImageIO.read(new File("src/BrickDestroyer/View/Image/PurpleBrick.jfif"));
             g2d.drawImage(homeMenuBackground,0,0,450,350,null);
         }
         catch(IOException exception) {

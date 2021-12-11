@@ -1,4 +1,6 @@
-package test;
+package BrickDestroyer.Controller;
+
+import BrickDestroyer.View.GameFrame;
 
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowFocusListener;

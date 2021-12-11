@@ -1,4 +1,7 @@
-package test;
+package BrickDestroyer.Controller;
+
+import BrickDestroyer.View.GameInfo;
+import BrickDestroyer.View.HomeMenu;
 
 import java.awt.*;
 import java.awt.event.MouseEvent;

@@ -1,4 +1,6 @@
-package test;
+package BrickDestroyer.View;
+
+import BrickDestroyer.Controller.GameInfoController;
 
 import javax.swing.*;
 import java.awt.*;

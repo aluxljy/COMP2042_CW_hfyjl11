@@ -15,7 +15,9 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package test;
+package BrickDestroyer.Model;
+
+import BrickDestroyer.Model.*;
 
 import java.awt.*;
 import java.awt.geom.Point2D;
@@ -243,7 +245,7 @@ public class Wall {
             if(brick.findImpact(getBall()) == Brick.UP_IMPACT) {
                 //Vertical impact
                 getBall().reverseY();  // if the bottom side of the ball hits the top side of the brick, then ball rebounds upwards
-                return brick.setImpact(getBall().getDown(),Crack.DOWN);
+                return brick.setImpact(getBall().getDown(), Crack.DOWN);
             }
             else if(brick.findImpact(getBall()) == Brick.DOWN_IMPACT) {
                 //Vertical impact

@@ -15,7 +15,13 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package test;
+package BrickDestroyer.View;
+
+import BrickDestroyer.Controller.GameBoardController;
+import BrickDestroyer.Model.Ball;
+import BrickDestroyer.Model.Brick;
+import BrickDestroyer.Model.Player;
+import BrickDestroyer.Model.Wall;
 
 import javax.swing.*;
 import java.awt.*;
@@ -147,7 +153,7 @@ public class GameBoard extends JComponent {
         g2d.setColor(tmp);
     }
 
-    private void drawBall(Ball ball,Graphics2D g2d) {
+    private void drawBall(Ball ball, Graphics2D g2d) {
         Color tmp = g2d.getColor();
 
         Shape shape = ball.getBallShape();
@@ -161,7 +167,7 @@ public class GameBoard extends JComponent {
         g2d.setColor(tmp);
     }
 
-    private void drawPlayer(Player player,Graphics2D g2d) {
+    private void drawPlayer(Player player, Graphics2D g2d) {
         Color tmp = g2d.getColor();
 
         Shape shape = player.getPlayerShape();

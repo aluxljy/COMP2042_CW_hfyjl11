@@ -1,4 +1,7 @@
-package test;
+package BrickDestroyer.Controller;
+
+import BrickDestroyer.View.GameFrame;
+import BrickDestroyer.View.GameInfo;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;

@@ -1,4 +1,7 @@
-package test;
+package BrickDestroyer.Model;
+
+import BrickDestroyer.Model.Brick;
+import BrickDestroyer.Model.BrickFactory;
 
 import java.awt.*;
 
