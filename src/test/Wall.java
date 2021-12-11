@@ -200,10 +200,7 @@ public class Wall {
      * called in GameBoard
      */
     public void findImpacts() {
-        if(getPlayer().impactWithBall(getBall()) && impactWithBorder()) {
-            getBall().reverseY();
-        }
-        else if(getPlayer().impactWithBall(getBall())) {
+        if(getPlayer().impactWithBall(getBall())) {
             getBall().reverseY();
         }
         else if(impactWithWall()) {
