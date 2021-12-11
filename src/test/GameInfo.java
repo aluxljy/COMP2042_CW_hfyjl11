@@ -2,20 +2,18 @@ package test;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
-public class GameInfo extends JFrame implements ActionListener {
+public class GameInfo extends JFrame {
     private JLabel GAME_INFO_TITLE;
     private JLabel GAME_INFO_CONTENT;
+
     private JButton backButton;
 
     private static final int DEF_WIDTH = 600;
     private static final int DEF_HEIGHT = 450;
 
     /**
-     * Controller
-     * called in HomeMenu
+     * called in HomeMenuController
      */
     // GameInfo constructor
     public GameInfo() {
@@ -25,9 +23,6 @@ public class GameInfo extends JFrame implements ActionListener {
         initialize();
     }
 
-    /**
-     * Controller
-     */
     private void initialize () {
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.setSize(DEF_WIDTH, DEF_HEIGHT);
@@ -40,9 +35,6 @@ public class GameInfo extends JFrame implements ActionListener {
         this.add(backButton);
     }
 
-    /**
-     * View
-     */
     private void displayInfoTitle() {
         GAME_INFO_TITLE = new JLabel();
 
@@ -53,9 +45,6 @@ public class GameInfo extends JFrame implements ActionListener {
         GAME_INFO_TITLE.setFont(new Font("Serif",Font.BOLD,20));
     }
 
-    /**
-     * View
-     */
     private void displayInfoContent() {
         GAME_INFO_CONTENT = new JLabel();
 
@@ -75,9 +64,6 @@ public class GameInfo extends JFrame implements ActionListener {
         GAME_INFO_CONTENT.setFont(new Font("Serif",Font.PLAIN,15));
     }
 
-    /**
-     * View
-     */
     private void drawBackButton() {
         backButton = new JButton("BACK TO MENU");
 
@@ -86,12 +72,9 @@ public class GameInfo extends JFrame implements ActionListener {
         backButton.setForeground(Color.BLACK);
         backButton.setBackground(Color.WHITE);
         backButton.setFocusable(false);
-        backButton.addActionListener(this);
+        backButton.addActionListener(new GameInfoController(this));
     }
 
-    /**
-     * Together with Controller
-     */
     private void autoLocate() {
         Dimension size = Toolkit.getDefaultToolkit().getScreenSize();
         int x = (size.width - this.getWidth()) / 2;
@@ -99,11 +82,7 @@ public class GameInfo extends JFrame implements ActionListener {
         this.setLocation(x,y);
     }
 
-    @Override
-    public void actionPerformed(ActionEvent actionEvent) {
-        if(actionEvent.getSource() == backButton) {
-            dispose();
-            new GameFrame();
-        }
+    public JButton getBackButton() {
+        return backButton;
     }
 }
