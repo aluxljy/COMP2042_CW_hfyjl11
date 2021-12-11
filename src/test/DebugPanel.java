@@ -34,7 +34,6 @@ public class DebugPanel extends JPanel {
     private Wall wall;
 
     /**
-     * Controller
      * called in DebugConsole
      */
     //DebugPanel constructor
@@ -56,26 +55,17 @@ public class DebugPanel extends JPanel {
         this.add(ballYSpeed);
     }
 
-    /**
-     * Controller
-     */
     private void initialize(){
         this.setBackground(DEF_BKG);
         this.setLayout(new GridLayout(2,2));
     }
 
-    /**
-     * View
-     */
     private JButton makeButton(String title, ActionListener listener){
         JButton out = new JButton(title);
         out.addActionListener(listener);
         return out;
     }
 
-    /**
-     * View
-     */
     private JSlider makeSlider(int min, int max, ChangeListener listener){
         JSlider out = new JSlider(min,max);
         out.setMajorTickSpacing(1);
@@ -86,8 +76,7 @@ public class DebugPanel extends JPanel {
     }
 
     /**
-     * Together with Controller
-     * called in DebugConsole
+     * called in DebugConsoleController
      */
     public void setValues(int x,int y){
         ballXSpeed.setValue(x);

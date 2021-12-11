@@ -19,19 +19,17 @@ package test;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.WindowEvent;
-import java.awt.event.WindowListener;
 
-public class DebugConsole extends JDialog implements WindowListener {
-    private static final String TITLE = "Debug Console";
+public class DebugConsole extends JDialog {
+    private static final String TITLE = "DEBUG CONSOLE";
 
     private JFrame owner;
     private DebugPanel debugPanel;
+
     private GameBoard gameBoard;
     private Wall wall;
 
     /**
-     * Controller
      * called in GameBoard
      */
     // DebugConsole constructor
@@ -48,67 +46,32 @@ public class DebugConsole extends JDialog implements WindowListener {
         this.pack();
     }
 
-    /**
-     * Controller
-     */
     private void initialize() {
         this.setModal(true);
         this.setTitle(TITLE);
         this.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
         this.setLayout(new BorderLayout());
-        this.addWindowListener(this);
+        this.addWindowListener(new DebugConsoleController(this));
         this.setFocusable(true);
     }
 
     /**
-     * Together with Controller
+     * all called in DebugConsoleController
      */
-    private void setLocation() {
-        int x = ((owner.getWidth() - this.getWidth()) / 2) + owner.getX();
-        int y = ((owner.getHeight() - this.getHeight()) / 2) + owner.getY();
-        this.setLocation(x,y);
+    public GameBoard getGameBoard() {
+        return gameBoard;
     }
 
     @Override
-    public void windowOpened(WindowEvent windowEvent) {
-
+    public JFrame getOwner() {
+        return owner;
     }
 
-    /**
-     * Controller
-     */
-    @Override
-    public void windowClosing(WindowEvent windowEvent) {
-        gameBoard.repaint();
+    public DebugPanel getDebugPanel() {
+        return debugPanel;
     }
 
-    @Override
-    public void windowClosed(WindowEvent windowEvent) {
-
-    }
-
-    @Override
-    public void windowIconified(WindowEvent windowEvent) {
-
-    }
-
-    @Override
-    public void windowDeiconified(WindowEvent windowEvent) {
-
-    }
-
-    /**
-     * Controller
-     */
-    @Override
-    public void windowActivated(WindowEvent windowEvent) {
-        setLocation();
-        Ball ball = wall.getBall();
-        debugPanel.setValues(ball.getSpeedX(),ball.getSpeedY());
-    }
-
-    @Override
-    public void windowDeactivated(WindowEvent windowEvent) {
-
+    public Wall getWall() {
+        return wall;
     }
 }
