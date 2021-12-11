@@ -20,16 +20,13 @@ package test;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.awt.event.MouseMotionListener;
 import java.awt.font.FontRenderContext;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
-public class HomeMenu extends JComponent implements MouseListener, MouseMotionListener {
+public class HomeMenu extends JComponent {
     private static final String GREETINGS = "LETS PLAY";
     private static final String GAME_TITLE = "BRICK DESTROYER";
     private static final String CREDITS = "REFACTORED VERSION 1.0";
@@ -39,12 +36,10 @@ public class HomeMenu extends JComponent implements MouseListener, MouseMotionLi
 
     private static final Color BG_COLOR = new Color(153,0,153);
     private static final Color BORDER_COLOR = new Color(102,0,102);
-    //private static final Color DASH_BORDER_COLOR = new Color(255, 216, 0);
     private static final Color TEXT_COLOR = new Color(255, 255, 255);
     private static final Color CLICKED_BUTTON_COLOR = BG_COLOR.brighter();
     private static final Color CLICKED_TEXT = BG_COLOR.brighter();
     private static final int BORDER_SIZE = 10;
-    //private static final float[] DASHES = {12,6};
 
     private static final double BUTTON_DISPLACEMENT = 35.0;
 
@@ -53,7 +48,6 @@ public class HomeMenu extends JComponent implements MouseListener, MouseMotionLi
     private Rectangle exitButton;
     private Rectangle infoButton;
 
-    //private BasicStroke borderStoke;
     private BasicStroke borderStroke;
 
     private Font greetingsFont;
@@ -63,23 +57,20 @@ public class HomeMenu extends JComponent implements MouseListener, MouseMotionLi
 
     private GameFrame owner;
 
-    private boolean startHovered;
-    private boolean exitHovered;
-    private boolean infoHovered;
-
     BufferedImage homeMenuBackground;
 
+    private HomeMenuController homeMenuController;
+
     /**
-     *
      * called in GameFrame
      */
     // HomeMenu constructor
     public HomeMenu(GameFrame owner,Dimension area) {
         this.setFocusable(true);
         this.requestFocusInWindow();
-
-        this.addMouseListener(this);
-        this.addMouseMotionListener(this);
+        HomeMenuController homeMenuController = new HomeMenuController(this);
+        this.addMouseListener(homeMenuController);
+        this.addMouseMotionListener(homeMenuController);
 
         this.owner = owner;
 
@@ -91,25 +82,20 @@ public class HomeMenu extends JComponent implements MouseListener, MouseMotionLi
         exitButton = new Rectangle(buttonDimension);
         infoButton = new Rectangle(buttonDimension);
 
-        //borderStoke = new BasicStroke(BORDER_SIZE,BasicStroke.CAP_ROUND,BasicStroke.JOIN_ROUND,0,DASHES,0);
         borderStroke = new BasicStroke(BORDER_SIZE,BasicStroke.CAP_ROUND,BasicStroke.JOIN_ROUND);
 
         greetingsFont = new Font("Monospaced",Font.PLAIN,20);
         gameTitleFont = new Font("Serif",Font.BOLD,40);
         creditsFont = new Font("Monospaced",Font.PLAIN,10);
         buttonFont = new Font("Serif",Font.BOLD,startButton.height - 2);
+
+        this.homeMenuController = homeMenuController;
     }
 
-    /**
-     * View
-     */
     public void paint(Graphics g) {
         drawMenu((Graphics2D)g);
     }
 
-    /**
-     * View
-     */
     private void drawMenu(Graphics2D g2d) {
         drawContainer(g2d);
 
@@ -136,9 +122,6 @@ public class HomeMenu extends JComponent implements MouseListener, MouseMotionLi
         g2d.setColor(previousColor);
     }
 
-    /**
-     * View
-     */
     private void drawContainer(Graphics2D g2d) {
         try {
             homeMenuBackground = ImageIO.read(new File("src/test/PurpleBrick.jfif"));
@@ -153,10 +136,7 @@ public class HomeMenu extends JComponent implements MouseListener, MouseMotionLi
             Stroke tmp = g2d.getStroke();
 
             g2d.setStroke(borderStroke);
-            //g2d.setColor(DASH_BORDER_COLOR);
-            //g2d.draw(menuShape);
 
-            //g2d.setStroke(borderStoke);
             g2d.setColor(BORDER_COLOR);
             g2d.draw(menuShape);
 
@@ -166,9 +146,6 @@ public class HomeMenu extends JComponent implements MouseListener, MouseMotionLi
         }
     }
 
-    /**
-     * View
-     */
     private void drawText(Graphics2D g2d) {
         g2d.setColor(TEXT_COLOR);
 
@@ -181,39 +158,24 @@ public class HomeMenu extends JComponent implements MouseListener, MouseMotionLi
         int x = (int)(menuShape.getWidth() - greetingsRectangleText.getWidth()) / 2;
         int y = (int)(menuShape.getHeight() / 4);
 
-        /*g2d.setFont(greetingsFont);
-        g2d.drawString(GREETINGS,x,y);*/
-
         createText(g2d,greetingsFont,GREETINGS,x,y);
 
         x = (int)(menuShape.getWidth() - gameTitleRectangleText.getWidth()) / 2;
         y += (int) gameTitleRectangleText.getHeight() * 1.1;  //add 10% of String height between the two strings
-
-        /*g2d.setFont(gameTitleFont);
-        g2d.drawString(GAME_TITLE,x,y);*/
 
         createText(g2d,gameTitleFont,GAME_TITLE,x,y);
 
         x = (int)(menuShape.getWidth() - creditsRectangleText.getWidth()) / 2;
         y += (int) creditsRectangleText.getHeight() * 1.1;
 
-        /*g2d.setFont(creditsFont);
-        g2d.drawString(CREDITS,x,y);*/
-
         createText(g2d,creditsFont,CREDITS,x,y);
     }
 
-    /**
-     * View
-     */
     private void createText(Graphics2D g2d,Font font,String string,int x,int y) {
         g2d.setFont(font);
         g2d.drawString(string,x,y);
     }
 
-    /**
-     * View
-     */
     private void drawButton(Graphics2D g2d) {
         FontRenderContext frc = g2d.getFontRenderContext();
 
@@ -226,26 +188,23 @@ public class HomeMenu extends JComponent implements MouseListener, MouseMotionLi
         int x = (menuShape.width - startButton.width) / 2;  // align buttons from the right to the center
         int y = (int)((menuShape.height - startButton.height) * 0.6);  // move buttons from the bottom to the current position
 
-        createButton(g2d,startButton,startRectangleText,startHovered,START_TEXT,x,y);
+        createButton(g2d,startButton,startRectangleText,homeMenuController.isStartHovered(),START_TEXT,x,y);
 
         x = startButton.x;
         y = startButton.y;
 
         y += BUTTON_DISPLACEMENT;
 
-        createButton(g2d,exitButton,exitRectangleText,exitHovered,EXIT_TEXT,x,y);
+        createButton(g2d,exitButton,exitRectangleText,homeMenuController.isExitHovered(),EXIT_TEXT,x,y);
 
         x = exitButton.x;
         y = exitButton.y;
 
         y += BUTTON_DISPLACEMENT;
 
-        createButton(g2d,infoButton,infoRectangleText,infoHovered,INFO_TEXT,x,y);
+        createButton(g2d,infoButton,infoRectangleText,homeMenuController.isInfoHovered(),INFO_TEXT,x,y);
     }
 
-    /**
-     * View
-     */
     private void createButton(Graphics2D g2d,Rectangle button,Rectangle2D rectangleText,boolean buttonHovered,String BUTTON_TEXT,int x,int y) {
         button.setLocation(x,y);
 
@@ -271,110 +230,21 @@ public class HomeMenu extends JComponent implements MouseListener, MouseMotionLi
     }
 
     /**
-     * Controller
+     * all called in HomeMenuController
      */
-    @Override
-    public void mouseClicked(MouseEvent mouseEvent) {
-        Point point = mouseEvent.getPoint();
-        if(startButton.contains(point)) {
-           owner.enableGameBoard();
-        }
-        else if(exitButton.contains(point)) {
-            System.out.println("Goodbye " + System.getProperty("user.name"));
-            System.exit(0);
-        }
-        else if(infoButton.contains(point)) {
-            new GameInfo();
-        }
+    public Rectangle getStartButton() {
+        return startButton;
     }
 
-    /**
-     * Controller
-     */
-    @Override
-    public void mousePressed(MouseEvent mouseEvent) {
-        /*Point point = mouseEvent.getPoint();
-        if(startButton.contains(point)) {
-            startClicked = true;
-            repaint(startButton.x,startButton.y,startButton.width + 1,startButton.height + 1);
-        }
-        else if(exitButton.contains(point)) {
-            exitClicked = true;
-            repaint(exitButton.x, exitButton.y, exitButton.width + 1, exitButton.height + 1);
-        }
-        else if(infoButton.contains(point)) {
-            infoClicked = true;
-            repaint(infoButton.x, infoButton.y, infoButton.width + 1, infoButton.height + 1);
-        }*/
+    public Rectangle getExitButton() {
+        return exitButton;
     }
 
-    /**
-     * Controller
-     */
-    @Override
-    public void mouseReleased(MouseEvent mouseEvent) {
-        if(startHovered) {
-            startHovered =false;
-            repaint(startButton.x,startButton.y,startButton.width + 1,startButton.height+1);
-            this.setCursor(Cursor.getDefaultCursor());
-        }
-        else if(exitHovered) {
-            exitHovered = false;
-            repaint(exitButton.x, exitButton.y, exitButton.width + 1, exitButton.height+1);
-            this.setCursor(Cursor.getDefaultCursor());
-        }
-        else if(infoHovered) {
-            infoHovered = false;
-            repaint(infoButton.x, infoButton.y, infoButton.width + 1, infoButton.height+1);
-            this.setCursor(Cursor.getDefaultCursor());
-        }
+    public Rectangle getInfoButton() {
+        return infoButton;
     }
 
-    @Override
-    public void mouseEntered(MouseEvent mouseEvent) {
-
-    }
-
-    @Override
-    public void mouseExited(MouseEvent mouseEvent) {
-
-    }
-
-
-    @Override
-    public void mouseDragged(MouseEvent mouseEvent) {
-
-    }
-
-    /**
-     * Controller
-     */
-    @Override
-    public void mouseMoved(MouseEvent mouseEvent) {
-        Point point = mouseEvent.getPoint();
-        if(startButton.contains(point)) {
-            startHovered = true;
-            repaint(startButton.x,startButton.y,startButton.width + 1,startButton.height+1);
-            this.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-        }
-        else if(exitButton.contains(point)) {
-            exitHovered = true;
-            repaint(exitButton.x, exitButton.y, exitButton.width + 1, exitButton.height+1);
-            this.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-        }
-        else if(infoButton.contains(point)) {
-            infoHovered = true;
-            repaint(infoButton.x, infoButton.y, infoButton.width + 1, infoButton.height+1);
-            this.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-        }
-        else {
-            startHovered = false;
-            exitHovered = false;
-            infoHovered = false;
-            repaint(startButton.x,startButton.y,startButton.width + 1,startButton.height+1);
-            repaint(exitButton.x, exitButton.y, exitButton.width + 1, exitButton.height+1);
-            repaint(infoButton.x, infoButton.y, infoButton.width + 1, infoButton.height+1);
-            this.setCursor(Cursor.getDefaultCursor());
-        }
+    public GameFrame getOwner() {
+        return owner;
     }
 }
