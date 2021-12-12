@@ -17,22 +17,33 @@
  */
 package BrickDestroyer.Model;
 
-import BrickDestroyer.Model.Ball;
-
 import java.awt.*;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Point2D;
 
+/**
+ * RubberBall inherits the methods of Ball
+ */
 public class RubberBall extends Ball {
     private static final int DEF_RADIUS = 12;
     private static final Color DEF_INNER_COLOR = new Color(255,219,88);
     private static final Color DEF_BORDER_COLOR = DEF_INNER_COLOR.darker().darker();
 
-    // RubberBall constructor
+    /**
+     * called in BallFactory, the RubberBall constructor takes in a parameter to make a rubber ball
+     * @param center center point of the rubber ball
+     */
     public RubberBall(Point2D center) {
         super(center,DEF_RADIUS,DEF_RADIUS,DEF_INNER_COLOR,DEF_BORDER_COLOR);  // call Ball constructor
     }
 
+    /**
+     * overrides the abstract method in Ball by implementing its own
+     * @param center center point of the ball
+     * @param radiusA horizontal radius of the ball
+     * @param radiusB vertical radius of the ball
+     * @return ellipse shape of the rubber ball
+     */
     @Override
     protected Shape makeBallShape(Point2D center,int radiusA,int radiusB) {
         // framing the rectangle shape
