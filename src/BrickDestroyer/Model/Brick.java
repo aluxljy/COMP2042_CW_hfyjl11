@@ -29,8 +29,6 @@ abstract public class Brick {
 
     private boolean broken;
 
-    //
-
     /**
      * called in CementBrick, ClayBrick, SteelBrick, the Brick constructor takes in some parameters to make the shape of the brick and set the colour of the brick
      * @param name brick name
