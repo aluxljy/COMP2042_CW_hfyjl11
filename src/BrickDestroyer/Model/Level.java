@@ -1,22 +1,24 @@
 package BrickDestroyer.Model;
 
 import java.awt.*;
+import java.util.Random;
 
 /**
  * to arrange different bricks together into different combinations that can be used to make new levels
  */
 public class Level {
     /**
-     * called in Wall, to arrange 2 types of bricks into a chessboard pattern
+     * called in Wall, to take in 3 types of bricks and arrange them into a random pattern
      * @param drawArea area of the rectangular shape
      * @param brickCount number of bricks
      * @param lineCount number of lines
      * @param brickSizeRatio ratio of the brick size
      * @param typeA name of brickA
      * @param typeB name of brickB
+     * @param typeC name of BrickC
      * @return a list of bricks
      */
-    public static Brick[] makeChessboardLevel(Rectangle drawArea, int brickCount, int lineCount, double brickSizeRatio, String typeA, String typeB) {
+    public static Brick[] makeCombinationLevel(Rectangle drawArea, int brickCount, int lineCount, double brickSizeRatio, String typeA, String typeB, String typeC) {
         BrickFactory brickFactory = new BrickFactory();
         /*
           if brickCount is not divisible by line count,brickCount is adjusted to the biggest
@@ -51,7 +53,7 @@ public class Level {
             point.setLocation(x,y);
 
             boolean brick = ((line % 2 == 0 && i % 2 == 0) || (line % 2 != 0 && positionX > centerLeft && positionX <= centerRight));
-            tmp[i] = brick ? brickFactory.makeBrick(typeA,point,brickSize) : brickFactory.makeBrick(typeB,point,brickSize);
+            tmp[i] = brick ? brickFactory.makeBrick(typeA,point,brickSize) : randomBrickType(typeB,typeC,point,brickSize);
         }
 
         for(double y = brickHeight;i < tmp.length;i++, y += 2*brickHeight){
@@ -60,5 +62,25 @@ public class Level {
             tmp[i] = brickFactory.makeBrick(typeA,point,brickSize);
         }
         return tmp;
+    }
+
+    /**
+     * to randomize the type of brick created
+     * @param typeB name of brickB
+     * @param typeC name of brickC
+     * @param point point of position of the brick
+     * @param brickSize size of the brick
+     * @return new object of the brick type
+     */
+    private static Brick randomBrickType(String typeB, String typeC,Point point, Dimension brickSize) {
+        BrickFactory brickFactory = new BrickFactory();
+        Random random = new Random();
+
+        if(random.nextInt(2) == 0) {
+            return brickFactory.makeBrick(typeB,point,brickSize);
+        }
+        else {
+            return brickFactory.makeBrick(typeC,point,brickSize);
+        }
     }
 }
