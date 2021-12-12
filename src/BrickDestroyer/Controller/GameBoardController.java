@@ -2,7 +2,6 @@ package BrickDestroyer.Controller;
 
 import BrickDestroyer.View.GameBoard;
 import BrickDestroyer.View.GameFrame;
-import BrickDestroyer.View.HomeMenu;
 
 import java.awt.*;
 import java.awt.event.*;
@@ -73,7 +72,6 @@ public class GameBoardController implements KeyListener, MouseListener, MouseMot
             gameBoard.repaint();
         }
         else if(gameBoard.getMenuButtonRectangle().contains(point)) {
-            //System.exit(0);
             gameBoard.getOwner().dispose();
             gameBoard.getOwner().remove(gameBoard);
             new GameFrame().initialize();
