@@ -30,10 +30,10 @@ import java.awt.font.FontRenderContext;
 public class GameBoard extends JComponent {
     private static final String CONTINUE = "CONTINUE";
     private static final String RESTART = "RESTART";
-    private static final String EXIT = "EXIT";
+    private static final String MENU = "BACK TO MENU";
     private static final String PAUSE = "PAUSE MENU";
     private static final int TEXT_SIZE = 30;
-    private static final Color MENU_COLOR = new Color(0,255,0);
+    private static final Color MENU_COLOR = new Color(153,0,153);;
 
     private static final int DEF_WIDTH = 600;
     private static final int DEF_HEIGHT = 450;
@@ -47,11 +47,13 @@ public class GameBoard extends JComponent {
     private Font menuFont;
 
     private Rectangle continueButtonRectangle;
-    private Rectangle exitButtonRectangle;
+    private Rectangle menuButtonRectangle;
     private Rectangle restartButtonRectangle;
     private int stringLength;
 
     private DebugConsole debugConsole;
+
+    private JFrame owner;
 
     /**
      * called in GameFrame
@@ -60,10 +62,12 @@ public class GameBoard extends JComponent {
     public GameBoard(JFrame owner) {
         super();
 
+        this.owner = owner;
+
         stringLength = 0;
         showPauseMenu = false;
 
-        menuFont = new Font("Monospaced",Font.PLAIN,TEXT_SIZE);
+        menuFont = new Font("Serif",Font.BOLD,TEXT_SIZE);
 
         this.initialize();
         message = "";
@@ -239,12 +243,12 @@ public class GameBoard extends JComponent {
 
         y *= 3.0 / 2;
 
-        if(exitButtonRectangle == null){
-            exitButtonRectangle = (Rectangle) continueButtonRectangle.clone();
-            exitButtonRectangle.setLocation(x,y - exitButtonRectangle.height);
+        if(menuButtonRectangle == null){
+            menuButtonRectangle = (Rectangle) continueButtonRectangle.clone();
+            menuButtonRectangle.setLocation(x,y - menuButtonRectangle.height);
         }
 
-        g2d.drawString(EXIT,x,y);
+        g2d.drawString(MENU,x,y);
 
         g2d.setFont(tmpFont);
         g2d.setColor(tmpColor);
@@ -278,8 +282,8 @@ public class GameBoard extends JComponent {
         return continueButtonRectangle;
     }
 
-    public Rectangle getExitButtonRectangle() {
-        return exitButtonRectangle;
+    public Rectangle getMenuButtonRectangle() {
+        return menuButtonRectangle;
     }
 
     public Rectangle getRestartButtonRectangle() {
@@ -296,5 +300,9 @@ public class GameBoard extends JComponent {
 
     public DebugConsole getDebugConsole() {
         return debugConsole;
+    }
+
+    public JFrame getOwner() {
+        return owner;
     }
 }

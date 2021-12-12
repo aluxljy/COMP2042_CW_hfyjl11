@@ -1,6 +1,8 @@
 package BrickDestroyer.Controller;
 
 import BrickDestroyer.View.GameBoard;
+import BrickDestroyer.View.GameFrame;
+import BrickDestroyer.View.HomeMenu;
 
 import java.awt.*;
 import java.awt.event.*;
@@ -70,8 +72,11 @@ public class GameBoardController implements KeyListener, MouseListener, MouseMot
             gameBoard.setShowPauseMenu(false);
             gameBoard.repaint();
         }
-        else if(gameBoard.getExitButtonRectangle().contains(point)) {
-            System.exit(0);
+        else if(gameBoard.getMenuButtonRectangle().contains(point)) {
+            //System.exit(0);
+            gameBoard.getOwner().dispose();
+            gameBoard.getOwner().remove(gameBoard);
+            new GameFrame().initialize();
         }
     }
 
@@ -103,8 +108,8 @@ public class GameBoardController implements KeyListener, MouseListener, MouseMot
     @Override
     public void mouseMoved(MouseEvent mouseEvent) {
         Point point = mouseEvent.getPoint();
-        if(gameBoard.getExitButtonRectangle() != null && gameBoard.isShowPauseMenu()) {
-            if (gameBoard.getExitButtonRectangle().contains(point) || gameBoard.getContinueButtonRectangle().contains(point) || gameBoard.getRestartButtonRectangle().contains(point))
+        if(gameBoard.getMenuButtonRectangle() != null && gameBoard.isShowPauseMenu()) {
+            if (gameBoard.getMenuButtonRectangle().contains(point) || gameBoard.getContinueButtonRectangle().contains(point) || gameBoard.getRestartButtonRectangle().contains(point))
                 gameBoard.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
             else
                 gameBoard.setCursor(Cursor.getDefaultCursor());
