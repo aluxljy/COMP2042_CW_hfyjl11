@@ -33,13 +33,18 @@ public class GameBoardController implements KeyListener, MouseListener, MouseMot
             gameBoard.setShowPauseMenu(!gameBoard.isShowPauseMenu());
             gameBoard.repaint();
             gameBoard.getGameTimer().stop();
+            gameBoard.getTimer().setGameStatus(false);
         }
         else if(keyEvent.getKeyCode() == KeyEvent.VK_SPACE) {
             if(!gameBoard.isShowPauseMenu())
-                if(gameBoard.getGameTimer().isRunning())
+                if(gameBoard.getGameTimer().isRunning()) {
                     gameBoard.getGameTimer().stop();
-                else
+                    gameBoard.getTimer().setGameStatus(false);
+                }
+                else {
                     gameBoard.getGameTimer().start();
+                    gameBoard.getTimer().setGameStatus(true);
+                }
         }
         else if(keyEvent.getKeyCode() == KeyEvent.VK_F1) {
             if(gameBoard.getMode() == "training") {

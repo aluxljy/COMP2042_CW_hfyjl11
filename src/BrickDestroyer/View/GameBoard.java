@@ -18,10 +18,7 @@
 package BrickDestroyer.View;
 
 import BrickDestroyer.Controller.GameBoardController;
-import BrickDestroyer.Model.Ball;
-import BrickDestroyer.Model.Brick;
-import BrickDestroyer.Model.Player;
-import BrickDestroyer.Model.Wall;
+import BrickDestroyer.Model.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -58,6 +55,8 @@ public class GameBoard extends JComponent {
     private JFrame owner;
     private String mode;
 
+    private GameTimer timer;
+
     /**
      * called in GameFrame
      */
@@ -67,6 +66,7 @@ public class GameBoard extends JComponent {
 
         this.owner = owner;
         this.mode = mode;
+        timer = new GameTimer();
 
         stringLength = 0;
         showPauseMenu = false;
@@ -83,6 +83,7 @@ public class GameBoard extends JComponent {
         wall.nextLevel();
 
         gameTimer = new Timer(10,e -> {
+            timer.setGameStatus(true);
             wall.move();
             wall.findImpacts();
             message = "";
@@ -92,7 +93,7 @@ public class GameBoard extends JComponent {
                 message = "BRICKS: " + wall.getBrickCount() + "   " + "BALLS: " + wall.getBallCount();
             }
             else {
-                score = "BRICKS: " + wall.getBrickCount() + "   " + "BALLS: " + wall.getBallCount() + "   " + "TOTAL SCORE: " + wall.getTotalScore();
+                score = "BRICKS: " + wall.getBrickCount() + "   " + "BALLS: " + wall.getBallCount() + "   " + "TOTAL SCORE: " + wall.getTotalScore() + "   " + "REMAINING TIME: " + timer.getDdMinute() + ":" + timer.getDdSecond();
             }
 
             if(wall.isBallLost()) {
@@ -142,7 +143,7 @@ public class GameBoard extends JComponent {
 
         g2d.setColor(Color.BLUE);
         g2d.drawString(message,240,225);
-        g2d.drawString(score,190,225);
+        g2d.drawString(score,120,225);
 
         drawBall(wall.getBall(),g2d);
 
@@ -337,5 +338,13 @@ public class GameBoard extends JComponent {
 
     public void setScore(String score) {
         this.score = score;
+    }
+
+    public GameTimer getTimer() {
+        return timer;
+    }
+
+    public void setTimer(GameTimer timer) {
+        this.timer = timer;
     }
 }
