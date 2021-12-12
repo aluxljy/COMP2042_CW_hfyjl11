@@ -43,6 +43,7 @@ public class GameBoard extends JComponent {
     private Timer gameTimer;
     private Wall wall;
     private String message;
+
     private String score;
     private boolean showPauseMenu;
     private Font menuFont;
@@ -85,12 +86,13 @@ public class GameBoard extends JComponent {
             wall.move();
             wall.findImpacts();
             message = "";
+            score = "";
 
             if(this.mode == "training") {
                 message = "BRICKS: " + wall.getBrickCount() + "   " + "BALLS: " + wall.getBallCount();
             }
             else {
-                score = message + "   " + "TOTAL SCORE: " + wall.getTotalScore();
+                score = "BRICKS: " + wall.getBrickCount() + "   " + "BALLS: " + wall.getBallCount() + "   " + "TOTAL SCORE: " + wall.getTotalScore();
             }
 
             if(wall.isBallLost()) {
@@ -98,6 +100,7 @@ public class GameBoard extends JComponent {
                     wall.wallReset();
                     message = "GAME OVER";
                     score = "";
+                    wall.setTotalScore(0);
                 }
                 wall.ballReset();
                 gameTimer.stop();
@@ -115,6 +118,7 @@ public class GameBoard extends JComponent {
                     message = "ALL WALLS DESTROYED";
                     score = "";
                     gameTimer.stop();
+                    wall.setTotalScore(0);
                 }
             }
             repaint();
@@ -329,5 +333,9 @@ public class GameBoard extends JComponent {
 
     public void setMode(String mode) {
         this.mode = mode;
+    }
+
+    public void setScore(String score) {
+        this.score = score;
     }
 }

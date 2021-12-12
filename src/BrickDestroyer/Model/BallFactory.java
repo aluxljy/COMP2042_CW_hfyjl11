@@ -19,6 +19,9 @@ public class BallFactory {
         if(ballType.equalsIgnoreCase("RUBBERBALL")) {
             return new RubberBall(center);
         }
+        else if(ballType.equalsIgnoreCase("SUPERBALL")) {
+            return new SuperBall(center);
+        }
         return null;
     }
 }

@@ -67,6 +67,7 @@ public class GameBoardController implements KeyListener, MouseListener, MouseMot
             gameBoard.repaint();
         }
         else if(gameBoard.getRestartButtonRectangle().contains(point)) {
+            gameBoard.setScore("");
             gameBoard.setMessage("RESTARTING GAME...");
             gameBoard.getWall().ballReset();
             gameBoard.getWall().wallReset();
