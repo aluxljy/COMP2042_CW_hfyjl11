@@ -38,6 +38,9 @@ public class HomeMenuController implements MouseListener, MouseMotionListener {
         else if(homeMenu.getInfoButton().contains(point)) {
             new GameInfo();
         }
+        else if(homeMenu.getHighScoresButton().contains(point)) {
+            homeMenu.getOwner().enableGameHighScore();
+        }
     }
 
     @Override

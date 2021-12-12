@@ -18,9 +18,15 @@
 package BrickDestroyer.View;
 
 import BrickDestroyer.Controller.GameFrameController;
+import javafx.application.Platform;
+import javafx.embed.swing.JFXPanel;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.IOException;
 
 public class GameFrame extends JFrame {
     private static final String DEF_TITLE = "BRICK DESTROYER";
@@ -66,6 +72,31 @@ public class GameFrame extends JFrame {
         this.setUndecorated(false);
         initialize();
         this.addWindowFocusListener(new GameFrameController(this));
+    }
+
+    public void enableGameHighScore() {
+        this.dispose();
+        this.remove(homeMenu);
+
+        final JFXPanel jfxPanel = new JFXPanel();  // embed javaFX into jFrame
+        Platform.runLater(() -> {
+            initGameHighScoreFX(jfxPanel);
+        });
+    }
+
+    private void initGameHighScoreFX(JFXPanel jfxPanel) {
+        this.add(jfxPanel,BorderLayout.CENTER);
+
+        try {
+            Parent root = FXMLLoader.load(GameFrame.class.getResource("GameHighScore.fxml"));
+            Scene scene = new Scene(root);
+            jfxPanel.setScene(scene);
+            initialize();
+        }
+        catch(IOException exception) {
+            exception.printStackTrace();
+            System.exit(0);
+        }
     }
 
     private void autoLocate() {

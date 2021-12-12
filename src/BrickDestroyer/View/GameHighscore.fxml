@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="450.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="450.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="BrickDestroyer.Controller.GameHighScoreController">
    <children>
       <Button fx:id="btnBack" layoutX="249.0" layoutY="383.0" mnemonicParsing="false" text="BACK TO MENU" />
       <Label fx:id="lblPlayer_3" layoutX="150.0" layoutY="190.0" prefHeight="38.0" prefWidth="142.0" text="Label" />
@@ -20,6 +20,6 @@
       <Label fx:id="lblScore_4" layoutX="310.0" layoutY="230.0" prefHeight="38.0" prefWidth="142.0" text="Label" />
       <Label fx:id="lblScore_5" layoutX="310.0" layoutY="270.0" prefHeight="38.0" prefWidth="142.0" text="Label" />
       <Label fx:id="lblScore_6" layoutX="310.0" layoutY="310.0" prefHeight="38.0" prefWidth="142.0" text="Label" />
-      <Label fx:id="lblHighscoreTitle" layoutX="278.0" layoutY="55.0" text="Label" />
+      <Label fx:id="lblHighScoreTitle" layoutX="278.0" layoutY="55.0" text="Label" />
    </children>
 </AnchorPane>
