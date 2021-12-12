@@ -44,7 +44,6 @@ public class GameFrame extends JFrame {
         super();
         gaming = false;
         this.setLayout(new BorderLayout());
-        gameBoard = new GameBoard(this);
         homeMenu = new HomeMenu(this,new Dimension(450,400));
         this.add(homeMenu,BorderLayout.CENTER);
         this.setUndecorated(true);
@@ -65,9 +64,10 @@ public class GameFrame extends JFrame {
     /**
      * called in HomeMenuController
      */
-    public void enableGameBoard() {
+    public void enableGameBoard(String mode) {
         this.dispose();
         this.remove(homeMenu);
+        gameBoard = new GameBoard(this,mode);
         this.add(gameBoard,BorderLayout.CENTER);
         this.setUndecorated(false);
         initialize();

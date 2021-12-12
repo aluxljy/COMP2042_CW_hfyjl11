@@ -33,7 +33,7 @@ public class GameBoard extends JComponent {
     private static final String MENU = "BACK TO MENU";
     private static final String PAUSE = "PAUSE MENU";
     private static final int TEXT_SIZE = 30;
-    private static final Color MENU_COLOR = new Color(153,0,153);;
+    private static final Color MENU_COLOR = new Color(255,0,255);;
 
     private static final int DEF_WIDTH = 600;
     private static final int DEF_HEIGHT = 450;
@@ -43,6 +43,7 @@ public class GameBoard extends JComponent {
     private Timer gameTimer;
     private Wall wall;
     private String message;
+    private String score;
     private boolean showPauseMenu;
     private Font menuFont;
 
@@ -54,15 +55,17 @@ public class GameBoard extends JComponent {
     private DebugConsole debugConsole;
 
     private JFrame owner;
+    private String mode;
 
     /**
      * called in GameFrame
      */
     // GameBoard constructor
-    public GameBoard(JFrame owner) {
+    public GameBoard(JFrame owner,String mode) {
         super();
 
         this.owner = owner;
+        this.mode = mode;
 
         stringLength = 0;
         showPauseMenu = false;
@@ -71,7 +74,8 @@ public class GameBoard extends JComponent {
 
         this.initialize();
         message = "";
-        wall = new Wall(new Rectangle(0,0,DEF_WIDTH,DEF_HEIGHT),30,3,6/2,new Point(300,430));
+        score = "";
+        wall = new Wall(new Rectangle(0,0,DEF_WIDTH,DEF_HEIGHT),6/2,new Point(300,430));
 
         debugConsole = new DebugConsole(owner,wall,this);
         //initialize the first level
@@ -80,11 +84,20 @@ public class GameBoard extends JComponent {
         gameTimer = new Timer(10,e -> {
             wall.move();
             wall.findImpacts();
-            message = String.format("BRICKS: %d  BALLS %d",wall.getBrickCount(),wall.getBallCount());
+            message = "";
+
+            if(this.mode == "training") {
+                message = "BRICKS: " + wall.getBrickCount() + "   " + "BALLS: " + wall.getBallCount();
+            }
+            else {
+                score = message + "   " + "TOTAL SCORE: " + wall.getTotalScore();
+            }
+
             if(wall.isBallLost()) {
                 if(wall.ballEnd()) {
                     wall.wallReset();
                     message = "GAME OVER";
+                    score = "";
                 }
                 wall.ballReset();
                 gameTimer.stop();
@@ -92,6 +105,7 @@ public class GameBoard extends JComponent {
             else if(wall.isDone()) {
                 if(wall.hasLevel()) {
                     message = "GO TO NEXT LEVEL";
+                    score = "";
                     gameTimer.stop();
                     wall.ballReset();
                     wall.wallReset();
@@ -99,6 +113,7 @@ public class GameBoard extends JComponent {
                 }
                 else {
                     message = "ALL WALLS DESTROYED";
+                    score = "";
                     gameTimer.stop();
                 }
             }
@@ -122,7 +137,8 @@ public class GameBoard extends JComponent {
         clear(g2d);
 
         g2d.setColor(Color.BLUE);
-        g2d.drawString(message,250,225);
+        g2d.drawString(message,240,225);
+        g2d.drawString(score,190,225);
 
         drawBall(wall.getBall(),g2d);
 
@@ -260,6 +276,7 @@ public class GameBoard extends JComponent {
     public void onLostFocus() {
         gameTimer.stop();
         message = "FOCUS LOST";
+        score = "";
         repaint();
     }
 
@@ -304,5 +321,13 @@ public class GameBoard extends JComponent {
 
     public JFrame getOwner() {
         return owner;
+    }
+
+    public String getMode() {
+        return mode;
+    }
+
+    public void setMode(String mode) {
+        this.mode = mode;
     }
 }

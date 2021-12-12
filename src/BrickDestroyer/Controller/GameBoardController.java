@@ -42,8 +42,10 @@ public class GameBoardController implements KeyListener, MouseListener, MouseMot
                     gameBoard.getGameTimer().start();
         }
         else if(keyEvent.getKeyCode() == KeyEvent.VK_F1) {
-            if(keyEvent.isAltDown() && keyEvent.isShiftDown())
-                gameBoard.getDebugConsole().setVisible(true);
+            if(gameBoard.getMode() == "training") {
+                if(keyEvent.isAltDown() && keyEvent.isShiftDown())
+                    gameBoard.getDebugConsole().setVisible(true);
+            }
         }
         else {
             gameBoard.getWall().getPlayer().stop();

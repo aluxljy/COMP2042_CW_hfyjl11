@@ -29,7 +29,10 @@ public class HomeMenuController implements MouseListener, MouseMotionListener {
     public void mouseClicked(MouseEvent mouseEvent) {
         Point point = mouseEvent.getPoint();
         if(homeMenu.getTrainingButton().contains(point)) {
-            homeMenu.getOwner().enableGameBoard();
+            homeMenu.getOwner().enableGameBoard("training");
+        }
+        else if(homeMenu.getRankedButton().contains(point)) {
+            homeMenu.getOwner().enableGameBoard("ranked");
         }
         else if(homeMenu.getExitButton().contains(point)) {
             System.out.println("Goodbye " + System.getProperty("user.name"));
