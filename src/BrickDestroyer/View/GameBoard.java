@@ -127,7 +127,7 @@ public class GameBoard extends JComponent {
         drawBall(wall.getBall(),g2d);
 
         for(Brick brick : wall.getBricks())
-            if(!brick.getBroken())
+            if(!brick.isBroken())
                 drawBrick(brick,g2d);
 
         drawPlayer(wall.getPlayer(),g2d);

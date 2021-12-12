@@ -17,11 +17,12 @@
  */
 package BrickDestroyer.Model;
 
-import BrickDestroyer.Model.Brick;
-
 import java.awt.*;
 import java.util.Random;
 
+/**
+ * SteelBrick inherits the methods of Brick
+ */
 public class SteelBrick extends Brick {
     private static final String NAME = "Steel Brick";
     private static final Color DEF_INNER = new Color(203,203,201);
@@ -30,35 +31,20 @@ public class SteelBrick extends Brick {
     private static final double STEEL_PROBABILITY = 0.4;
 
     private Random random;
-    //private Shape brickShape;
 
     /**
-     * called in BrickFactory
+     * called in BrickFactory, the SteelBrick constructor takes in parameters to make a steel brick
+     * @param position position of the steel brick
+     * @param size size of the steel brick
      */
-    // SteelBrick constructor
     public SteelBrick(Point position, Dimension size) {
         super(NAME,position,size,DEF_BORDER,DEF_INNER,STEEL_STRENGTH);
         random = new Random();
-        //brickShape = super.getBrickShape();
     }
 
-    /*@Override
-    protected Shape makeBrickShape(Point position,Dimension size) {
-        return new Rectangle(position,size);
-    }*/
-
-   /* @Override
-    public Shape getBrick() {
-        return brickShape;
-    }*/
-
-    /*public boolean setImpact(Point2D point,int direction) {
-        if(super.isBroken())
-            return false;
-        impact();
-        return super.isBroken();
-    }*/
-
+    /**
+     * overrides the method in Brick by implementing its own
+     */
     @Override
     public void impact() {
         if(random.nextDouble() < STEEL_PROBABILITY) {

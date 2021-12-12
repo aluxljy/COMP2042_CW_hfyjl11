@@ -4,6 +4,9 @@ import java.awt.*;
 import java.awt.geom.GeneralPath;
 import java.awt.geom.Point2D;
 
+/**
+ * CementBrick inherits the methods of Brick
+ */
 public class CementBrick extends Brick {
     private static final String NAME = "Cement Brick";
     private static final Color DEF_INNER = new Color(147,147,147);
@@ -17,29 +20,28 @@ public class CementBrick extends Brick {
     private Shape brickShape;
 
     /**
-     * called in BrickFactory
+     * called in BrickFactory, the CementBrick constructor takes in parameters to make a cement brick
+     * @param position position of the cement brick
+     * @param size size of the cement brick
      */
-    // CementBrick constructor
     public CementBrick(Point position,Dimension size) {
         super(NAME,position,size,DEF_BORDER,DEF_INNER,CEMENT_STRENGTH);
         crack = new Crack(this,DEF_CRACK_DEPTH,DEF_STEPS);
         brickShape = super.getBrickShape();
     }
 
-   /* @Override
-    protected Shape makeBrickShape(Point position,Dimension size) {
-        return new Rectangle(position,size);
-    }
-*/
     /**
-     * called in Wall
+     * called in Wall, overrides the method in Brick by implementing its own
+     * @param point point of impact on the brick
+     * @param direction direction of impact on the brick
+     * @return if the cement brick is broken or not
      */
     @Override
     public boolean setImpact(Point2D point,int direction) {
-        if(super.getBroken())
+        if(super.isBroken())
             return false;  // if broken then do not set impact
         super.impact();
-        if(!super.getBroken()) {
+        if(!super.isBroken()) {
             crack.makeCrack(point,direction);  // if not broken then add crack on cement brick
             updateBrick();
             return false;
@@ -48,15 +50,19 @@ public class CementBrick extends Brick {
     }
 
     /**
-     * called in GameBoard
+     * called in Crack & GameBoard, getter
+     * @return shape of the cement brick
      */
    @Override
     public Shape getBrickShape() {
         return this.brickShape;
     }
 
+    /**
+     * to update the shape of the cement brick
+     */
     private void updateBrick() {
-        if(!super.getBroken()) {
+        if(!super.isBroken()) {
             GeneralPath output = crack.draw();  // draw the crack path
             output.append(super.getBrickShape(),false);
             brickShape = output;
@@ -64,7 +70,7 @@ public class CementBrick extends Brick {
     }
 
     /**
-     * called in Wall
+     * called in Wall, overrides the method in Brick by implementing its own
      */
     @Override
     public void repair() {
