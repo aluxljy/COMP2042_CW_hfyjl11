@@ -39,7 +39,7 @@ public class GameFrame extends JFrame {
         gaming = false;
         this.setLayout(new BorderLayout());
         gameBoard = new GameBoard(this);
-        homeMenu = new HomeMenu(this,new Dimension(450,350));
+        homeMenu = new HomeMenu(this,new Dimension(450,400));
         this.add(homeMenu,BorderLayout.CENTER);
         this.setUndecorated(true);
     }

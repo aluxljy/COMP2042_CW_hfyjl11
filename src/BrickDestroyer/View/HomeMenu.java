@@ -32,9 +32,11 @@ public class HomeMenu extends JComponent {
     private static final String GREETINGS = "LETS PLAY";
     private static final String GAME_TITLE = "BRICK DESTROYER";
     private static final String CREDITS = "REFACTORED VERSION 1.0";
-    private static final String START_TEXT = "START";
+    private static final String TRAINING_TEXT = "TRAINING";
     private static final String EXIT_TEXT = "EXIT";
     private static final String INFO_TEXT = "INFO";
+    private static final String HIGH_SCORES_TEXT = "HIGH SCORES";
+    private static final String RANKED_TEXT = "RANKED";
 
     private static final Color BG_COLOR = new Color(153,0,153);
     private static final Color BORDER_COLOR = new Color(102,0,102);
@@ -43,12 +45,14 @@ public class HomeMenu extends JComponent {
     private static final Color CLICKED_TEXT = BG_COLOR.brighter();
     private static final int BORDER_SIZE = 10;
 
-    private static final double BUTTON_DISPLACEMENT = 35.0;
+    private static final double BUTTON_DISPLACEMENT = 45.0;
 
     private Rectangle menuShape;
-    private Rectangle startButton;
+    private Rectangle trainingButton;
     private Rectangle exitButton;
     private Rectangle infoButton;
+    private Rectangle highScoresButton;
+    private Rectangle rankedButton;
 
     private BasicStroke borderStroke;
 
@@ -79,17 +83,19 @@ public class HomeMenu extends JComponent {
         menuShape = new Rectangle(new Point(0,0),area);
         this.setPreferredSize(area);
 
-        Dimension buttonDimension = new Dimension(area.width / 3,area.height / 12);
-        startButton = new Rectangle(buttonDimension);
+        Dimension buttonDimension = new Dimension(area.width * 3 / 7,area.height / 14);
+        trainingButton = new Rectangle(buttonDimension);
         exitButton = new Rectangle(buttonDimension);
         infoButton = new Rectangle(buttonDimension);
+        rankedButton = new Rectangle(buttonDimension);
+        highScoresButton = new Rectangle(buttonDimension);
 
         borderStroke = new BasicStroke(BORDER_SIZE,BasicStroke.CAP_ROUND,BasicStroke.JOIN_ROUND);
 
         greetingsFont = new Font("Monospaced",Font.PLAIN,20);
-        gameTitleFont = new Font("Serif",Font.BOLD,40);
+        gameTitleFont = new Font("Serif",Font.BOLD,42);
         creditsFont = new Font("Monospaced",Font.PLAIN,10);
-        buttonFont = new Font("Serif",Font.BOLD,startButton.height - 2);
+        buttonFont = new Font("Serif",Font.BOLD,trainingButton.height - 3);
 
         this.homeMenuController = homeMenuController;
     }
@@ -127,7 +133,7 @@ public class HomeMenu extends JComponent {
     private void drawContainer(Graphics2D g2d) {
         try {
             homeMenuBackground = ImageIO.read(new File("src/BrickDestroyer/View/Image/PurpleBrick.jfif"));
-            g2d.drawImage(homeMenuBackground,0,0,450,350,null);
+            g2d.drawImage(homeMenuBackground,0,0,450,400,null);
         }
         catch(IOException exception) {
             Color previousColor = g2d.getColor();
@@ -158,7 +164,7 @@ public class HomeMenu extends JComponent {
         Rectangle2D creditsRectangleText = creditsFont.getStringBounds(CREDITS,frc);
 
         int x = (int)(menuShape.getWidth() - greetingsRectangleText.getWidth()) / 2;
-        int y = (int)(menuShape.getHeight() / 4);
+        int y = (int)(menuShape.getHeight() / 6);
 
         createText(g2d,greetingsFont,GREETINGS,x,y);
 
@@ -181,30 +187,46 @@ public class HomeMenu extends JComponent {
     private void drawButton(Graphics2D g2d) {
         FontRenderContext frc = g2d.getFontRenderContext();
 
-        Rectangle2D startRectangleText = buttonFont.getStringBounds(START_TEXT,frc);
+        Rectangle2D trainingRectangleText = buttonFont.getStringBounds(TRAINING_TEXT,frc);
         Rectangle2D exitRectangleText = buttonFont.getStringBounds(EXIT_TEXT,frc);
         Rectangle2D infoRectangleText = buttonFont.getStringBounds(INFO_TEXT,frc);
+        Rectangle2D rankedRectangleText = buttonFont.getStringBounds(RANKED_TEXT,frc);
+        Rectangle2D highScoresRectangleText = buttonFont.getStringBounds(HIGH_SCORES_TEXT,frc);
 
         g2d.setFont(buttonFont);
 
-        int x = (menuShape.width - startButton.width) / 2;  // align buttons from the right to the center
-        int y = (int)((menuShape.height - startButton.height) * 0.6);  // move buttons from the bottom to the current position
+        int x = (menuShape.width - trainingButton.width) / 2;  // align buttons from the right to the center
+        int y = (int)((menuShape.height - trainingButton.height) * 0.45);  // move buttons from the bottom to the current position
 
-        createButton(g2d,startButton,startRectangleText,homeMenuController.isStartHovered(),START_TEXT,x,y);
+        createButton(g2d,trainingButton,trainingRectangleText,homeMenuController.isStartHovered(),TRAINING_TEXT,x,y);
 
-        x = startButton.x;
-        y = startButton.y;
+        x = trainingButton.x;
+        y = trainingButton.y;
 
         y += BUTTON_DISPLACEMENT;
 
-        createButton(g2d,exitButton,exitRectangleText,homeMenuController.isExitHovered(),EXIT_TEXT,x,y);
+        createButton(g2d,rankedButton,rankedRectangleText,homeMenuController.isRankedHovered(),RANKED_TEXT,x,y);
 
-        x = exitButton.x;
-        y = exitButton.y;
+        x = rankedButton.x;
+        y = rankedButton.y;
+
+        y += BUTTON_DISPLACEMENT;
+
+        createButton(g2d,highScoresButton,highScoresRectangleText,homeMenuController.isHighScoresHovered(),HIGH_SCORES_TEXT,x,y);
+
+        x = highScoresButton.x;
+        y = highScoresButton.y;
 
         y += BUTTON_DISPLACEMENT;
 
         createButton(g2d,infoButton,infoRectangleText,homeMenuController.isInfoHovered(),INFO_TEXT,x,y);
+
+        x = infoButton.x;
+        y = infoButton.y;
+
+        y += BUTTON_DISPLACEMENT;
+
+        createButton(g2d,exitButton,exitRectangleText,homeMenuController.isExitHovered(),EXIT_TEXT,x,y);
     }
 
     private void createButton(Graphics2D g2d,Rectangle button,Rectangle2D rectangleText,boolean buttonHovered,String BUTTON_TEXT,int x,int y) {
@@ -214,7 +236,7 @@ public class HomeMenu extends JComponent {
         y = (int)(button.getHeight() - rectangleText.getHeight()) / 2;
 
         x += button.x;
-        y += button.y + (button.height * 0.9);
+        y += button.y + (button.height * 0.86);  // button height position
 
         if(buttonHovered) {
             Color tmp = g2d.getColor();
@@ -234,8 +256,8 @@ public class HomeMenu extends JComponent {
     /**
      * all called in HomeMenuController
      */
-    public Rectangle getStartButton() {
-        return startButton;
+    public Rectangle getTrainingButton() {
+        return trainingButton;
     }
 
     public Rectangle getExitButton() {
@@ -248,5 +270,13 @@ public class HomeMenu extends JComponent {
 
     public GameFrame getOwner() {
         return owner;
+    }
+
+    public Rectangle getHighScoresButton() {
+        return highScoresButton;
+    }
+
+    public Rectangle getRankedButton() {
+        return rankedButton;
     }
 }
