@@ -31,7 +31,7 @@ public class CementBrick extends Brick {
     }
 
     /**
-     * called in Wall, overrides the method in Brick by implementing its own
+     * called in Wall, overrides the method in Brick by implementing its own and increments the score again by 1 upon breaking
      * @param point point of impact on the brick
      * @param direction direction of impact on the brick
      * @return if the cement brick is broken or not
@@ -41,7 +41,11 @@ public class CementBrick extends Brick {
         if(super.isBroken())
             return false;  // if broken then do not set impact
         super.impact();
-        if(!super.isBroken()) {
+
+        if(super.isBroken()) {
+            Wall.setTotalScore(Wall.getTotalScore() + 1);
+        }
+        else {
             crack.makeCrack(point,direction);  // if not broken then add crack on cement brick
             updateBrick();
             return false;

@@ -43,12 +43,16 @@ public class SteelBrick extends Brick {
     }
 
     /**
-     * overrides the method in Brick by implementing its own
+     * overrides the method in Brick by implementing its own and increments the score again by 3 upon breaking
      */
     @Override
     public void impact() {
         if(random.nextDouble() < STEEL_PROBABILITY) {
             super.impact();  // if random is less than STEEL_PROBABILITY then call parent impact, else do nothing (steel brick does not break)
+
+            if(super.isBroken()) {
+                Wall.setTotalScore(Wall.getTotalScore() + 3);
+            }
         }
     }
 }

@@ -25,6 +25,7 @@ abstract public class Brick {
     private Color inner;
 
     private int fullStrength;
+
     private int strength;
 
     private boolean broken;
@@ -114,6 +115,10 @@ abstract public class Brick {
         return broken;
     }
 
+    public void setBroken(boolean broken) {
+        this.broken = broken;
+    }
+
     /**
      * called in Wall, to repair the bricks
      */
@@ -123,11 +128,15 @@ abstract public class Brick {
     }
 
     /**
-     * called in SteelBrick & CementBrick, to apply impact on the brick and decrease its strength
+     * called in SteelBrick & CementBrick, to apply impact on the brick, decrease its strength and increment the total score if brick is broken
      */
     public void impact() {
         strength--;  // decrease strength of brick
         broken = (strength == 0);  // if strength is 0 then broken is true
+
+        if(broken) {
+            Wall.setTotalScore(Wall.getTotalScore() + 1);
+        }
     }
 
     /**
@@ -144,6 +153,22 @@ abstract public class Brick {
      */
     public void setBrickShape(Shape brickShape) {
         this.brickShape = brickShape;
+    }
+
+    /**
+     * called in MagicBrick, getter
+     * @return strength of the brick
+     */
+    public int getStrength() {
+        return strength;
+    }
+
+    /**
+     * called in MagicBrick, setter
+     * @param strength strength of the brick
+     */
+    public void setStrength(int strength) {
+        this.strength = strength;
     }
 }
 

@@ -26,6 +26,9 @@ public class BrickFactory {
         else if(brickType.equalsIgnoreCase("STEELBRICK")) {
             return new SteelBrick(point,size);
         }
+        else if(brickType.equalsIgnoreCase("MAGICBRICK")) {
+            return new MagicBrick(point,size);
+        }
         return null;
     }
 }
