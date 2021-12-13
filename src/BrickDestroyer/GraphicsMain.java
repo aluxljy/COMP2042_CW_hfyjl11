@@ -21,6 +21,9 @@ import BrickDestroyer.View.GameFrame;
 
 import java.awt.*;
 
+/**
+ * the entire game is run here
+ */
 public class GraphicsMain {
     public static void main(String[] args){
         EventQueue.invokeLater(() -> new GameFrame().initialize());
