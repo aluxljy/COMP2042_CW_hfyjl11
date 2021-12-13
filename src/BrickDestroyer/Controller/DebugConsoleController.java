@@ -6,13 +6,16 @@ import BrickDestroyer.View.DebugConsole;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 
+/**
+ * Controller for DebugConsole
+ */
 public class DebugConsoleController implements WindowListener {
     private DebugConsole debugConsole;
 
     /**
-     * called in DebugConsole
+     * called in DebugConsole, DebugConsoleController constructor
+     * @param debugConsole current debug console
      */
-    // DebugConsoleController constructor
     public DebugConsoleController(DebugConsole debugConsole) {
         this.debugConsole = debugConsole;
     }
@@ -22,6 +25,10 @@ public class DebugConsoleController implements WindowListener {
 
     }
 
+    /**
+     * to get the state of the window and perform actions based on the state
+     * @param windowEvent event of window
+     */
     @Override
     public void windowClosing(WindowEvent windowEvent) {
         debugConsole.getGameBoard().repaint();
@@ -42,6 +49,10 @@ public class DebugConsoleController implements WindowListener {
 
     }
 
+    /**
+     * to get the state of the window and set the value of a variable based on the state
+     * @param windowEvent event of window
+     */
     @Override
     public void windowActivated(WindowEvent windowEvent) {
         setLocation();
@@ -54,6 +65,9 @@ public class DebugConsoleController implements WindowListener {
 
     }
 
+    /**
+     * to set the location of the debug console
+     */
     private void setLocation() {
         int x = ((debugConsole.getOwner().getWidth() - debugConsole.getWidth()) / 2) + debugConsole.getOwner().getX();
         int y = ((debugConsole.getOwner().getHeight() - debugConsole.getHeight()) / 2) + debugConsole.getOwner().getY();

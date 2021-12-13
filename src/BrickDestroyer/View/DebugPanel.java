@@ -24,6 +24,9 @@ import javax.swing.event.ChangeListener;
 import java.awt.*;
 import java.awt.event.ActionListener;
 
+/**
+ * to make a JPanel for debug panel
+ */
 public class DebugPanel extends JPanel {
     private static final Color DEF_BKG = Color.WHITE;
 
@@ -36,9 +39,9 @@ public class DebugPanel extends JPanel {
     private Wall wall;
 
     /**
-     * called in DebugConsole
+     * called in DebugConsole, DebugPanel constructor
+     * @param wall current wall
      */
-    //DebugPanel constructor
     public DebugPanel(Wall wall) {
         this.wall = wall;
 
@@ -57,17 +60,33 @@ public class DebugPanel extends JPanel {
         this.add(ballYSpeed);
     }
 
+    /**
+     * initialize the debug panel
+     */
     private void initialize(){
         this.setBackground(DEF_BKG);
         this.setLayout(new GridLayout(2,2));
     }
 
+    /**
+     * to make a button and add a listener to the button
+     * @param title button title
+     * @param listener action listener
+     * @return resultant output
+     */
     private JButton makeButton(String title, ActionListener listener){
         JButton out = new JButton(title);
         out.addActionListener(listener);
         return out;
     }
 
+    /**
+     * to make a slider and add a listener to the slider
+     * @param min minimum value of the slider
+     * @param max maximum value of the slider
+     * @param listener change listener
+     * @return resultant output
+     */
     private JSlider makeSlider(int min, int max, ChangeListener listener){
         JSlider out = new JSlider(min,max);
         out.setMajorTickSpacing(1);
@@ -78,7 +97,9 @@ public class DebugPanel extends JPanel {
     }
 
     /**
-     * called in DebugConsoleController
+     * called in DebugConsoleController, to set the speed of the ball
+     * @param x speed x of the ball
+     * @param y speed y of the ball
      */
     public void setValues(int x,int y){
         ballXSpeed.setValue(x);

@@ -23,6 +23,9 @@ import BrickDestroyer.Model.Wall;
 import javax.swing.*;
 import java.awt.*;
 
+/**
+ * to make a debug console using JDialog
+ */
 public class DebugConsole extends JDialog {
     private static final String TITLE = "DEBUG CONSOLE";
 
@@ -33,9 +36,11 @@ public class DebugConsole extends JDialog {
     private Wall wall;
 
     /**
-     * called in GameBoard
+     * called in GameBoard, DebugConsole constructor
+     * @param owner current owner
+     * @param wall current wall
+     * @param gameBoard current game board
      */
-    // DebugConsole constructor
     public DebugConsole(JFrame owner,Wall wall,GameBoard gameBoard) {
         this.wall = wall;
         this.owner = owner;
@@ -49,6 +54,9 @@ public class DebugConsole extends JDialog {
         this.pack();
     }
 
+    /**
+     * initialize the debug console
+     */
     private void initialize() {
         this.setModal(true);
         this.setTitle(TITLE);
@@ -59,21 +67,34 @@ public class DebugConsole extends JDialog {
     }
 
     /**
-     * all called in DebugConsoleController
+     * called in DebugConsoleController, getter
+     * @return current game board
      */
     public GameBoard getGameBoard() {
         return gameBoard;
     }
 
+    /**
+     * called in DebugConsoleController, getter
+     * @return current owner
+     */
     @Override
     public JFrame getOwner() {
         return owner;
     }
 
+    /**
+     * called in DebugConsoleController, getter
+     * @return current debug panel
+     */
     public DebugPanel getDebugPanel() {
         return debugPanel;
     }
 
+    /**
+     * called in DebugConsoleController, getter
+     * @return current wall
+     */
     public Wall getWall() {
         return wall;
     }
