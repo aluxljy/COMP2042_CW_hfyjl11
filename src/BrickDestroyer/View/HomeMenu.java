@@ -28,6 +28,9 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
+/**
+ * to make the home menu using JComponent
+ */
 public class HomeMenu extends JComponent {
     private static final String GREETINGS = "LETS PLAY";
     private static final String GAME_TITLE = "BRICK DESTROYER";
@@ -68,9 +71,10 @@ public class HomeMenu extends JComponent {
     private HomeMenuController homeMenuController;
 
     /**
-     * called in GameFrame
+     * called in GameFrame, HomeMenu constructor
+     * @param owner current owner
+     * @param area current area
      */
-    // HomeMenu constructor
     public HomeMenu(GameFrame owner,Dimension area) {
         this.setFocusable(true);
         this.requestFocusInWindow();
@@ -100,10 +104,18 @@ public class HomeMenu extends JComponent {
         this.homeMenuController = homeMenuController;
     }
 
+    /**
+     * to paint the home menu
+     * @param g used for graphics
+     */
     public void paint(Graphics g) {
         drawMenu((Graphics2D)g);
     }
 
+    /**
+     * to draw the home menu
+     * @param g2d used for 2D graphics
+     */
     private void drawMenu(Graphics2D g2d) {
         drawContainer(g2d);
 
@@ -130,6 +142,10 @@ public class HomeMenu extends JComponent {
         g2d.setColor(previousColor);
     }
 
+    /**
+     * to draw the container of the home menu
+     * @param g2d used for 2D graphics
+     */
     private void drawContainer(Graphics2D g2d) {
         try {
             homeMenuBackground = ImageIO.read(new File("src/BrickDestroyer/View/Image/PurpleBrick.jfif"));
@@ -154,6 +170,10 @@ public class HomeMenu extends JComponent {
         }
     }
 
+    /**
+     * to draw the text displayed on the home menu
+     * @param g2d used for 2D graphics
+     */
     private void drawText(Graphics2D g2d) {
         g2d.setColor(TEXT_COLOR);
 
@@ -179,11 +199,23 @@ public class HomeMenu extends JComponent {
         createText(g2d,creditsFont,CREDITS,x,y);
     }
 
+    /**
+     * to create the text displayed on the home menu
+     * @param g2d used for 2D graphic
+     * @param font current font
+     * @param string current string
+     * @param x horizontal position of the text
+     * @param y vertical position of the text
+     */
     private void createText(Graphics2D g2d,Font font,String string,int x,int y) {
         g2d.setFont(font);
         g2d.drawString(string,x,y);
     }
 
+    /**
+     * to draw the button displayed on the home menu
+     * @param g2d used for 2D graphics
+     */
     private void drawButton(Graphics2D g2d) {
         FontRenderContext frc = g2d.getFontRenderContext();
 
@@ -229,6 +261,16 @@ public class HomeMenu extends JComponent {
         createButton(g2d,exitButton,exitRectangleText,homeMenuController.isExitHovered(),EXIT_TEXT,x,y);
     }
 
+    /**
+     * to create the button displayed on the home menu
+     * @param g2d used for 2D graphics
+     * @param button current button
+     * @param rectangleText current rectangle of the text
+     * @param buttonHovered is the current button hovered or not
+     * @param BUTTON_TEXT text of the button
+     * @param x horizontal position of the button
+     * @param y vertical position of the button
+     */
     private void createButton(Graphics2D g2d,Rectangle button,Rectangle2D rectangleText,boolean buttonHovered,String BUTTON_TEXT,int x,int y) {
         button.setLocation(x,y);
 
@@ -254,28 +296,49 @@ public class HomeMenu extends JComponent {
     }
 
     /**
-     * all called in HomeMenuController
+     * called in HomeMenuController, getter
+     * @return current training button
      */
     public Rectangle getTrainingButton() {
         return trainingButton;
     }
 
+    /**
+     * called in HomeMenuController, getter
+     * @return current exit button
+     */
     public Rectangle getExitButton() {
         return exitButton;
     }
 
+    /**
+     * called in HomeMenuController, getter
+     * @return current info button
+     */
     public Rectangle getInfoButton() {
         return infoButton;
     }
 
+    /**
+     * called in HomeMenuController, getter
+     * @return current owner
+     */
     public GameFrame getOwner() {
         return owner;
     }
 
+    /**
+     * called in HomeMenuController, getter
+     * @return current high scores button
+     */
     public Rectangle getHighScoresButton() {
         return highScoresButton;
     }
 
+    /**
+     * called in HomeMenuController, getter
+     * @return current ranked button
+     */
     public Rectangle getRankedButton() {
         return rankedButton;
     }

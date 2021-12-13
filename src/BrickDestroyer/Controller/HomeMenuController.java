@@ -8,6 +8,9 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 
+/**
+ * Controller for HomeMenu
+ */
 public class HomeMenuController implements MouseListener, MouseMotionListener {
     private HomeMenu homeMenu;
 
@@ -18,21 +21,25 @@ public class HomeMenuController implements MouseListener, MouseMotionListener {
     private boolean highScoresHovered;
 
     /**
-     * called in HomeMenu
+     * called in HomeMenu, HomeMenuController constructor
+     * @param homeMenu current home menu
      */
-    // HomeMenuController constructor
     public HomeMenuController(HomeMenu homeMenu) {
         this.homeMenu = homeMenu;
     }
 
+    /**
+     * to get the point the mouse clicks on and perform actions based on the point clicked
+     * @param mouseEvent event of mouse
+     */
     @Override
     public void mouseClicked(MouseEvent mouseEvent) {
         Point point = mouseEvent.getPoint();
         if(homeMenu.getTrainingButton().contains(point)) {
-            homeMenu.getOwner().enableGameBoard("training");
+            homeMenu.getOwner().enableGameBoard("training","home menu");
         }
         else if(homeMenu.getRankedButton().contains(point)) {
-            homeMenu.getOwner().enableGameBoard("ranked");
+            homeMenu.getOwner().enableGameBoard("ranked","home menu");
         }
         else if(homeMenu.getExitButton().contains(point)) {
             System.out.println("Goodbye " + System.getProperty("user.name"));
@@ -51,6 +58,10 @@ public class HomeMenuController implements MouseListener, MouseMotionListener {
 
     }
 
+    /**
+     * to get the point the mouse releases from and perform actions based on the point of release
+     * @param mouseEvent event of mouse
+     */
     @Override
     public void mouseReleased(MouseEvent mouseEvent) {
         if(startHovered) {
@@ -95,6 +106,10 @@ public class HomeMenuController implements MouseListener, MouseMotionListener {
 
     }
 
+    /**
+     * to get the point the mouse hovers on and perform actions based on the point hovered
+     * @param mouseEvent event of mouse
+     */
     @Override
     public void mouseMoved(MouseEvent mouseEvent) {
         Point point = mouseEvent.getPoint();
@@ -139,24 +154,41 @@ public class HomeMenuController implements MouseListener, MouseMotionListener {
     }
 
     /**
-     * all called in HomeMenu
+     * called in HomeMenu
+     * @return if the current start button is hovered, getter
      */
     public boolean isStartHovered() {
         return startHovered;
     }
 
+    /**
+     * called in HomeMenu
+     * @return if the current exit button is hovered, getter
+     */
     public boolean isExitHovered() {
         return exitHovered;
     }
 
+    /**
+     * called in HomeMenu
+     * @return if the current info button is hovered, getter
+     */
     public boolean isInfoHovered() {
         return infoHovered;
     }
 
+    /**
+     * called in HomeMenu
+     * @return if the current ranked button is hovered, getter
+     */
     public boolean isRankedHovered() {
         return rankedHovered;
     }
 
+    /**
+     * called in HomeMenu
+     * @return if the current high scores button is hovered, getter
+     */
     public boolean isHighScoresHovered() {
         return highScoresHovered;
     }
