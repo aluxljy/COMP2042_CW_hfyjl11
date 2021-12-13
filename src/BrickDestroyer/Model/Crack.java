@@ -5,6 +5,9 @@ import java.awt.geom.GeneralPath;
 import java.awt.geom.Point2D;
 import java.util.Random;
 
+/**
+ * to make and draw the cracks on the cement brick
+ */
 public class Crack {
     private static final int CRACK_SECTIONS = 3;
     private static final double JUMP_PROBABILITY = 0.7;
@@ -25,7 +28,7 @@ public class Crack {
     private int steps;
 
     /**
-     * called in CementBrick, takes in some parameters to make the cracks
+     * called in CementBrick, the Crack constructor takes in some parameters to make the cracks
      * @param brick the current brick
      * @param crackDepth depth of the cracks
      * @param steps number of steps a crack contains

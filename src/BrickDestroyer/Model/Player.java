@@ -17,10 +17,11 @@
  */
 package BrickDestroyer.Model;
 
-import BrickDestroyer.Model.Ball;
-
 import java.awt.*;
 
+/**
+ *
+ */
 public class Player {
     public static final Color BORDER_COLOR = Color.GRAY;
     public static final Color INNER_COLOR = Color.LIGHT_GRAY;
@@ -34,9 +35,12 @@ public class Player {
     private int max;
 
     /**
-     * called in Wall
+     * called in Wall, the Player constructor takes in some parameters to make the shape of the player and set the colour of the player
+     * @param ballPosition position of the ball
+     * @param width width of the player
+     * @param height height of the player
+     * @param container rectangular shape of the player
      */
-    // Player constructor
     public Player(Point ballPosition,int width,int height,Rectangle container) {
         this.ballPosition = ballPosition;
         moveAmount = 0;
@@ -45,6 +49,12 @@ public class Player {
         max = min + container.width - width;  // right boundary
     }
 
+    /**
+     * to make the shape of the player
+     * @param width width of the player
+     * @param height height of the player
+     * @return rectangular shape of the player
+     */
     private Rectangle makeRectangle(int width,int height) {
         Point point = new Point((int)(ballPosition.getX() - (width / 2)),(int) ballPosition.getY() + (height / 3));  // position of the player
         return new Rectangle(point,new Dimension(width,height));
@@ -52,13 +62,15 @@ public class Player {
 
     /**
      * called in Wall
+     * @param ball the current ball
+     * @return if the player has impact with the ball
      */
     public boolean impactWithBall(Ball ball) {
         return playerShape.contains(ball.getBallPosition()) && playerShape.contains(ball.getDown());
     }
 
     /**
-     * called in Wall
+     * called in Wall, to set the location of the player when it is moving
      */
     public void move() {
         double x = ballPosition.getX() + moveAmount;
@@ -69,35 +81,37 @@ public class Player {
     }
 
     /**
-     * called in GameBoard
+     * called in GameBoardController, to move the player to the left
      */
     public void moveLeft() {
         moveAmount = -DEF_MOVE_AMOUNT;
     }
 
     /**
-     * called in GameBoard
+     * called in GameBoardController, to move the player to the right
      */
     public void moveRight() {
         moveAmount = DEF_MOVE_AMOUNT;
     }
 
     /**
-     * called in GameBoard
+     * called in GameBoardController, to stop the player
      */
     public void stop() {
         moveAmount = 0;
     }
 
     /**
-     * called in GameBoard
+     * called in GameBoard, getter
+     * @return shape of the player
      */
     public Shape getPlayerShape() {
         return playerShape;
     }
 
     /**
-     * called in Wall
+     * called in Wall, to set the location of the player when it is moved to a certain position
+     * @param position desired position to move the player to
      */
     public void moveTo(Point position) {
         ballPosition.setLocation(position);
