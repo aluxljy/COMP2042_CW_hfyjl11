@@ -29,6 +29,7 @@ public class Player {
     private static final int DEF_MOVE_AMOUNT = 5;
 
     private Rectangle playerShape;
+
     private Point ballPosition;
     private int moveAmount;
     private int min;
@@ -116,5 +117,21 @@ public class Player {
     public void moveTo(Point position) {
         ballPosition.setLocation(position);
         playerShape.setLocation(ballPosition.x - (int) playerShape.getWidth() / 2, ballPosition.y + (int) playerShape.getHeight() / 3);
+    }
+
+    /**
+     * called in PlayerTest
+     * @return current ball position
+     */
+    public Point getBallPosition() {
+        return ballPosition;
+    }
+
+    /**
+     * called in PlayerTest
+     * @return current move amount
+     */
+    public int getMoveAmount() {
+        return moveAmount;
     }
 }

@@ -55,4 +55,12 @@ public class SteelBrick extends Brick {
             }
         }
     }
+
+    /**
+     * called in SteelBrickTest
+     * @return current random
+     */
+    public Random getRandom() {
+        return random;
+    }
 }

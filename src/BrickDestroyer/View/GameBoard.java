@@ -111,9 +111,9 @@ public class GameBoard extends JComponent {
                         JFrame popup = new JFrame();
 
                         String userName = (String)JOptionPane.showInputDialog(
-                                popup, "New Highscore!\n"
+                                popup, "New High Score!\n"
                                         + "Name:",
-                                "Highscore",
+                                "High Score",
                                 JOptionPane.PLAIN_MESSAGE
                         );
 
@@ -140,9 +140,9 @@ public class GameBoard extends JComponent {
                                 JFrame popup = new JFrame();
 
                                 String userName = (String)JOptionPane.showInputDialog(
-                                        popup, "New Highscore!\n"
+                                        popup, "New High Score!\n"
                                                 + "Name:",
-                                        "Highscore",
+                                        "High Score",
                                         JOptionPane.PLAIN_MESSAGE
                                 );
 
@@ -178,9 +178,9 @@ public class GameBoard extends JComponent {
                                 JFrame popup = new JFrame();
 
                                 String userName = (String)JOptionPane.showInputDialog(
-                                        popup, "New Highscore!\n"
+                                        popup, "New High Score!\n"
                                                 + "Name:",
-                                        "Highscore",
+                                        "High Score",
                                         JOptionPane.PLAIN_MESSAGE
                                 );
 

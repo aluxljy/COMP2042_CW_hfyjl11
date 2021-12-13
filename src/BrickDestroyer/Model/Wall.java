@@ -46,6 +46,7 @@ public class Wall {
     private int level;
 
     private Point startPoint;
+
     private int brickCount;
     private int ballCount;
     private boolean ballLost;
@@ -363,5 +364,13 @@ public class Wall {
      */
     public static void setTotalScore(int totalScore) {
         Wall.totalScore = totalScore;
+    }
+
+    /**
+     * called in WallTest
+     * @param brickCount current number of bricks
+     */
+    public void setBrickCount(int brickCount) {
+        this.brickCount = brickCount;
     }
 }
