@@ -20,7 +20,7 @@ package BrickDestroyer.Model;
 import java.awt.*;
 
 /**
- *
+ * to make the features of a player
  */
 public class Player {
     public static final Color BORDER_COLOR = Color.GRAY;
