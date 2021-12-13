@@ -1,0 +1,19 @@
+.label{
+-fx-font: 20px "Serif";
+-fx-text-fill: White;
+}
+.body{
+-fx-background-color: rgb(153,0,153);
+}
+.button{
+-fx-font: Bold 20px "Serif";
+-fx-text-fill: White;
+-fx-background-color: rgb(102,0,102);
+}
+#lblHighScoreTitle{
+-fx-font: Bold 30px "Serif";
+}
+#lblPlayer,#lblScore,#lblTime{
+-fx-font: Bold 20px "Serif";
+-fx-text-fill: Black;
+}
