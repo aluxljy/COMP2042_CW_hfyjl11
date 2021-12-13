@@ -25,7 +25,7 @@ public class GameTimer {
      */
     public GameTimer() {
         second = 0;
-        minute = 10;
+        minute = 15;
         gameStatus = false;
         dFormat = new DecimalFormat("00");
         ddSecond = dFormat.format(second);
@@ -82,5 +82,21 @@ public class GameTimer {
      */
     public boolean getGameStatus(){
         return gameStatus;
+    }
+
+    /**
+     * called in GameBoard, getter
+     * @return current minute
+     */
+    public int getMinute() {
+        return minute;
+    }
+
+    /**
+     * called in GameBoard, getter
+     * @return current second
+     */
+    public int getSecond() {
+        return second;
     }
 }

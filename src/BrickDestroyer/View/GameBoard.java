@@ -101,6 +101,32 @@ public class GameBoard extends JComponent {
                 score = "BRICKS: " + wall.getBrickCount() + "   " + "BALLS: " + wall.getBallCount() + "   " + "TOTAL SCORE: " + wall.getTotalScore() + "   " + "REMAINING TIME: " + timer.getDdMinute() + ":" + timer.getDdSecond();
             }
 
+            if(timer.getMinute() == 0 && timer.getSecond() == 0) {
+                gameTimer.stop();
+                timer.setGameStatus(false);
+                message = "GAME OVER";
+
+                try {
+                    if (GameHighScore.Check(wall.getTotalScore(), timer.getDdMinute() + ":" + timer.getDdSecond()) == true) {
+                        JFrame popup = new JFrame();
+
+                        String userName = (String)JOptionPane.showInputDialog(
+                                popup, "New Highscore!\n"
+                                        + "Name:",
+                                "Highscore",
+                                JOptionPane.PLAIN_MESSAGE
+                        );
+
+                        if (userName != null){
+                            GameHighScore.AddPlayer(userName,wall.getTotalScore(),timer.getDdMinute() + ":" + timer.getDdSecond());
+                        }
+                    }
+                    owner.enableGameHighScore();
+                } catch (IOException exception) {
+                    exception.printStackTrace();
+                }
+            }
+
             if(wall.isBallLost()) {
                 wall.ballReset();
                 gameTimer.stop();
