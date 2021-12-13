@@ -21,6 +21,9 @@ import java.awt.*;
 import java.awt.geom.Point2D;
 import java.util.Random;
 
+/**
+ * to make the wall using the bricks
+ */
 public class Wall {
     private static final int LEVELS_COUNT = 8;
 
@@ -54,9 +57,11 @@ public class Wall {
     private Point ballPosition;
 
     /**
-     * called in GameBoard
+     * called in GameBoard, the Wall constructor takes in some parameters to make the wall for the game
+     * @param drawArea area of the rectangular shape
+     * @param brickDimensionRatio ratio of brick dimension
+     * @param ballPosition position of the ball
      */
-    // Wall constructor
     public Wall(Rectangle drawArea,double brickDimensionRatio, Point ballPosition) {
         this.startPoint = new Point(ballPosition);
         this.ballPosition = ballPosition;
@@ -79,6 +84,12 @@ public class Wall {
         area = drawArea;
     }
 
+    /**
+     * to make different levels with different brick combination
+     * @param drawArea area of the rectangular shape
+     * @param brickDimensionRatio ratio of brick dimension
+     * @return a multidimensional array
+     */
     private Brick[][] makeLevels(Rectangle drawArea,double brickDimensionRatio) {
         Brick[][] tmp = new Brick[LEVELS_COUNT][];
         tmp[0] = Level.makeCombinationLevel(drawArea,30,3,brickDimensionRatio,CLAY,CLAY,CLAY);
@@ -93,7 +104,7 @@ public class Wall {
     }
 
     /**
-     * called in GameBoard
+     * called in GameBoard, to make the player and ball move
      */
     public void move(){
         getPlayer().move();
@@ -101,7 +112,7 @@ public class Wall {
     }
 
     /**
-     * called in GameBoard
+     * called in GameBoard, to find the impacts occurred
      */
     public void findImpacts() {
         if(getPlayer().impactWithBall(getBall())) {
@@ -125,6 +136,10 @@ public class Wall {
         }
     }
 
+    /**
+     * to find the impact between the ball and the bricks
+     * @return if the direction of the impact is true or false
+     */
     private boolean impactWithWall(){
         for(Brick brick : getBricks()){
             if(brick.findImpact(getBall()) == Brick.UP_IMPACT) {
@@ -151,34 +166,41 @@ public class Wall {
         return false;
     }
 
+    /**
+     * to find the impact between the ball and the border
+     * @return if the impact between the ball and the border are true or false
+     */
     private boolean impactWithBorder(){
         Point2D point = getBall().getBallPosition();
         return ((point.getX() < area.getX()) || (point.getX() > (area.getX() + area.getWidth())));
     }
 
     /**
-     * called in GameBoard
+     * called in GameBoard, getter
+     * @return number of bricks
      */
     public int getBrickCount(){
         return brickCount;
     }
 
     /**
-     * called in GameBoard
+     * called in GameBoard, getter
+     * @return number of balls
      */
     public int getBallCount(){
         return ballCount;
     }
 
     /**
-     * called in GameBoard
+     * called in GameBoard, getter
+     * @return if the ball is lost
      */
     public boolean isBallLost(){
         return ballLost;
     }
 
     /**
-     * called in GameBoard
+     * called in GameBoardController & GameBoard, to reset the ball back to the original position
      */
     public void ballReset(){
         getPlayer().moveTo(startPoint);
@@ -188,6 +210,13 @@ public class Wall {
         ballLost = false;
     }
 
+    /**
+     * to produce random speed
+     * @param xMax maximum of x speed
+     * @param xMin minimum of x speed
+     * @param yMax maximum of y speed
+     * @param yMin minimum of y speed
+     */
     public void randomSpeed(int xMax, int xMin, int yMax, int yMin) {
         int speedX,speedY;
         do{
@@ -203,7 +232,7 @@ public class Wall {
     }
 
     /**
-     * called in GameBoard
+     * called in GameBoardController & GameBoard, to reset the walls by repairing them
      */
     public void wallReset(){
         for(Brick brick : getBricks())
@@ -213,21 +242,23 @@ public class Wall {
     }
 
     /**
-     * called in GameBoard
+     * called in GameBoard, to check if all the balls are used up
+     * @return true if all the balls are used up
      */
     public boolean ballEnd(){
         return ballCount == 0;
     }
 
     /**
-     * called in GameBoard
+     * called in GameBoard, to check if all the bricks are destroyed
+     * @return true id all the bricks are destroyed
      */
     public boolean isDone(){
         return brickCount == 0;
     }
 
     /**
-     * called in DebugPanel & GameBoard
+     * called in DebugPanel & GameBoard, to move to the next level
      */
     public void nextLevel(){
         setBricks(levels[level++]);
@@ -240,70 +271,96 @@ public class Wall {
     }
 
     /**
-     * called in GameBoard
+     * called in GameBoard, to check if there are anymore levels
+     * @return true if there are more levels left
      */
     public boolean hasLevel(){
         return level < levels.length;
     }
 
     /**
-     * called in DebugPanel
+     * called in DebugPanel, to set the x speed of the ball
+     * @param speed speed of x
      */
     public void setBallXSpeed(int speed){
         getBall().setSpeedX(speed);
     }
 
     /**
-     * called in DebugPanel
+     * called in DebugPanel, to set the y speed of the ball
+     * @param speed speed of y
      */
     public void setBallYSpeed(int speed){
         getBall().setSpeedY(speed);
     }
 
     /**
-     * called in DebugPanel
+     * called in DebugPanel, to reset the number of balls
      */
     public void resetBallCount(){
         ballCount = 3;
     }
 
     /**
-     * called in GameBoard
+     * called in GameBoard, getter
+     * @return array of bricks
      */
     public Brick[] getBricks() {
         return bricks;
     }
 
+    /**
+     * setter
+     * @param bricks array of bricks
+     */
     public void setBricks(Brick[] bricks) {
         this.bricks = bricks;
     }
 
     /**
-     * called in DebugConsole & GameBoard
+     * called in DebugConsoleController & GameBoard, getter
+     * @return current ball
      */
     public Ball getBall() {
         return ball;
     }
 
+    /**
+     * setter
+     * @param ball current ball
+     */
     public void setBall(Ball ball) {
         this.ball = ball;
     }
 
     /**
-     * called in GameBoard
+     * called in GameBoardController & GameBoard
+     * @return current player
      */
     public Player getPlayer() {
         return player;
     }
 
+    /**
+     * setter
+     * @param player current player
+     */
     public void setPlayer(Player player) {
         this.player = player;
     }
 
+    /**
+     * called in Brick, CementBrick, MagicBrick, SteelBrick & GameBoard, getter
+     * @return current total score
+     */
     public static int getTotalScore() {
         return totalScore;
     }
 
+    /**
+     * called in Brick, CementBrick, MagicBrick, SteelBrick & GameBoard, setter
+     * @param totalScore current total score
+     */
     public static void setTotalScore(int totalScore) {
         Wall.totalScore = totalScore;
     }
