@@ -5,17 +5,24 @@ import BrickDestroyer.View.GameFrame;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowFocusListener;
 
+/**
+ * Controller for GameFrame
+ */
 public class GameFrameController implements WindowFocusListener {
     private GameFrame gameFrame;
 
     /**
-     * called in GameFrame
+     * called in GameFrame, GameFrameController constructor
+     * @param gameFrame current game frame
      */
-    // GameFrameController constructor
     public GameFrameController(GameFrame gameFrame) {
         this.gameFrame = gameFrame;
     }
 
+    /**
+     * to get the state of the window and set the value of a variable based on the state
+     * @param windowEvent event for window
+     */
     @Override
     public void windowGainedFocus(WindowEvent windowEvent) {
         /*
@@ -29,6 +36,10 @@ public class GameFrameController implements WindowFocusListener {
         gameFrame.setGaming(true);
     }
 
+    /**
+     * to get the state of the window and get the value of a variable based on the state
+     * @param windowEvent event for window
+     */
     @Override
     public void windowLostFocus(WindowEvent windowEvent) {
         if(gameFrame.isGaming())

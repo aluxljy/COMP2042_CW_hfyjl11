@@ -6,13 +6,16 @@ import BrickDestroyer.View.GameFrame;
 import java.awt.*;
 import java.awt.event.*;
 
+/**
+ * Controller for GameBoard
+ */
 public class GameBoardController implements KeyListener, MouseListener, MouseMotionListener {
     private GameBoard gameBoard;
 
     /**
-     * called in GameBoard
+     * called in GameBoard, GameBoardController constructor
+     * @param gameBoard current game board
      */
-    // GameBoardController constructor
     public GameBoardController(GameBoard gameBoard) {
         this.gameBoard = gameBoard;
     }
@@ -21,6 +24,10 @@ public class GameBoardController implements KeyListener, MouseListener, MouseMot
     public void keyTyped(KeyEvent keyEvent) {
     }
 
+    /**
+     * to get the key pressed and perform actions based on the key pressed
+     * @param keyEvent event of key
+     */
     @Override
     public void keyPressed(KeyEvent keyEvent) {
         if(keyEvent.getKeyCode() == KeyEvent.VK_A) {
@@ -57,11 +64,19 @@ public class GameBoardController implements KeyListener, MouseListener, MouseMot
         }
     }
 
+    /**
+     * to get the key released and perform actions based on the key released
+     * @param keyEvent event of key
+     */
     @Override
     public void keyReleased(KeyEvent keyEvent) {
         gameBoard.getWall().getPlayer().stop();
     }
 
+    /**
+     * to get the point the mouse clicks on and perform actions based on the point clicked
+     * @param mouseEvent event of mouse
+     */
     @Override
     public void mouseClicked(MouseEvent mouseEvent) {
         Point point = mouseEvent.getPoint();
@@ -73,13 +88,12 @@ public class GameBoardController implements KeyListener, MouseListener, MouseMot
         }
         else if(gameBoard.getRestartButtonRectangle().contains(point)) {
             gameBoard.setScore("");
-            gameBoard.setMessage("RESTARTING GAME...");
-            gameBoard.getWall().ballReset();
-            gameBoard.getWall().wallReset();
+            gameBoard.getWall().setTotalScore(0);
+            gameBoard.getOwner().enableGameBoard(gameBoard.getMode(),"game");
             gameBoard.setShowPauseMenu(false);
-            gameBoard.repaint();
         }
         else if(gameBoard.getMenuButtonRectangle().contains(point)) {
+            gameBoard.getWall().setTotalScore(0);
             gameBoard.getOwner().dispose();
             gameBoard.getOwner().remove(gameBoard);
             new GameFrame().initialize();
@@ -111,6 +125,10 @@ public class GameBoardController implements KeyListener, MouseListener, MouseMot
 
     }
 
+    /**
+     * to get the point the mouse hovers on and perform actions based on the point hovered
+     * @param mouseEvent event of mouse
+     */
     @Override
     public void mouseMoved(MouseEvent mouseEvent) {
         Point point = mouseEvent.getPoint();

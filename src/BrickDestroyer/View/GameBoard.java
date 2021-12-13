@@ -23,7 +23,11 @@ import BrickDestroyer.Model.*;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.font.FontRenderContext;
+import java.io.IOException;
 
+/**
+ * to make a game board using JComponent
+ */
 public class GameBoard extends JComponent {
     private static final String CONTINUE = "CONTINUE";
     private static final String RESTART = "RESTART";
@@ -52,16 +56,17 @@ public class GameBoard extends JComponent {
 
     private DebugConsole debugConsole;
 
-    private JFrame owner;
+    private GameFrame owner;
     private String mode;
 
     private GameTimer timer;
 
     /**
-     * called in GameFrame
+     * called in GameFrame, GameBoard constructor
+     * @param owner current owner
+     * @param mode current mode
      */
-    // GameBoard constructor
-    public GameBoard(JFrame owner,String mode) {
+    public GameBoard(GameFrame owner,String mode) {
         super();
 
         this.owner = owner;
@@ -97,14 +102,36 @@ public class GameBoard extends JComponent {
             }
 
             if(wall.isBallLost()) {
+                wall.ballReset();
+                gameTimer.stop();
+
                 if(wall.ballEnd()) {
                     wall.wallReset();
                     message = "GAME OVER";
+                    if(this.mode != "training") {
+                        try {
+                            if (GameHighScore.Check(wall.getTotalScore(), timer.getDdMinute() + ":" + timer.getDdSecond()) == true) {
+                                JFrame popup = new JFrame();
+
+                                String userName = (String)JOptionPane.showInputDialog(
+                                        popup, "New Highscore!\n"
+                                                + "Name:",
+                                        "Highscore",
+                                        JOptionPane.PLAIN_MESSAGE
+                                );
+
+                                if (userName != null){
+                                    GameHighScore.AddPlayer(userName,wall.getTotalScore(),timer.getDdMinute() + ":" + timer.getDdSecond());
+                                }
+                            }
+                            owner.enableGameHighScore();
+                        } catch (IOException exception) {
+                            exception.printStackTrace();
+                        }
+                    }
                     score = "";
                     wall.setTotalScore(0);
                 }
-                wall.ballReset();
-                gameTimer.stop();
             }
             else if(wall.isDone()) {
                 if(wall.hasLevel()) {
@@ -117,8 +144,30 @@ public class GameBoard extends JComponent {
                 }
                 else {
                     message = "ALL WALLS DESTROYED";
-                    score = "";
                     gameTimer.stop();
+
+                    if(this.mode != "training") {
+                        try {
+                            if (GameHighScore.Check(wall.getTotalScore(), timer.getDdMinute() + ":" + timer.getDdSecond()) == true) {
+                                JFrame popup = new JFrame();
+
+                                String userName = (String)JOptionPane.showInputDialog(
+                                        popup, "New Highscore!\n"
+                                                + "Name:",
+                                        "Highscore",
+                                        JOptionPane.PLAIN_MESSAGE
+                                );
+
+                                if (userName != null){
+                                    GameHighScore.AddPlayer(userName,wall.getTotalScore(),timer.getDdMinute() + ":" + timer.getDdSecond());
+                                    owner.enableGameHighScore();
+                                }
+                            }
+                        } catch (IOException exception) {
+                            exception.printStackTrace();
+                        }
+                    }
+                    score = "";
                     wall.setTotalScore(0);
                 }
             }
@@ -126,6 +175,9 @@ public class GameBoard extends JComponent {
         });
     }
 
+    /**
+     * initialize the game board
+     */
     private void initialize() {
         this.setPreferredSize(new Dimension(DEF_WIDTH,DEF_HEIGHT));
         this.setFocusable(true);
@@ -136,6 +188,10 @@ public class GameBoard extends JComponent {
         this.addMouseMotionListener(gameBoardController);
     }
 
+    /**
+     * to paint the game board
+     * @param g used for graphics
+     */
     public void paint(Graphics g) {
         Graphics2D g2d = (Graphics2D) g;
 
@@ -159,6 +215,10 @@ public class GameBoard extends JComponent {
         Toolkit.getDefaultToolkit().sync();
     }
 
+    /**
+     * to temporarily clear the colours
+     * @param g2d used for 2D graphics
+     */
     private void clear(Graphics2D g2d) {
         Color tmp = g2d.getColor();
         g2d.setColor(BG_COLOR);
@@ -166,6 +226,11 @@ public class GameBoard extends JComponent {
         g2d.setColor(tmp);
     }
 
+    /**
+     * to draw the brick
+     * @param brick current brick
+     * @param g2d used for 2D graphics
+     */
     private void drawBrick(Brick brick,Graphics2D g2d) {
         Color tmp = g2d.getColor();
 
@@ -178,6 +243,11 @@ public class GameBoard extends JComponent {
         g2d.setColor(tmp);
     }
 
+    /**
+     * to draw the ball
+     * @param ball current ball
+     * @param g2d used for 2D graphics
+     */
     private void drawBall(Ball ball, Graphics2D g2d) {
         Color tmp = g2d.getColor();
 
@@ -192,6 +262,11 @@ public class GameBoard extends JComponent {
         g2d.setColor(tmp);
     }
 
+    /**
+     * to draw the player
+     * @param player current player
+     * @param g2d used for 2D graphics
+     */
     private void drawPlayer(Player player, Graphics2D g2d) {
         Color tmp = g2d.getColor();
 
@@ -206,11 +281,19 @@ public class GameBoard extends JComponent {
         g2d.setColor(tmp);
     }
 
+    /**
+     * to draw the menu
+     * @param g2d used for 2D graphics
+     */
     private void drawMenu(Graphics2D g2d) {
         obscureGameBoard(g2d);
         drawPauseMenu(g2d);
     }
 
+    /**
+     * to create the obscure game board
+     * @param g2d used for 2D graphics
+     */
     private void obscureGameBoard(Graphics2D g2d) {
         Composite tmp = g2d.getComposite();
         Color tmpColor = g2d.getColor();
@@ -225,6 +308,10 @@ public class GameBoard extends JComponent {
         g2d.setColor(tmpColor);
     }
 
+    /**
+     * to draw the pause menu
+     * @param g2d used for 2D graphics
+     */
     private void drawPauseMenu(Graphics2D g2d) {
         Font tmpFont = g2d.getFont();
         Color tmpColor = g2d.getColor();
@@ -276,7 +363,7 @@ public class GameBoard extends JComponent {
     }
 
     /**
-     * called in GameFrameController
+     * called in GameFrameController, to perform some actions if is on lost focus
      */
     public void onLostFocus() {
         gameTimer.stop();
@@ -286,65 +373,106 @@ public class GameBoard extends JComponent {
     }
 
     /**
-     * all called in GameBoardController
+     * called in GameBoardController, getter
+     * @return current wall
      */
     public Wall getWall() {
         return wall;
     }
 
+    /**
+     * called in GameBoardController, getter
+     * @return if pause menu is shown
+     */
     public boolean isShowPauseMenu() {
         return showPauseMenu;
     }
 
+    /**
+     * called in GameBoardController, setter
+     * @param showPauseMenu pause menu is shown or not
+     */
     public void setShowPauseMenu(boolean showPauseMenu) {
         this.showPauseMenu = showPauseMenu;
     }
 
+    /**
+     * called in GameBoardController, getter
+     * @return current rectangle of continue button
+     */
     public Rectangle getContinueButtonRectangle() {
         return continueButtonRectangle;
     }
 
+    /**
+     * called in GameBoardController, getter
+     * @return current rectangle of menu button
+     */
     public Rectangle getMenuButtonRectangle() {
         return menuButtonRectangle;
     }
 
+    /**
+     * called in GameBoardController, getter
+     * @return current rectangle of restart button
+     */
     public Rectangle getRestartButtonRectangle() {
         return restartButtonRectangle;
     }
 
+    /**
+     * called in GameBoardController, getter
+     * @return current game timer
+     */
     public Timer getGameTimer() {
         return gameTimer;
     }
 
-    public void setMessage(String message) {
-        this.message = message;
-    }
-
+    /**
+     * called in GameBoardController, getter
+     * @return current debug console
+     */
     public DebugConsole getDebugConsole() {
         return debugConsole;
     }
 
-    public JFrame getOwner() {
+    /**
+     * called in GameBoardController, getter
+     * @return current owner
+     */
+    public GameFrame getOwner() {
         return owner;
     }
 
+    /**
+     * called in GameBoardController, getter
+     * @return current mode
+     */
     public String getMode() {
         return mode;
     }
 
+    /**
+     * called in GameBoardController, setter
+     * @param mode current mode
+     */
     public void setMode(String mode) {
         this.mode = mode;
     }
 
+    /**
+     * called in GameBoardController, setter
+     * @param score current score
+     */
     public void setScore(String score) {
         this.score = score;
     }
 
+    /**
+     * called in GameBoardController, getter
+     * @return current timer
+     */
     public GameTimer getTimer() {
         return timer;
-    }
-
-    public void setTimer(GameTimer timer) {
-        this.timer = timer;
     }
 }

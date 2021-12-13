@@ -18,16 +18,13 @@
 package BrickDestroyer.View;
 
 import BrickDestroyer.Controller.GameFrameController;
-import javafx.application.Platform;
-import javafx.embed.swing.JFXPanel;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 
 import javax.swing.*;
 import java.awt.*;
-import java.io.IOException;
 
+/**
+ * to make a JFrame for game frame
+ */
 public class GameFrame extends JFrame {
     private static final String DEF_TITLE = "BRICK DESTROYER";
 
@@ -36,12 +33,15 @@ public class GameFrame extends JFrame {
 
     private boolean gaming;
 
+    private String currentFrame;
+    private GameHighScoreFrame gameHighScoreFrame;
+
     /**
-     * called in GameInfoController & GraphicsMain
+     * called in GameBoardController, GameHighScoreController, GameInfoController & GraphicsMain, GameFrame constructor
      */
-    // GameFrame constructor
     public GameFrame() {
         super();
+        gameHighScoreFrame = new GameHighScoreFrame(this);
         gaming = false;
         this.setLayout(new BorderLayout());
         homeMenu = new HomeMenu(this,new Dimension(450,400));
@@ -50,7 +50,7 @@ public class GameFrame extends JFrame {
     }
 
     /**
-     * called in GraphicsMain
+     * called in GraphicsMain, GameBoardController & GameHighScoreController, initialize the frame
      */
     public void initialize() {
         this.setTitle(DEF_TITLE);
@@ -62,11 +62,19 @@ public class GameFrame extends JFrame {
     }
 
     /**
-     * called in HomeMenuController
+     * called in GameBoardController & HomeMenuController, to initialize and enable the game board
+     * @param mode current mode
+     * @param currentFrame current game frame
      */
-    public void enableGameBoard(String mode) {
+    public void enableGameBoard(String mode,String currentFrame) {
+        this.currentFrame = currentFrame;
         this.dispose();
-        this.remove(homeMenu);
+        if(currentFrame == "home menu") {
+            this.remove(homeMenu);
+        }
+        else {
+            this.remove(gameBoard);
+        }
         gameBoard = new GameBoard(this,mode);
         this.add(gameBoard,BorderLayout.CENTER);
         this.setUndecorated(false);
@@ -74,31 +82,17 @@ public class GameFrame extends JFrame {
         this.addWindowFocusListener(new GameFrameController(this));
     }
 
+    /**
+     * called in HomeMenuController & GameBoard, to initialize and enable the game high score
+     */
     public void enableGameHighScore() {
         this.dispose();
-        this.remove(homeMenu);
-
-        final JFXPanel jfxPanel = new JFXPanel();  // embed javaFX into jFrame
-        Platform.runLater(() -> {
-            initGameHighScoreFX(jfxPanel);
-        });
+        gameHighScoreFrame.initialize();
     }
 
-    private void initGameHighScoreFX(JFXPanel jfxPanel) {
-        this.add(jfxPanel,BorderLayout.CENTER);
-
-        try {
-            Parent root = FXMLLoader.load(GameFrame.class.getResource("GameHighScore.fxml"));
-            Scene scene = new Scene(root);
-            jfxPanel.setScene(scene);
-            initialize();
-        }
-        catch(IOException exception) {
-            exception.printStackTrace();
-            System.exit(0);
-        }
-    }
-
+    /**
+     * auto locate the position of the frame
+     */
     private void autoLocate() {
         Dimension size = Toolkit.getDefaultToolkit().getScreenSize();
         int x = (size.width - this.getWidth()) / 2;
@@ -107,23 +101,34 @@ public class GameFrame extends JFrame {
     }
 
     /**
-     * called in GameFrameController
+     * called in GameFrameController, getter
+     * @return if the player is gaming or not
      */
     public boolean isGaming() {
         return gaming;
     }
 
     /**
-     * called in GameFrameController
+     * called in GameFrameController, setter
+     * @param gaming player is gaming or not
      */
     public void setGaming(boolean gaming) {
         this.gaming = gaming;
     }
 
     /**
-     * called in GameFrameController
+     * called in GameFrameController, getter
+     * @return current game board
      */
     public GameBoard getGameBoard() {
         return gameBoard;
+    }
+
+    /**
+     * called in GameHighScoreController, getter
+     * @return current game high score frame
+     */
+    public GameHighScoreFrame getGameHighScoreFrame() {
+        return gameHighScoreFrame;
     }
 }
