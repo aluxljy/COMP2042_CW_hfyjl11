@@ -4,6 +4,9 @@ import java.text.DecimalFormat;
 import java.util.TimerTask;
 import java.util.Timer;
 
+/**
+ * to count down the time when playing
+ */
 public class GameTimer {
     private int minute;
     private int second;
@@ -17,6 +20,9 @@ public class GameTimer {
 
     private DecimalFormat dFormat;
 
+    /**
+     * called in GameBoard, GameTimer constructor
+     */
     public GameTimer() {
         second = 0;
         minute = 10;
@@ -46,40 +52,35 @@ public class GameTimer {
         timer.schedule(timerTask, 0, 1000);
     }
 
-    public int getMinute() {
-        return minute;
-    }
-
-    public void setMinute(int minute) {
-        this.minute = minute;
-    }
-
-    public int getSecond() {
-        return second;
-    }
-
-    public void setSecond(int second) {
-        this.second = second;
-    }
-
+    /**
+     * called in GameBoard, getter
+     * @return decimal format seconds
+     */
     public String getDdSecond() {
         return ddSecond;
     }
 
+    /**
+     * called in GameBoard, getter
+     * @return decimal format minutes
+     */
     public String getDdMinute() {
         return ddMinute;
     }
 
+    /**
+     * called in GameBoardController & GameBoard, setter
+     * @param gameStatus current game status
+     */
     public void setGameStatus(boolean gameStatus) {
         this.gameStatus = gameStatus;
     }
 
+    /**
+     * getter
+     * @return current game status
+     */
     public boolean getGameStatus(){
         return gameStatus;
-    }
-
-    public void resetTimer(){
-        second = 0;
-        minute = 10;
     }
 }
