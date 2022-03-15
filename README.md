@@ -19,6 +19,7 @@ Work conducted:
 - Some codes have also been splitted code into components to enhance component encapsulation and reduce coupling, for example separating the Crack class from the Brick class and changing public methods that are not used in other classes to private methods.
 - Design patterns such as Factory Pattern was implemented to create Ball objects and Brick objects and also MVC for the entire project.
 - Also, some bugs in which when initially setting the speed of the ball, the ball would not be released and would roll over the player were solved by adjusting the position of the player.
+- Used JavaFX to make the HIGHSCORE page, designed the layout using Scene Builder while other pages remained using Java Swing and stored the highscores in json
 
 Explanation on the functions of the game:
 - Throughout the game there will be 8 different levels in total in which every level has different combinations of bricks.
